@@ -51,10 +51,15 @@ h2.main-heading {
   font-size: 83px;
   text-align: center;
   line-height: 83px;
+  font-variant-alternates: styleset(2);
 }
 
 .desc {
   font-size: 30px;
   text-align: center;
   line-height: 36px;
+}
+
+.color-dropdown {
+  padding: 10px;
 }
