@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--youth);
+}
+
+.above-heading {
+  font-weight: 500;
+  margin-bottom: 0px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 28px;
+  text-align: center;
+}
+
+h2.main-heading {
+  font-weight: 700;
+  margin-bottom: 0px;
+  letter-spacing: -0.035em;
+  font-size: 83px;
+  text-align: center;
+  line-height: 83px;
+}
+
+.desc {
+  font-size: 30px;
+  text-align: center;
+  line-height: 36px;
+}
