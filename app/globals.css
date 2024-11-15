@@ -2,13 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --white: #ffffff;
+  --black: #000000;
+
+  --drevo: #7e5228;
+  --kov: #afca0b;
+  --grafika: #f7941d;
+  --textil: #ffcb04;
+
+  --chemie: #6859a3;
+  --prirodopis: #004f9f;
+  --fyzika: #ec619f;
+  --it: #83d0f5;
+
+  --sos: #e74011;
+  --hriste: #3fa535;
+  --tabory: #f37053;
+  --kreativniuceni: #4aa1ae;
+
+  --accent-pink: #f7cadf;
+  --accent-red: #fac5aa;
+  --accent-orange: #fedbb3;
+  --accent-yellow: #fffa9e;
+  --accent-lime: #e1eebf;
+  --accent-green: #b7dca9;
+  --accent-blue: #8dd5f8;
+  --accent-purple: #a2adcd;
+  --accent-brown: #c2b5aa;
+  --accent-gray: #cacaca;
+}
+
 body {
   font-family: var(--youth);
 }
 
 .above-heading {
   font-weight: 500;
-  margin-bottom: 0px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 28px;
@@ -17,7 +47,6 @@ body {
 
 h2.main-heading {
   font-weight: 700;
-  margin-bottom: 0px;
   letter-spacing: -0.035em;
   font-size: 83px;
   text-align: center;
