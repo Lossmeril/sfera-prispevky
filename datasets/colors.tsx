@@ -9,6 +9,10 @@ export const accents: Color[] = [
     name: "Bílá",
   },
   {
+    cssVar: "var(--accent-pink)",
+    name: "Růžová",
+  },
+  {
     cssVar: "var(--accent-red)",
     name: "Červená",
   },
@@ -26,22 +30,22 @@ export const accents: Color[] = [
   },
   {
     cssVar: "var(--accent-green)",
-    name: "",
+    name: "Zelená",
   },
   {
     cssVar: "var(--accent-blue)",
-    name: "",
+    name: "Modrá",
   },
   {
     cssVar: "var(--accent-purple)",
-    name: "",
+    name: "Fialová",
   },
   {
     cssVar: "var(--accent-brown)",
-    name: "",
+    name: "Hnědá",
   },
   {
     cssVar: "var(--accent-gray)",
-    name: "",
+    name: "Šedá",
   },
 ];

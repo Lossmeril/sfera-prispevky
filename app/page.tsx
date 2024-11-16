@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Image from "next/image";
 import { accents } from "@/datasets/colors";
-import { facilities } from "@/datasets/facilities";
+import { formatDate } from "@/utils/formatters";
 
 const ImageGenerator = () => {
   const [eventType, setEventType] = useState("");
@@ -14,11 +14,6 @@ const ImageGenerator = () => {
   const [date, setDate] = useState("");
   const [beginningTime, setBeginningTime] = useState("");
   const [endTime, setEndTime] = useState("");
-
-  const [image1Name, setImage1Name] = useState(
-    facilities[0].elementSet.elementPrefix
-  );
-  const [image1No, setImage1No] = useState(1);
 
   const [image1, setImage1] = useState<File | null>(null);
   const [image1BG, setImage1BG] = useState("");
@@ -48,20 +43,6 @@ const ImageGenerator = () => {
     }
   };
 
-  const formatDate = (date: string): string => {
-    if (!date) return ""; // Handle empty input
-
-    const dateObj = new Date(date); // Parse the date string (YYYY-MM-DD format)
-
-    const formatter = new Intl.DateTimeFormat("cs-CZ", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-
-    return formatter.format(dateObj); // Format to "DD. month YYYY"
-  };
-
   const formattedDateTime = formatDate(date);
   console.log("Formatted DateTime:", formattedDateTime);
 
@@ -84,14 +65,19 @@ const ImageGenerator = () => {
           </div>
 
           <div className="mb-4 w-2/3">
-            <label className="block font-semibold">Název akce</label>
-            <input
-              type="text"
-              value={heading}
-              onChange={(e) => setHeading(e.target.value)}
-              className="border p-2 w-full"
-              maxLength={36}
-            />
+            <label className="block font-semibold">Název akce</label>{" "}
+            <div className="relative">
+              <input
+                type="text"
+                value={heading}
+                onChange={(e) => setHeading(e.target.value)}
+                className="border p-2 w-full"
+                maxLength={36}
+              />
+              <p className="absolute text-slate-400 right-3 top-2">
+                {36 - heading.length}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -146,31 +132,6 @@ const ImageGenerator = () => {
               />
             </div>
           </div>
-        </div>
-
-        <div className="mb-4">
-          <label className="block font-semibold">Vyber obrázek:</label>
-          <select
-            onChange={(e) => setImage1Name(e.target.value)}
-            className="color-dropdown"
-          >
-            {facilities.map((facility) => (
-              <option
-                value={facility.elementSet.elementPrefix}
-                key={facility.name}
-              >
-                {facility.name}
-              </option>
-            ))}
-          </select>
-          <input
-            type="number"
-            value={image1No}
-            onChange={(e) => setImage1No(e.target.valueAsNumber)}
-            className="border p-2 w-full"
-            min={1}
-            max={image1Name}
-          />
         </div>
 
         <div className="mb-4">
@@ -232,7 +193,7 @@ const ImageGenerator = () => {
       </div>
 
       {/* --- LIVE PREVIEW --- */}
-      <div className="w-1/2">
+      <div className="w-1/2 pointer-events-none">
         <div className="scale-50" style={{ transformOrigin: "top center" }}>
           <div
             ref={previewRef}
@@ -245,29 +206,20 @@ const ImageGenerator = () => {
             </div>
             <div className="w-[880px] h-full border-black border-r-2">
               <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2 flex flex-col">
+              <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
                 <div className="flex flex-row flex-nowrap">
                   <div
                     className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
                     style={{ backgroundColor: image1BG }}
                   >
-                    {/* {image1 && (
+                    {image1 && (
                       <Image
                         src={URL.createObjectURL(image1)}
                         alt="Image 1"
                         className="object-cover"
                         fill
                       />
-                    )} */}
-
-                    <Image
-                      src={
-                        "/img/prvky/" + image1Name + "motiv" + image1No + ".jpg"
-                      }
-                      fill
-                      alt="Image 1"
-                      className="object-cover"
-                    />
+                    )}
                   </div>
                   <div
                     className="w-[440px] aspect-square border-black border-b-2 relative"
@@ -285,8 +237,16 @@ const ImageGenerator = () => {
                 </div>
                 <div className="mx-[60px] my-[50px] h-full flex flex-col justify-around">
                   <div>
-                    <p className="above-heading mb-3">{eventType}</p>
-                    <h2 className="main-heading">{heading}</h2>
+                    {eventType ? (
+                      <p className="above-heading mb-3">{eventType}</p>
+                    ) : (
+                      <></>
+                    )}
+                    {heading ? (
+                      <h2 className="main-heading">{heading}</h2>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <p className="desc m-0">{text}</p>
                   <p className="desc m-0">
