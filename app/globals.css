@@ -58,6 +58,14 @@ body {
   max-height: 166px;
 }
 
+.announcement .main-heading {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  font-size: 72px;
+  line-height: 72px;
+  max-height: 144px;
+}
+
 .desc {
   font-size: 30px;
   text-align: center;
