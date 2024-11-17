@@ -64,7 +64,7 @@ export default function RootLayout({
   return (
     <html lang="cs">
       <body
-        className={`${youth.variable} ${youthRounded.variable} ${aptos.variable} antialiased`}
+        className={`${youth.variable} ${youthRounded.variable} ${aptos.variable} antialiased w-screen overflow-x-hidden`}
       >
         <Header />
         {children}

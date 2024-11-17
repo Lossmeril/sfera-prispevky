@@ -35,6 +35,8 @@
 
 body {
   font-family: var(--youth);
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 .above-heading {
