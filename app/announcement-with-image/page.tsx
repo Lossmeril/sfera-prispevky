@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { toPng } from "html-to-image";
 
-import { formatDate, formatTime } from "@/utils/formatters";
+import { formatDate, formatTime, removeEmojis } from "@/utils/formatters";
 import {
   bgColorsValidate,
   imageUploadValidate,
@@ -85,7 +85,7 @@ const AnnouncementImageGenerator = () => {
                 <input
                   type="text"
                   value={heading}
-                  onChange={(e) => setHeading(e.target.value)}
+                  onChange={(e) => setHeading(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
                   maxLength={36}
                 />
@@ -103,7 +103,7 @@ const AnnouncementImageGenerator = () => {
             <div className="relative">
               <textarea
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setDescription(removeEmojis(e.target.value))}
                 className="border p-2 w-full relative"
                 style={{
                   borderColor: descLengthValidate ? "" : "red",

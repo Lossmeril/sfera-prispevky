@@ -8,6 +8,7 @@ import { toPng } from "html-to-image";
 import { imageUploadValidate, lengthValidate } from "@/utils/validators";
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
+import { removeEmojis } from "@/utils/formatters";
 
 const TestimonialGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -72,7 +73,7 @@ const TestimonialGenerator = () => {
             <div className="relative">
               <textarea
                 value={text}
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => setText(removeEmojis(e.target.value))}
                 className="border p-2 w-full relative"
                 style={{
                   borderColor: descLengthValidate ? "" : "red",
@@ -101,7 +102,7 @@ const TestimonialGenerator = () => {
                 <input
                   type="text"
                   value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
+                  onChange={(e) => setAuthor(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
                   maxLength={50}
                 />

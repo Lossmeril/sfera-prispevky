@@ -230,7 +230,7 @@ const Post2ImagesGenerator = () => {
               obrázky.
             </p>
             <p className="mb-0">
-              Obrázky můžete stahnovat v plné velikosti z platformy{" "}
+              Obrázky můžete stahovat v plné velikosti z platformy{" "}
               <Link
                 href={
                   "https://sferapardubice.sharepoint.com/:f:/s/SFERA/Es0LEpuZCf9PkOHb8IMDEosBaZhIxzIB1I0EofrNn9oUzg?e=QRNKWu"

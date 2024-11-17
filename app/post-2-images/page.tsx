@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { toPng } from "html-to-image";
 
-import { formatDate, formatTime } from "@/utils/formatters";
+import { formatDate, formatTime, removeEmojis } from "@/utils/formatters";
 import {
   bgColorsValidate,
   imageUploadValidate,
@@ -98,7 +98,7 @@ const Post2ImagesGenerator = () => {
               <input
                 type="text"
                 value={eventType}
-                onChange={(e) => setEventType(e.target.value)}
+                onChange={(e) => setEventType(removeEmojis(e.target.value))}
                 className="border p-2 w-full"
               />
             </div>
@@ -111,7 +111,7 @@ const Post2ImagesGenerator = () => {
                 <input
                   type="text"
                   value={heading}
-                  onChange={(e) => setHeading(e.target.value)}
+                  onChange={(e) => setHeading(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
                   maxLength={36}
                 />
@@ -129,7 +129,7 @@ const Post2ImagesGenerator = () => {
             <div className="relative">
               <textarea
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setDescription(removeEmojis(e.target.value))}
                 className="border p-2 w-full relative"
                 style={{
                   borderColor: descLengthValidate ? "" : "red",
@@ -276,7 +276,7 @@ const Post2ImagesGenerator = () => {
               obrázky.
             </p>
             <p className="mb-0">
-              Obrázky můžete stahnovat v plné velikosti z platformy{" "}
+              Obrázky můžete stahovat v plné velikosti z platformy{" "}
               <Link
                 href={
                   "https://sferapardubice.sharepoint.com/:f:/s/SFERA/Es0LEpuZCf9PkOHb8IMDEosBaZhIxzIB1I0EofrNn9oUzg?e=QRNKWu"
