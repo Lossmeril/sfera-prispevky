@@ -1,22 +1,26 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { toPng } from "html-to-image";
 import Image from "next/image";
-import { accents } from "@/datasets/colors";
+import Link from "next/link";
+
+import { toPng } from "html-to-image";
+
 import { formatDate, formatTime } from "@/utils/formatters";
-import { facilities } from "@/datasets/facilities";
 import {
   bgColorsValidate,
   imageUploadValidate,
   lengthValidate,
 } from "@/utils/validators";
+import { accents } from "@/datasets/colors";
+import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
 
 const Post2ImagesGenerator = () => {
+  //--- STATES AND REFS --------------------------------------------------------------
   const [eventType, setEventType] = useState("");
   const [heading, setHeading] = useState("");
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
 
   const [date, setDate] = useState("");
   const [beginningTime, setBeginningTime] = useState("");
@@ -28,9 +32,9 @@ const Post2ImagesGenerator = () => {
   const [image2BG, setImage2BG] = useState("");
 
   const [facility, setFacility] = useState(0);
-
   const previewRef = useRef<HTMLDivElement>(null);
 
+  //--- UPLOAD FUNCTION --------------------------------------------------------------
   const handleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
     setImage: React.Dispatch<React.SetStateAction<File | null>>
@@ -39,11 +43,34 @@ const Post2ImagesGenerator = () => {
     setImage(file);
   };
 
+  const formattedDate = formatDate(date);
+  const formattedTimes = [formatTime(beginningTime), formatTime(endTime)];
+
+  //--- VALIDATOR VARIABLES --------------------------------------------------------------
+
+  const descLengthLong = 100;
+  const descLengthShort = 50;
+  const isTextShort = date || beginningTime || endTime ? true : false;
+
+  //--- VALIDATOR FUNCTIONS --------------------------------------------------------------
+  const descLengthValidate = lengthValidate(
+    description.length,
+    descLengthShort,
+    descLengthLong,
+    isTextShort
+  );
+  const areImagesUploaded = imageUploadValidate(2, image1, image2);
+  const areBGColorsNotSame = bgColorsValidate(image1BG, image2BG);
+  const isEventTypeSet = eventType !== "";
+  const isHeadingSet = heading !== "";
+  const isDescSet = description !== "";
+
+  //--- IMAGE GENERATOR --------------------------------------------------------------
   const handleGenerate = async () => {
     if (previewRef.current) {
       const pngData = await toPng(previewRef.current, {
-        width: 1080, // Desired width in pixels
-        height: 1080, // Desired height in pixels
+        width: 1080,
+        height: 1080,
       });
       const link = document.createElement("a");
       link.download =
@@ -53,34 +80,16 @@ const Post2ImagesGenerator = () => {
     }
   };
 
-  const formattedDate = formatDate(date);
-  const formattedTimes = [formatTime(beginningTime), formatTime(endTime)];
-
-  const descLengthLong = 100;
-  const descLengthShort = 50;
-  const isTextShort = date || beginningTime || endTime ? true : false;
-
-  //--- VALIDATOR FUNCTIONS
-  const descLengthValidate = lengthValidate(
-    text.length,
-    descLengthShort,
-    descLengthLong,
-    isTextShort
-  );
-  const areImagesUploaded = imageUploadValidate(2, image1, image2);
-  const areBGColorsNotSame = bgColorsValidate(image1BG, image2BG);
-  const isEventTypeSet = eventType !== "";
-  const isHeadingSet = heading !== "";
-
   return (
     <div className="p-4 h-auto flex flex-row">
-      <div className="w-1/2 py-20 px-10 border-r">
-        {/* --- INPUTY --- */}
+      <div className="w-1/2 p-10 border-r">
+        {/* --- INPUT SECTION -------------------------------------------------------------- */}
         <h1 className="text-xl font-bold mb-4">
-          Generátor: Příspěvek s dvěma symboly
+          Generátor: Příspěvek se dvěma symboly
         </h1>
 
-        <div className="border p-4 w-full">
+        {/* --- NAME, TYPE AND DESCRIPTION SECTION --- */}
+        <div className="w-full py-5 border-b">
           <div className="flex flex-row flex-nowrap w-full gap-5">
             <div className="mb-4 w-1/3">
               <label className="block font-semibold">
@@ -97,7 +106,7 @@ const Post2ImagesGenerator = () => {
             <div className="mb-4 w-2/3">
               <label className="block font-semibold">
                 Název akce<span className="text-sos"> *</span>
-              </label>{" "}
+              </label>
               <div className="relative">
                 <input
                   type="text"
@@ -119,8 +128,8 @@ const Post2ImagesGenerator = () => {
             </label>
             <div className="relative">
               <textarea
-                value={text}
-                onChange={(e) => setText(e.target.value)}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className="border p-2 w-full relative"
                 style={{
                   borderColor: descLengthValidate ? "" : "red",
@@ -131,7 +140,8 @@ const Post2ImagesGenerator = () => {
                 className="absolute right-3 top-2 text-slate-400"
                 style={{ color: descLengthValidate ? "" : "var(--sos)" }}
               >
-                {(isTextShort ? descLengthShort : descLengthLong) - text.length}
+                {(isTextShort ? descLengthShort : descLengthLong) -
+                  description.length}
               </p>
               {!descLengthValidate ? (
                 <ErrorText>
@@ -144,7 +154,8 @@ const Post2ImagesGenerator = () => {
           </div>
         </div>
 
-        <div className="border p-4 w-full">
+        {/* --- DATE AND TIME SECTION --- */}
+        <div className="w-full py-5 border-b">
           <div className="flex flex-row flex-nowrap gap-3">
             <div className="mb-4 w-1/3">
               <label className="block font-semibold">Datum</label>
@@ -183,7 +194,9 @@ const Post2ImagesGenerator = () => {
             </div>
           </div>
         </div>
-        <div className="border p-4 w-full">
+
+        {/* --- IMAGES SECTION --- */}
+        <div className="w-full py-5 border-b">
           <div className="flex flex-row flex-nowrap gap-3">
             <div className="w-1/2">
               <div className="mb-4">
@@ -256,70 +269,102 @@ const Post2ImagesGenerator = () => {
               </div>
             </div>
           </div>
-          <div className="mb-4">
-            <label className="block font-semibold">Kdo zaštiťuje akci?</label>
-            <select
-              onChange={(e) => setFacility(parseInt(e.target.value))}
-              className="border-2 px-6 py-1"
-            >
-              <option value={0}>Nechat prázdné</option>
-              {facilities.map((facility) => (
-                <option value={facility.id} key={facility.name}>
-                  {facility.name}
-                </option>
-              ))}
-            </select>
+          <div className="bg-accent-pink p-5 mt-5">
+            <p>
+              Do této šablony smí být umístěny{" "}
+              <strong>pouze sférické symboly</strong>, nikoliv fotky a jiné
+              obrázky.
+            </p>
+            <p className="mb-0">
+              Obrázky můžete stahnovat v plné velikosti z platformy{" "}
+              <Link
+                href={
+                  "https://sferapardubice.sharepoint.com/:f:/s/SFERA/Es0LEpuZCf9PkOHb8IMDEosBaZhIxzIB1I0EofrNn9oUzg?e=QRNKWu"
+                }
+                target="_blank"
+                className="underline"
+              >
+                SharePoint
+              </Link>
+              .
+            </p>
           </div>
         </div>
 
-        {
-          // Is the text not overflowing?
-          descLengthValidate &&
-          // Are the images uploaded?
-          areImagesUploaded &&
-          // Are the colors not same
-          areBGColorsNotSame &&
-          // Is the event type set?
-          isEventTypeSet &&
-          // Is the title set?
-          isHeadingSet ? (
-            <button
-              onClick={handleGenerate}
-              className="mt-4 border-2 border-black px-8 py-4 font-bold"
-            >
-              Stáhnout příspěvek (.png)
-            </button>
-          ) : (
-            <>
-              <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
+        {/* --- FACILITY SECTION --- */}
+        <div className="w-full py-5 border-b">
+          <label className="block font-semibold">Kdo zaštiťuje akci?</label>
+          <select
+            onChange={(e) => setFacility(parseInt(e.target.value))}
+            className="border-2 px-6 py-1"
+          >
+            <option value={0}>Nechat prázdné</option>
+            {facilities.map((facility) => (
+              <option value={facility.id} key={facility.name}>
+                {facility.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* --- DOWNLOAD SECTION --- */}
+        <div className="w-full py-5">
+          {
+            // Is the text not overflowing?
+            descLengthValidate &&
+            // Are the images uploaded?
+            areImagesUploaded &&
+            // Are the colors not same
+            areBGColorsNotSame &&
+            // Is the event type set?
+            isEventTypeSet &&
+            // Is the title set?
+            isHeadingSet &&
+            // Is the description set?
+            isDescSet ? (
+              <button
+                onClick={handleGenerate}
+                className="mt-4 border-2 border-black px-8 py-4 font-bold"
+              >
                 Stáhnout příspěvek (.png)
               </button>
-              {!isEventTypeSet ? (
-                <ErrorText>Prosím, vyplň typ události</ErrorText>
-              ) : (
-                <></>
-              )}
-              {!isHeadingSet ? (
-                <ErrorText>Prosím, vyplň název události</ErrorText>
-              ) : (
-                <></>
-              )}
-              {!areImagesUploaded ? (
-                <ErrorText>Prosím, nahraj dva symboly</ErrorText>
-              ) : (
-                <></>
-              )}
-              {!areBGColorsNotSame ? (
-                <ErrorText>Barvy pozadí nesmí být stejné</ErrorText>
-              ) : (
-                <></>
-              )}
-            </>
-          )
-        }
+            ) : (
+              <>
+                <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
+                  Stáhnout příspěvek (.png)
+                </button>
+                {!isEventTypeSet ? (
+                  <ErrorText>Prosím, vyplň typ události</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!isHeadingSet ? (
+                  <ErrorText>Prosím, vyplň název události</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!isHeadingSet ? (
+                  <ErrorText>Prosím, vyplň krátký popisek</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!areImagesUploaded ? (
+                  <ErrorText>Prosím, nahraj dva symboly</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!areBGColorsNotSame ? (
+                  <ErrorText>Barvy pozadí nesmí být stejné</ErrorText>
+                ) : (
+                  <></>
+                )}
+              </>
+            )
+          }
+        </div>
       </div>
 
-      {/* --- LIVE PREVIEW --- */}
+      {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
       <div className="w-1/2 pointer-events-none max-h-screen overflow-hidden">
         <div className="scale-50" style={{ transformOrigin: "center 25%" }}>
           <div
@@ -406,7 +451,7 @@ const Post2ImagesGenerator = () => {
                           : "72px",
                     }}
                   >
-                    {text}
+                    {description}
                   </p>
                   <p className="desc m-0">
                     {formattedDate}
