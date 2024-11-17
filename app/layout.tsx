@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Header from "@/components/header";
 
 const youth = localFont({
   variable: "--youth",
@@ -65,6 +66,7 @@ export default function RootLayout({
       <body
         className={`${youth.variable} ${youthRounded.variable} ${aptos.variable} antialiased`}
       >
+        <Header />
         {children}
       </body>
     </html>

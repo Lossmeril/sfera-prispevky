@@ -72,7 +72,7 @@ const Post2ImagesGenerator = () => {
       <div className="w-1/2 p-10 border-r">
         {/* --- INPUT SECTION -------------------------------------------------------------- */}
         <h1 className="text-xl font-bold mb-4">
-          Generátor: Příspěvek se dvěma symboly
+          Generátor: Příspěvek se čtyřmi symboly
         </h1>
 
         {/* --- IMAGES SECTION --- */}

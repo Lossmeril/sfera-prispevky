@@ -79,7 +79,7 @@ const AnnouncementImageGenerator = () => {
           <div className="flex flex-row flex-nowrap w-full gap-5">
             <div className="mb-4 w-full">
               <label className="block font-semibold">
-                Název akce<span className="text-sos"> *</span>
+                Nadpis<span className="text-sos"> *</span>
               </label>
               <div className="relative">
                 <input
@@ -98,7 +98,7 @@ const AnnouncementImageGenerator = () => {
 
           <div className="mb-4">
             <label className="block font-semibold">
-              Popisek<span className="text-sos"> *</span>
+              Text<span className="text-sos"> *</span>
             </label>
             <div className="relative">
               <textarea
@@ -133,7 +133,7 @@ const AnnouncementImageGenerator = () => {
             <div className="w-1/2">
               <div className="mb-4">
                 <label className="block font-semibold">
-                  Nahrajte první prvek: <span className="text-sos"> *</span>
+                  Nahraj obrázek <span className="text-sos"> *</span>
                 </label>
                 <input
                   type="file"
@@ -145,9 +145,12 @@ const AnnouncementImageGenerator = () => {
           </div>
           <div className="bg-accent-pink p-5 mt-5">
             <p>
-              Do této šablony povoluji vkládat fotky a obrázky. Nesmí se tu ale
-              objevit nic s textem (například bannery, nebo cizí plakáty). Kdo
-              tam něco takového dá, tomu utrhnu hlavu.
+              Do této šablony povoluji vkládat fotky a obrázky.{" "}
+              <strong>
+                Nesmí se tu ale objevit nic s textem (například bannery, nebo
+                cizí plakáty).
+              </strong>{" "}
+              Kdo tam něco takového dá, tomu utrhnu hlavu.
             </p>
           </div>
         </div>
@@ -192,12 +195,12 @@ const AnnouncementImageGenerator = () => {
                 </button>
 
                 {!isHeadingSet ? (
-                  <ErrorText>Prosím, vyplň název události</ErrorText>
+                  <ErrorText>Prosím, vyplň nadpis</ErrorText>
                 ) : (
                   <></>
                 )}
                 {!isHeadingSet ? (
-                  <ErrorText>Prosím, vyplň krátký popisek</ErrorText>
+                  <ErrorText>Prosím, vyplň text</ErrorText>
                 ) : (
                   <></>
                 )}
