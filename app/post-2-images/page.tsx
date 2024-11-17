@@ -60,7 +60,7 @@ const Post2ImagesGenerator = () => {
     isTextShort
   );
   const areImagesUploaded = imageUploadValidate(2, image1, image2);
-  const areBGColorsNotSame = bgColorsValidate(image1BG, image2BG);
+  const areBGColorsNotSame = bgColorsValidate([image1BG, image2BG]);
   const isEventTypeSet = eventType !== "";
   const isHeadingSet = heading !== "";
   const isDescSet = description !== "";

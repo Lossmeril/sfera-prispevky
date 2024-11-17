@@ -24,6 +24,13 @@ export const imageUploadValidate = (
   );
 };
 
-export const bgColorsValidate = (color1: string, color2: string) => {
-  return color1 !== color2 || color1 === "var(--white)" || color1 === "";
+export const bgColorsValidate = (arr: string[]) => {
+  const seen = new Set();
+  for (const item of arr) {
+    if (seen.has(item) && item !== "" && item !== "var(--white)") {
+      return false; // Duplicate found
+    }
+    seen.add(item);
+  }
+  return true; // No duplicates
 };
