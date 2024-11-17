@@ -1,4 +1,5 @@
 export type facilityType = {
+  id: number;
   name: string;
   nameEn: string;
 
@@ -6,6 +7,7 @@ export type facilityType = {
 };
 
 export const dilnaTextilu: facilityType = {
+  id: 1,
   name: "Dílna Textilu",
   nameEn: "Textiles Workshop",
 
@@ -17,6 +19,7 @@ export const dilnaGrafiky: facilityType = {
   nameEn: "Graphics Workshop",
 
   colorBgVarName: "grafika",
+  id: 2,
 };
 
 export const dilnaDreva: facilityType = {
@@ -24,6 +27,7 @@ export const dilnaDreva: facilityType = {
   nameEn: "Wood Workshop",
 
   colorBgVarName: "drevo",
+  id: 3,
 };
 
 export const dilnaKovu: facilityType = {
@@ -31,6 +35,7 @@ export const dilnaKovu: facilityType = {
   nameEn: "Metal/Electric Workshop",
 
   colorBgVarName: "kov",
+  id: 4,
 };
 
 export const laboratorITVR: facilityType = {
@@ -38,6 +43,7 @@ export const laboratorITVR: facilityType = {
   nameEn: "Computer Science/VR Lab",
 
   colorBgVarName: "it",
+  id: 5,
 };
 
 export const laboratorFyziky: facilityType = {
@@ -45,6 +51,7 @@ export const laboratorFyziky: facilityType = {
   nameEn: "Physics Lab",
 
   colorBgVarName: "fyzika",
+  id: 6,
 };
 
 export const laboratorChemie: facilityType = {
@@ -52,6 +59,7 @@ export const laboratorChemie: facilityType = {
   nameEn: "Chemistry Lab",
 
   colorBgVarName: "chemie",
+  id: 7,
 };
 
 export const laboratorPrirodopisu: facilityType = {
@@ -59,6 +67,7 @@ export const laboratorPrirodopisu: facilityType = {
   nameEn: "Biology Lab",
 
   colorBgVarName: "prirodopis",
+  id: 8,
 };
 
 export const sferickeHriste: facilityType = {
@@ -66,6 +75,7 @@ export const sferickeHriste: facilityType = {
   nameEn: "Spherical Playground",
 
   colorBgVarName: "hriste",
+  id: 9,
 };
 
 export const scienceOnSphere: facilityType = {
@@ -73,6 +83,7 @@ export const scienceOnSphere: facilityType = {
   nameEn: "Science on a Sphere Room",
 
   colorBgVarName: "sos",
+  id: 10,
 };
 
 export const primestskyTabor: facilityType = {
@@ -80,6 +91,7 @@ export const primestskyTabor: facilityType = {
   nameEn: "Day Camp",
 
   colorBgVarName: "tabory",
+  id: 11,
 };
 
 export const kreativniUceni: facilityType = {
@@ -87,6 +99,7 @@ export const kreativniUceni: facilityType = {
   nameEn: "Creative Learning",
 
   colorBgVarName: "kreativniuceni",
+  id: 12,
 };
 
 export const eduLab: facilityType = {
@@ -94,6 +107,7 @@ export const eduLab: facilityType = {
   nameEn: "AI EduLab @ SFERA",
 
   colorBgVarName: "white",
+  id: 13,
 };
 
 export const facilities: facilityType[] = [
@@ -105,5 +119,7 @@ export const facilities: facilityType[] = [
   laboratorFyziky,
   laboratorChemie,
   laboratorPrirodopisu,
+  sferickeHriste,
+  scienceOnSphere,
   primestskyTabor,
 ];

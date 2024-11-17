@@ -45,19 +45,31 @@ body {
   text-align: center;
 }
 
-h2.main-heading {
+.main-heading {
   font-weight: 700;
   letter-spacing: -0.035em;
   font-size: 83px;
   text-align: center;
   line-height: 83px;
   font-variant-alternates: styleset(2);
+
+  display: block;
+  overflow: hidden;
+  max-height: 166px;
 }
 
 .desc {
   font-size: 30px;
   text-align: center;
   line-height: 36px;
+
+  display: block;
+  overflow: hidden;
+}
+
+.facility {
+  font-weight: 500;
+  font-size: 33px;
 }
 
 .color-dropdown {

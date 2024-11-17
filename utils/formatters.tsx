@@ -1,7 +1,7 @@
 export const formatDate = (date: string): string => {
-  if (!date) return ""; // Handle empty input
+  if (!date) return "";
 
-  const dateObj = new Date(date); // Parse the date string (YYYY-MM-DD format)
+  const dateObj = new Date(date);
 
   const formatter = new Intl.DateTimeFormat("cs-CZ", {
     day: "2-digit",
@@ -9,5 +9,20 @@ export const formatDate = (date: string): string => {
     year: "numeric",
   });
 
-  return formatter.format(dateObj); // Format to "DD. month YYYY"
+  return formatter.format(dateObj);
+};
+
+export const formatTime = (time: string): string => {
+  if (!time) return "";
+
+  console.log(time);
+  const dateObj = new Date(new Date().toDateString() + " " + time);
+
+  const formatter = new Intl.DateTimeFormat("en-UK", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  console.log(dateObj);
+  return formatter.format(dateObj).replace(":", ".");
 };
