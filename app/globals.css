@@ -75,6 +75,17 @@ body {
   overflow: hidden;
 }
 
+.testimonial .desc {
+  font-size: 40px;
+  line-height: 48px;
+}
+
+.testimonial .author {
+  text-align: center;
+  font-size: 28px;
+  line-height: 36px;
+}
+
 .facility {
   font-weight: 500;
   font-size: 33px;
