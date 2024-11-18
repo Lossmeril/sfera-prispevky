@@ -17,7 +17,7 @@ export type elementSetType = {
   numberOfElements: number;
 };
 
-export const elementSets: elementSetType[] = [
+const baseElementSets: elementSetType[] = [
   {
     name: dilnaTextilu.name,
     elementPrefix: "Textil_",
@@ -76,3 +76,5 @@ export const elementSets: elementSetType[] = [
 ];
 
 const unique: elementSetType[] = [];
+
+export const elementSets = baseElementSets.concat(unique);
