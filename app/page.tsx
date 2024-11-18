@@ -4,15 +4,7 @@ import Link from "next/link";
 
 const GeneratorsHomePage = () => {
   return (
-    <div className="w-screen h-screen flex flex-col justify-center px-[10%]">
-      <div className="bg-accent-pink p-5">
-        <p>
-          <strong>Varování:</strong> V současnosti existuje bug, který vyhodí
-          chybu při nahrání příliš velkého obrázku a ovlivňuje i některé
-          kombiace prvků. V blízké budoucnosti bude aplikace přeprogramována,
-          aby používala interní obrázky, místo nahrávání.
-        </p>
-      </div>
+    <div className="w-screen h-auto mt-8 flex flex-col justify-center px-[10%]">
       <p className="above-heading mt-14">Generátor sférických příspěvků</p>
       <h1 className="text-[4.5em] font-bold text-center leading-none mb-14">
         Co budeme dneska generovat?
