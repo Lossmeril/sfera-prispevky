@@ -9,46 +9,70 @@ import { toPng } from "html-to-image";
 import { bgColorsValidate, imageUploadValidate } from "@/utils/validators";
 import { accents } from "@/datasets/colors";
 import ErrorText from "@/components/error-text";
+import { elementSets } from "@/datasets/elements";
 
 const Post2ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
 
-  const [image1, setImage1] = useState<File | null>(null);
-  const [image1BG, setImage1BG] = useState("");
-  const [image2, setImage2] = useState<File | null>(null);
-  const [image2BG, setImage2BG] = useState("");
-  const [image3, setImage3] = useState<File | null>(null);
-  const [image3BG, setImage3BG] = useState("");
-  const [image4, setImage4] = useState<File | null>(null);
-  const [image4BG, setImage4BG] = useState("");
+  const [elementSet1, setElementSet1] = useState(elementSets[0]);
+  const [element1No, setElement1No] = useState(1);
+  const [element1BG, setElement1BG] = useState("");
+
+  const [elementSet2, setElementSet2] = useState(elementSets[0]);
+  const [element2No, setElement2No] = useState(1);
+  const [element2BG, setElement2BG] = useState("");
+
+  const [elementSet3, setElementSet3] = useState(elementSets[0]);
+  const [element3No, setElement3No] = useState(1);
+  const [element3BG, setElement3BG] = useState("");
+
+  const [elementSet4, setElementSet4] = useState(elementSets[0]);
+  const [element4No, setElement4No] = useState(1);
+  const [element4BG, setElement4BG] = useState("");
 
   const previewRef = useRef<HTMLDivElement>(null);
 
-  //--- UPLOAD FUNCTION --------------------------------------------------------------
-  const handleImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setImage: React.Dispatch<React.SetStateAction<File | null>>
-  ) => {
-    const file = e.target.files?.[0] || null;
-    setImage(file);
+  //--- IMAGES UPDATE FUNCTION --------------------------------------------------------------
+  const updateSetAndNumber = (index: number, elementNumber: number): void => {
+    switch (elementNumber) {
+      case 1:
+        setElementSet1(elementSets[index]);
+        setElement1No(1);
+        return;
+
+      case 2:
+        setElementSet2(elementSets[index]);
+        setElement2No(1);
+        return;
+
+      case 3:
+        setElementSet3(elementSets[index]);
+        setElement3No(1);
+        return;
+
+      case 4:
+        setElementSet4(elementSets[index]);
+        setElement4No(1);
+        return;
+    }
   };
 
   //--- VALIDATOR VARIABLES --------------------------------------------------------------
 
   //--- VALIDATOR FUNCTIONS --------------------------------------------------------------
 
-  const areImagesUploaded = imageUploadValidate(
-    4,
-    image1,
-    image2,
-    image3,
-    image4
-  );
   const areBGColorsNotSame = bgColorsValidate([
-    image1BG,
-    image2BG,
-    image3BG,
-    image4BG,
+    element1BG,
+    element2BG,
+    element3BG,
+    element4BG,
+  ]);
+
+  const areImagesNotSame = bgColorsValidate([
+    elementSet1.elementPrefix + element1No,
+    elementSet2.elementPrefix + element2No,
+    elementSet3.elementPrefix + element3No,
+    elementSet4.elementPrefix + element4No,
   ]);
 
   //--- IMAGE GENERATOR --------------------------------------------------------------
@@ -77,179 +101,242 @@ const Post2ImagesGenerator = () => {
 
         {/* --- IMAGES SECTION --- */}
         <div className="w-full py-5 border-b">
-          <div className="flex flex-row flex-nowrap gap-3">
-            <div className="w-1/2">
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Nahraj první prvek: <span className="text-sos"> *</span>
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, setImage1)}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Podkladová barva 1
-                </label>
-                <select
-                  onChange={(e) => setImage1BG(e.target.value)}
-                  className="border-2 px-6 py-1"
-                  style={{
-                    backgroundColor:
-                      image1BG !== "var(--white)" ? image1BG : "",
-                    borderColor: areBGColorsNotSame ? "" : "var(--sos)",
-                  }}
-                >
-                  {accents.map((accent) => (
-                    <option value={accent.cssVar} key={accent.cssVar}>
-                      {accent.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Nahraj druhý prvek:<span className="text-sos"> *</span>
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, setImage2)}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Podkladová barva 2
-                </label>
-                <select
-                  onChange={(e) => setImage2BG(e.target.value)}
-                  className="border-2 px-6 py-1"
-                  style={{
-                    backgroundColor:
-                      image2BG !== "var(--white)" ? image2BG : "",
-                    borderColor: areBGColorsNotSame ? "" : "var(--sos)",
-                  }}
-                >
-                  {accents.map((accent) => (
-                    <option
-                      value={accent.cssVar}
-                      key={accent.cssVar}
-                      style={{ backgroundColor: accent.cssVar }}
-                    >
-                      {accent.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-row flex-nowrap gap-3 mt-5">
-            <div className="w-1/2">
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Nahraj třetí prvek: <span className="text-sos"> *</span>
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, setImage3)}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Podkladová barva 3
-                </label>
-                <select
-                  onChange={(e) => setImage3BG(e.target.value)}
-                  className="border-2 px-6 py-1"
-                  style={{
-                    backgroundColor:
-                      image3BG !== "var(--white)" ? image3BG : "",
-                    borderColor: areBGColorsNotSame ? "" : "var(--sos)",
-                  }}
-                >
-                  {accents.map((accent) => (
-                    <option value={accent.cssVar} key={accent.cssVar}>
-                      {accent.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Nahraj čtvrtý prvek:<span className="text-sos"> *</span>
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, setImage4)}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block font-semibold">
-                  Podkladová barva 4
-                </label>
-                <select
-                  onChange={(e) => setImage4BG(e.target.value)}
-                  className="border-2 px-6 py-1"
-                  style={{
-                    backgroundColor:
-                      image4BG !== "var(--white)" ? image4BG : "",
-                    borderColor: areBGColorsNotSame ? "" : "var(--sos)",
-                  }}
-                >
-                  {accents.map((accent) => (
-                    <option
-                      value={accent.cssVar}
-                      key={accent.cssVar}
-                      style={{ backgroundColor: accent.cssVar }}
-                    >
-                      {accent.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-accent-pink p-5 mt-5">
-            <p>
-              Do této šablony smí být umístěny{" "}
-              <strong>pouze sférické symboly</strong>, nikoliv fotky a jiné
-              obrázky.
-            </p>
-            <p className="mb-0">
-              Obrázky můžete stahovat v plné velikosti z platformy{" "}
-              <Link
-                href={
-                  "https://sferapardubice.sharepoint.com/:f:/s/SFERA/Es0LEpuZCf9PkOHb8IMDEosBaZhIxzIB1I0EofrNn9oUzg?e=QRNKWu"
+          <div className="flex flex-row flex-nowrap w-full gap-3">
+            <div className="w-full">
+              <label className="block font-semibold">První prvek</label>
+              <select
+                onChange={(e) =>
+                  updateSetAndNumber(parseInt(e.target.value), 1)
                 }
-                target="_blank"
-                className="underline"
+                className="border-2 px-6 py-1 mb-2"
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
               >
-                SharePoint
-              </Link>
-              .
-            </p>
+                {elementSets.map((set, index) => (
+                  <option value={index} key={set.name}>
+                    {set.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Číslo prvku</label>
+              <input
+                type="number"
+                className="border-2 px-6 py-1 mb-2 w-full"
+                value={
+                  element1No > elementSet1.numberOfElements
+                    ? elementSet1.numberOfElements
+                    : element1No
+                }
+                onChange={(e) => setElement1No(parseInt(e.target.value))}
+                min={1}
+                max={elementSet1.numberOfElements}
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
+              />
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Podkladová barva 1</label>
+              <select
+                onChange={(e) => setElement1BG(e.target.value)}
+                className="border-2 px-6 py-1 w-full"
+                style={{
+                  backgroundColor:
+                    element1BG !== "var(--white)" ? element1BG : "",
+                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                }}
+              >
+                {accents.map((accent) => (
+                  <option value={accent.cssVar} key={accent.cssVar}>
+                    {accent.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="flex flex-row flex-nowrap w-full gap-3">
+            <div className="w-full">
+              <label className="block font-semibold">Druhý prvek</label>
+              <select
+                onChange={(e) =>
+                  updateSetAndNumber(parseInt(e.target.value), 2)
+                }
+                className="border-2 px-6 py-1 mb-2"
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
+              >
+                {elementSets.map((set, index) => (
+                  <option value={index} key={set.name}>
+                    {set.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="w-full">
+              <label className="block font-semibold">Číslo prvku</label>
+              <input
+                type="number"
+                className="border-2 px-6 py-1 mb-2 w-full"
+                value={
+                  element2No > elementSet2.numberOfElements
+                    ? elementSet2.numberOfElements
+                    : element2No
+                }
+                onChange={(e) => setElement2No(parseInt(e.target.value))}
+                min={1}
+                max={elementSet2.numberOfElements}
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
+              />
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Podkladová barva 2</label>
+              <select
+                onChange={(e) => setElement2BG(e.target.value)}
+                className="border-2 px-6 py-1 w-full"
+                style={{
+                  backgroundColor:
+                    element2BG !== "var(--white)" ? element2BG : "",
+                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                }}
+              >
+                {accents.map((accent) => (
+                  <option value={accent.cssVar} key={accent.cssVar}>
+                    {accent.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="flex flex-row flex-nowrap w-full gap-3">
+            <div className="w-full">
+              <label className="block font-semibold">Třetí prvek</label>
+              <select
+                onChange={(e) =>
+                  updateSetAndNumber(parseInt(e.target.value), 3)
+                }
+                className="border-2 px-6 py-1 mb-2"
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
+              >
+                {elementSets.map((set, index) => (
+                  <option value={index} key={set.name}>
+                    {set.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Číslo prvku</label>
+              <input
+                type="number"
+                className="border-2 px-6 py-1 mb-2 w-full"
+                value={
+                  element1No > elementSet3.numberOfElements
+                    ? elementSet3.numberOfElements
+                    : element3No
+                }
+                onChange={(e) => setElement3No(parseInt(e.target.value))}
+                min={1}
+                max={elementSet3.numberOfElements}
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
+              />
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Podkladová barva 3</label>
+              <select
+                onChange={(e) => setElement3BG(e.target.value)}
+                className="border-2 px-6 py-1 w-full"
+                style={{
+                  backgroundColor:
+                    element1BG !== "var(--white)" ? element3BG : "",
+                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                }}
+              >
+                {accents.map((accent) => (
+                  <option value={accent.cssVar} key={accent.cssVar}>
+                    {accent.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="flex flex-row flex-nowrap w-full gap-3">
+            <div className="w-full">
+              <label className="block font-semibold">Čtvrtý prvek</label>
+              <select
+                onChange={(e) =>
+                  updateSetAndNumber(parseInt(e.target.value), 4)
+                }
+                className="border-2 px-6 py-1 mb-2"
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
+              >
+                {elementSets.map((set, index) => (
+                  <option value={index} key={set.name}>
+                    {set.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="w-full">
+              <label className="block font-semibold">Číslo prvku</label>
+              <input
+                type="number"
+                className="border-2 px-6 py-1 mb-2 w-full"
+                value={
+                  element2No > elementSet4.numberOfElements
+                    ? elementSet4.numberOfElements
+                    : element4No
+                }
+                onChange={(e) => setElement4No(parseInt(e.target.value))}
+                min={1}
+                max={elementSet4.numberOfElements}
+                style={{
+                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                }}
+              />
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Podkladová barva 4</label>
+              <select
+                onChange={(e) => setElement4BG(e.target.value)}
+                className="border-2 px-6 py-1 w-full"
+                style={{
+                  backgroundColor:
+                    element4BG !== "var(--white)" ? element4BG : "",
+                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                }}
+              >
+                {accents.map((accent) => (
+                  <option value={accent.cssVar} key={accent.cssVar}>
+                    {accent.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
         {/* --- DOWNLOAD SECTION --- */}
         <div className="w-full py-5">
           {
-            // Are the images uploaded?
-            areImagesUploaded &&
+            // Are the images not same?
+            areImagesNotSame &&
             // Are the colors not same
             areBGColorsNotSame ? (
               <button
@@ -264,8 +351,10 @@ const Post2ImagesGenerator = () => {
                   Stáhnout příspěvek (.png)
                 </button>
 
-                {!areImagesUploaded ? (
-                  <ErrorText>Prosím, nahraj čtyři symboly</ErrorText>
+                {!areImagesNotSame ? (
+                  <ErrorText>
+                    Na příspěvku nesmí být dva stejné symboly
+                  </ErrorText>
                 ) : (
                   <></>
                 )}
@@ -298,31 +387,39 @@ const Post2ImagesGenerator = () => {
                 <div className="flex flex-row flex-nowrap">
                   <div
                     className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
-                    style={{ backgroundColor: image1BG }}
+                    style={{ backgroundColor: element1BG }}
                   >
-                    {image1 && (
+                    {elementSet1 && (
                       <Image
-                        src={URL.createObjectURL(image1)}
-                        alt="Image 1"
+                        src={
+                          "/img/elements/" +
+                          elementSet1.elementPrefix +
+                          "motiv" +
+                          (element1No !== 1 ? element1No : "") +
+                          ".png"
+                        }
+                        alt="Image 2"
                         className="object-cover"
-                        width={440}
-                        height={440}
-                        crossOrigin="anonymous"
+                        fill
                       />
                     )}
                   </div>
                   <div
                     className="w-[440px] aspect-square border-black border-b-2 relative"
-                    style={{ backgroundColor: image2BG }}
+                    style={{ backgroundColor: element2BG }}
                   >
-                    {image2 && (
+                    {elementSet2 && (
                       <Image
-                        src={URL.createObjectURL(image2)}
+                        src={
+                          "/img/elements/" +
+                          elementSet2.elementPrefix +
+                          "motiv" +
+                          (element2No !== 1 ? element2No : "") +
+                          ".png"
+                        }
                         alt="Image 2"
                         className="object-cover"
-                        width={440}
-                        height={440}
-                        crossOrigin="anonymous"
+                        fill
                       />
                     )}
                   </div>
@@ -331,31 +428,39 @@ const Post2ImagesGenerator = () => {
                 <div className="flex flex-row flex-nowrap">
                   <div
                     className="w-[440px] aspect-square border-black border-r-2 relative"
-                    style={{ backgroundColor: image3BG }}
+                    style={{ backgroundColor: element3BG }}
                   >
-                    {image3 && (
+                    {elementSet3 && (
                       <Image
-                        src={URL.createObjectURL(image3)}
-                        alt="Image 3"
+                        src={
+                          "/img/elements/" +
+                          elementSet3.elementPrefix +
+                          "motiv" +
+                          (element3No !== 1 ? element3No : "") +
+                          ".png"
+                        }
+                        alt="Image 2"
                         className="object-cover"
-                        width={440}
-                        height={440}
-                        crossOrigin="anonymous"
+                        fill
                       />
                     )}
                   </div>
                   <div
                     className="w-[440px] aspect-square relative"
-                    style={{ backgroundColor: image4BG }}
+                    style={{ backgroundColor: element4BG }}
                   >
-                    {image4 && (
+                    {elementSet4 && (
                       <Image
-                        src={URL.createObjectURL(image4)}
-                        alt="Image 4"
+                        src={
+                          "/img/elements/" +
+                          elementSet4.elementPrefix +
+                          "motiv" +
+                          (element4No !== 1 ? element4No : "") +
+                          ".png"
+                        }
+                        alt="Image 2"
                         className="object-cover"
-                        width={440}
-                        height={440}
-                        crossOrigin="anonymous"
+                        fill
                       />
                     )}
                   </div>

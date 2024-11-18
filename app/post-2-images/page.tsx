@@ -7,11 +7,7 @@ import Link from "next/link";
 import { toPng } from "html-to-image";
 
 import { formatDate, formatTime, removeEmojis } from "@/utils/formatters";
-import {
-  bgColorsValidate,
-  imageUploadValidate,
-  lengthValidate,
-} from "@/utils/validators";
+import { bgColorsValidate, lengthValidate } from "@/utils/validators";
 import { accents } from "@/datasets/colors";
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
@@ -209,6 +205,7 @@ const Post2ImagesGenerator = () => {
           </div>
         </div>
 
+        {/* --- IMAGES SECTION --- */}
         <div className="w-full py-5 border-b">
           <div className="flex flex-row flex-nowrap w-full gap-3">
             <div className="w-full">
