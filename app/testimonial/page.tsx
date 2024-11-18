@@ -176,7 +176,7 @@ const TestimonialGenerator = () => {
             <div className="w-[880px] h-full border-black border-r-2">
               <div className="h-[100px] w-full border-black border-b-2"></div>
               <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="mx-[120px] h-full flex flex-col py-[20px] justify-evenly">
+                <div className="mx-[120px] h-full flex flex-col py-[20px] justify-center gap-10">
                   {image1 && (
                     <div className="w-40 h-40 relative overflow-hidden mx-auto rounded-full">
                       <Image
@@ -187,11 +187,11 @@ const TestimonialGenerator = () => {
                       />
                     </div>
                   )}
-                  <p className="desc m-0">{text}</p>
+                  <p className="desc m-0 font-medium">{text}</p>
                   {author && (
                     <div>
                       {author ? (
-                        <h2 className="author">&mdash; {author}</h2>
+                        <h2 className="author font-medium">&mdash; {author}</h2>
                       ) : (
                         <></>
                       )}
