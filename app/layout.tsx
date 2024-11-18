@@ -52,8 +52,8 @@ const aptos = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "SFÉRA—interní grafický manuál",
-  description: "Referenční grafický manuál pro sjednocení sférické komunikace",
+  title: "SFÉRA—generátor příspěvků na sociální sítě",
+  description: "Online generátor příspěvků sociálních sítí pro značku SFÉRA",
 };
 
 export default function RootLayout({

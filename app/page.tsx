@@ -23,6 +23,7 @@ const GeneratorsHomePage = () => {
           <Link
             href={"/" + post.link}
             className="border rounded-lg w-1/4 aspect-[3/4] hover:scale-105 transition-all overflow-hidden hover:shadow-md"
+            key={post.link}
           >
             <div className="w-full aspect-square border-b relative">
               <Image src={"/img/" + post.link + ".jpg"} fill alt={post.name} />
