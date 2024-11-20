@@ -52,12 +52,14 @@ body {
   letter-spacing: -0.035em;
   font-size: 83px;
   text-align: center;
-  line-height: 83px;
-  font-variant-alternates: styleset(2);
 
+  font-feature-settings: "ss02" 1;
+
+  padding-top: 2px;
+  line-height: 83px;
   display: block;
   overflow: hidden;
-  max-height: 166px;
+  max-height: 168px;
 }
 
 .announcement .main-heading {
