@@ -2,17 +2,11 @@
 
 import React, { useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 import { toPng } from "html-to-image";
 
-import { formatDate, formatTime, removeEmojis } from "@/utils/formatters";
-import {
-  bgColorsValidate,
-  imageUploadValidate,
-  lengthValidate,
-} from "@/utils/validators";
-import { accents } from "@/datasets/colors";
+import { removeEmojis } from "@/utils/formatters";
+import { imageUploadValidate, lengthValidate } from "@/utils/validators";
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
 
@@ -60,7 +54,12 @@ const AnnouncementImageGenerator = () => {
       });
       const link = document.createElement("a");
       link.download =
-        "SFÉRA_1080x1080px_" + heading.replace(" ", "-") + "-prispevek.png";
+        "SFÉRA_1080x1080px_" +
+        heading
+          .replace(/ /g, "-")
+          .replace(/[#%&:*!?]/, "")
+          .toLowerCase() +
+        "-prispevek.png";
       link.href = pngData;
       link.click();
     }

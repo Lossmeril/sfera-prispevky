@@ -5,8 +5,7 @@ import Image from "next/image";
 
 import { toPng } from "html-to-image";
 
-import { imageUploadValidate, lengthValidate } from "@/utils/validators";
-import { facilities } from "@/datasets/facilities";
+import { lengthValidate } from "@/utils/validators";
 import ErrorText from "@/components/error-text";
 import { removeEmojis } from "@/utils/formatters";
 
@@ -52,7 +51,12 @@ const TestimonialGenerator = () => {
       });
       const link = document.createElement("a");
       link.download =
-        "SFÉRA_1080x1080px_" + author.replace(" ", "-") + "-prispevek.png";
+        "SFÉRA_1080x1080px_" +
+        author
+          .replace(/ /g, "-")
+          .replace(/[#%&:*!?]/, "")
+          .toLowerCase() +
+        "-prispevek.png";
       link.href = pngData;
       link.click();
     }

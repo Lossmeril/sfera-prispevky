@@ -83,7 +83,12 @@ const Post2ImagesGenerator = () => {
       });
       const link = document.createElement("a");
       link.download =
-        "SFÉRA_1080x1080px_" + heading.replace(" ", "-") + "-prispevek.png";
+        "SFÉRA_1080x1080px_" +
+        heading
+          .replace(/ /g, "-")
+          .replace(/[#%&:*!?]/, "")
+          .toLowerCase() +
+        "-prispevek.png";
       link.href = pngData;
       link.click();
     }
