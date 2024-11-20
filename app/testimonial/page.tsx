@@ -53,6 +53,7 @@ const TestimonialGenerator = () => {
       link.download =
         "SFÉRA_1080x1080px_" +
         author
+          .split(":")[0]
           .replace(/ /g, "-")
           .replace(/[#%&:*!?]/, "")
           .toLowerCase() +

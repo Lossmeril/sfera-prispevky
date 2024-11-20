@@ -85,6 +85,7 @@ const Post2ImagesGenerator = () => {
       link.download =
         "SFÉRA_1080x1080px_" +
         heading
+          .split(":")[0]
           .replace(/ /g, "-")
           .replace(/[#%&:*!?]/, "")
           .toLowerCase() +
