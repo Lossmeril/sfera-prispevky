@@ -6,7 +6,11 @@ import Image from "next/image";
 import { toPng } from "html-to-image";
 
 import { formatDate, formatTime, removeEmojis } from "@/utils/formatters";
-import { bgColorsValidate, lengthValidate } from "@/utils/validators";
+import {
+  bgColorsValidate,
+  lengthValidate,
+  uppercaseValidate,
+} from "@/utils/validators";
 import { accents } from "@/datasets/colors";
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
@@ -74,6 +78,9 @@ const Post2ImagesGenerator = () => {
     elementSet1.elementPrefix + element1No !==
     elementSet2.elementPrefix + element2No;
 
+  const isHeadingNotUppercase = uppercaseValidate(heading);
+  const isDescNotUppercase = uppercaseValidate(description);
+
   //--- IMAGE GENERATOR --------------------------------------------------------------
   const handleGenerate = async () => {
     if (previewRef.current) {
@@ -129,6 +136,9 @@ const Post2ImagesGenerator = () => {
                   onChange={(e) => setHeading(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
                   maxLength={36}
+                  style={{
+                    borderColor: isHeadingNotUppercase ? "" : "var(--sos)",
+                  }}
                 />
                 <p className="absolute text-slate-400 right-3 top-2">
                   {36 - heading.length}
@@ -147,7 +157,8 @@ const Post2ImagesGenerator = () => {
                 onChange={(e) => setDescription(removeEmojis(e.target.value))}
                 className="border p-2 w-full relative"
                 style={{
-                  borderColor: descLengthValidate ? "" : "red",
+                  borderColor:
+                    descLengthValidate && isDescNotUppercase ? "" : "red",
                 }}
                 maxLength={isTextShort ? descLengthShort : descLengthLong}
               />
@@ -357,8 +368,12 @@ const Post2ImagesGenerator = () => {
             isEventTypeSet &&
             // Is the title set?
             isHeadingSet &&
+            // Is the title not all uppercase?
+            isHeadingNotUppercase &&
             // Is the description set?
-            isDescSet ? (
+            isDescSet &&
+            // Is the description not all uppercase?
+            isDescNotUppercase ? (
               <button
                 onClick={handleGenerate}
                 className="mt-4 border-2 border-black px-8 py-4 font-bold"
@@ -380,8 +395,18 @@ const Post2ImagesGenerator = () => {
                 ) : (
                   <></>
                 )}
-                {!isHeadingSet ? (
+                {!isHeadingNotUppercase ? (
+                  <ErrorText>Nadpis nepíšeme velkými písmeny</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!isDescSet ? (
                   <ErrorText>Prosím, vyplň krátký popisek</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!isDescNotUppercase ? (
+                  <ErrorText>Popisek nepíšeme velkými písmeny</ErrorText>
                 ) : (
                   <></>
                 )}

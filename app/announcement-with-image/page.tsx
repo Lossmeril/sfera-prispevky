@@ -6,7 +6,11 @@ import Image from "next/image";
 import { toPng } from "html-to-image";
 
 import { removeEmojis } from "@/utils/formatters";
-import { imageUploadValidate, lengthValidate } from "@/utils/validators";
+import {
+  imageUploadValidate,
+  lengthValidate,
+  uppercaseValidate,
+} from "@/utils/validators";
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
 
@@ -44,6 +48,9 @@ const AnnouncementImageGenerator = () => {
   const areImagesUploaded = imageUploadValidate(1, image1);
   const isHeadingSet = heading !== "";
   const isDescSet = description !== "";
+
+  const isHeadingNotUppercase = uppercaseValidate(heading);
+  const isDescNotUppercase = uppercaseValidate(description);
 
   //--- IMAGE GENERATOR --------------------------------------------------------------
   const handleGenerate = async () => {
@@ -88,6 +95,9 @@ const AnnouncementImageGenerator = () => {
                   onChange={(e) => setHeading(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
                   maxLength={36}
+                  style={{
+                    borderColor: isHeadingNotUppercase ? "" : "var(--sos)",
+                  }}
                 />
                 <p className="absolute text-slate-400 right-3 top-2">
                   {36 - heading.length}
@@ -106,7 +116,8 @@ const AnnouncementImageGenerator = () => {
                 onChange={(e) => setDescription(removeEmojis(e.target.value))}
                 className="border p-2 w-full relative"
                 style={{
-                  borderColor: descLengthValidate ? "" : "red",
+                  borderColor:
+                    descLengthValidate && isDescNotUppercase ? "" : "red",
                 }}
                 maxLength={descLengthLong}
               />
@@ -180,8 +191,12 @@ const AnnouncementImageGenerator = () => {
             areImagesUploaded &&
             // Is the title set?
             isHeadingSet &&
+            // Is the title not all uppercase?
+            isHeadingNotUppercase &&
             // Is the description set?
-            isDescSet ? (
+            isDescSet &&
+            // Is the description not all uppercase?
+            isDescNotUppercase ? (
               <button
                 onClick={handleGenerate}
                 className="mt-4 border-2 border-black px-8 py-4 font-bold"
@@ -199,8 +214,18 @@ const AnnouncementImageGenerator = () => {
                 ) : (
                   <></>
                 )}
+                {!isHeadingNotUppercase ? (
+                  <ErrorText>Nadpis nepíšeme velkými písmeny</ErrorText>
+                ) : (
+                  <></>
+                )}
                 {!isHeadingSet ? (
                   <ErrorText>Prosím, vyplň text</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!isDescNotUppercase ? (
+                  <ErrorText>Text nepíšeme velkými písmeny</ErrorText>
                 ) : (
                   <></>
                 )}

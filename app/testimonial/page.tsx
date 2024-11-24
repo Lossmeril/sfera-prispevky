@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { toPng } from "html-to-image";
 
-import { lengthValidate } from "@/utils/validators";
+import { lengthValidate, uppercaseValidate } from "@/utils/validators";
 import ErrorText from "@/components/error-text";
 import { removeEmojis } from "@/utils/formatters";
 
@@ -41,6 +41,8 @@ const TestimonialGenerator = () => {
   );
 
   const isTextSet = text !== "";
+  const isTextNotUppercase = uppercaseValidate(text);
+  const isAuthorNotUppercase = uppercaseValidate(author);
 
   //--- IMAGE GENERATOR --------------------------------------------------------------
   const handleGenerate = async () => {
@@ -81,7 +83,8 @@ const TestimonialGenerator = () => {
                 onChange={(e) => setText(removeEmojis(e.target.value))}
                 className="border p-2 w-full relative"
                 style={{
-                  borderColor: descLengthValidate ? "" : "red",
+                  borderColor:
+                    descLengthValidate && isTextNotUppercase ? "" : "red",
                 }}
                 maxLength={descLengthLong}
               />
@@ -110,6 +113,9 @@ const TestimonialGenerator = () => {
                   onChange={(e) => setAuthor(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
                   maxLength={50}
+                  style={{
+                    borderColor: isAuthorNotUppercase ? "" : "var(--sos)",
+                  }}
                 />
                 <p className="absolute text-slate-400 right-3 top-2">
                   {50 - author.length}
@@ -143,7 +149,11 @@ const TestimonialGenerator = () => {
             // Is the text not overflowing?
             descLengthValidate &&
             // Is the description set?
-            isTextSet ? (
+            isTextSet &&
+            // Is the description not all uppercase?
+            isTextNotUppercase &&
+            // Is the author's name not all uppercase?
+            isAuthorNotUppercase ? (
               <button
                 onClick={handleGenerate}
                 className="mt-4 border-2 border-black px-8 py-4 font-bold"
@@ -157,6 +167,16 @@ const TestimonialGenerator = () => {
                 </button>
                 {!isTextSet ? (
                   <ErrorText>Prosím, vyplň referenci</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!isTextNotUppercase ? (
+                  <ErrorText>Referenci nepíšeme velkými písmeny</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!isAuthorNotUppercase ? (
+                  <ErrorText>Jméno autora nepíšeme velkými písmeny</ErrorText>
                 ) : (
                   <></>
                 )}

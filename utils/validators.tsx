@@ -34,3 +34,7 @@ export const bgColorsValidate = (arr: string[]) => {
   }
   return true; // No duplicates
 };
+
+export const uppercaseValidate = (str: string) => {
+  return str !== str.toUpperCase() || str === "SFÉRA" || str === "";
+};
