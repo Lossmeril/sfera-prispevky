@@ -30,7 +30,7 @@ const baseElementSets: elementSetType[] = [
   },
   {
     name: dilnaDreva.name,
-    elementPrefix: "Drevo_",
+    elementPrefix: "Dřevo_",
     numberOfElements: 30,
   },
   {
@@ -40,7 +40,7 @@ const baseElementSets: elementSetType[] = [
   },
   {
     name: laboratorITVR.name,
-    elementPrefix: "IT_",
+    elementPrefix: "IT VR_",
     numberOfElements: 32,
   },
   {
@@ -55,23 +55,23 @@ const baseElementSets: elementSetType[] = [
   },
   {
     name: laboratorPrirodopisu.name,
-    elementPrefix: "Priroda_",
-    numberOfElements: 36,
+    elementPrefix: "Přírodopis_",
+    numberOfElements: 37,
   },
   {
     name: sferickeHriste.name,
-    elementPrefix: "Deti_",
+    elementPrefix: "Hřiště_",
     numberOfElements: 27,
   },
   {
     name: scienceOnSphere.name,
-    elementPrefix: "Science_Sphere_",
+    elementPrefix: "SOS_",
     numberOfElements: 27,
   },
   {
     name: "Miscellaneous (smíšené)",
     elementPrefix: "Misc_",
-    numberOfElements: 7,
+    numberOfElements: 9,
   },
 ];
 

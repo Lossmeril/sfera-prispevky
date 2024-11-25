@@ -394,7 +394,7 @@ const Post2ImagesGenerator = () => {
                           "/img/elements/" +
                           elementSet1.elementPrefix +
                           "motiv" +
-                          (element1No !== 1 ? element1No : "") +
+                          element1No +
                           ".png"
                         }
                         alt="Image 2"
@@ -413,7 +413,7 @@ const Post2ImagesGenerator = () => {
                           "/img/elements/" +
                           elementSet2.elementPrefix +
                           "motiv" +
-                          (element2No !== 1 ? element2No : "") +
+                          element2No +
                           ".png"
                         }
                         alt="Image 2"
@@ -435,7 +435,7 @@ const Post2ImagesGenerator = () => {
                           "/img/elements/" +
                           elementSet3.elementPrefix +
                           "motiv" +
-                          (element3No !== 1 ? element3No : "") +
+                          element3No +
                           ".png"
                         }
                         alt="Image 2"
@@ -454,7 +454,7 @@ const Post2ImagesGenerator = () => {
                           "/img/elements/" +
                           elementSet4.elementPrefix +
                           "motiv" +
-                          (element4No !== 1 ? element4No : "") +
+                          element4No +
                           ".png"
                         }
                         alt="Image 2"

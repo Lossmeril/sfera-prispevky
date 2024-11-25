@@ -464,7 +464,7 @@ const Post2ImagesGenerator = () => {
                           "/img/elements/" +
                           elementSet1.elementPrefix +
                           "motiv" +
-                          (element1No !== 1 ? element1No : "") +
+                          element1No +
                           ".png"
                         }
                         alt="Image 1"
@@ -483,7 +483,7 @@ const Post2ImagesGenerator = () => {
                           "/img/elements/" +
                           elementSet2.elementPrefix +
                           "motiv" +
-                          (element2No !== 1 ? element2No : "") +
+                          element2No +
                           ".png"
                         }
                         alt="Image 2"
