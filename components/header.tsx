@@ -8,7 +8,7 @@ const Header = () => {
         <Link href="/">Domů</Link>
       </div>
       <Link
-        href="https://sfera-grafika.vercel.app"
+        href="https://manual.sferagrafika.eu"
         target="_blank"
         className="px-5 py-2 border-black border 2 flex flex-row gap-2"
       >
