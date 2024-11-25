@@ -41,7 +41,7 @@ const baseElementSets: elementSetType[] = [
   {
     name: laboratorITVR.name,
     elementPrefix: "IT VR_",
-    numberOfElements: 33,
+    numberOfElements: 34,
   },
   {
     name: laboratorFyziky.name,
