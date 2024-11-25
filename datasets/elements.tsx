@@ -46,7 +46,7 @@ const baseElementSets: elementSetType[] = [
   {
     name: laboratorFyziky.name,
     elementPrefix: "Fyzika_",
-    numberOfElements: 25,
+    numberOfElements: 30,
   },
   {
     name: laboratorChemie.name,
@@ -56,7 +56,7 @@ const baseElementSets: elementSetType[] = [
   {
     name: laboratorPrirodopisu.name,
     elementPrefix: "Přírodopis_",
-    numberOfElements: 37,
+    numberOfElements: 36,
   },
   {
     name: sferickeHriste.name,
