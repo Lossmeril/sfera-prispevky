@@ -298,7 +298,13 @@ const AnnouncementImageGenerator = () => {
                       maxHeight: "180px",
                     }}
                   >
-                    {description}
+                    {description.split(/n-/g)[0]}
+                    {description.split(/n-/g)[1] ? <br /> : <></>}
+                    {description.split(/n-/g)[1] ? (
+                      description.split(/n-/g)[1]
+                    ) : (
+                      <></>
+                    )}
                   </p>
                 </div>
               </div>

@@ -537,7 +537,13 @@ const Post2ImagesGenerator = () => {
                           : "72px",
                     }}
                   >
-                    {description}
+                    {description.split(/n-/g)[0]}
+                    {description.split(/n-/g)[1] ? <br /> : <></>}
+                    {description.split(/n-/g)[1] ? (
+                      description.split(/n-/g)[1]
+                    ) : (
+                      <></>
+                    )}
                   </p>
                   <p className="desc m-0">
                     {formattedDate}
