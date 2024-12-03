@@ -51,7 +51,7 @@ const baseElementSets: elementSetType[] = [
   {
     name: laboratorChemie.name,
     elementPrefix: "Chemie_",
-    numberOfElements: 28,
+    numberOfElements: 29,
   },
   {
     name: laboratorPrirodopisu.name,
