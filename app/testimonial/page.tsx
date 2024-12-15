@@ -66,8 +66,8 @@ const TestimonialGenerator = () => {
   };
 
   return (
-    <div className="p-4 h-auto flex flex-row">
-      <div className="w-1/2 p-10 border-r">
+    <div className="p-4 h-auto flex flex-col lg:flex-row">
+      <div className="w-full lg:w-1/2 p-10 border-r">
         {/* --- INPUT SECTION -------------------------------------------------------------- */}
         <h1 className="text-xl font-bold mb-4">Generátor: Reference</h1>
 
@@ -103,7 +103,7 @@ const TestimonialGenerator = () => {
               )}
             </div>
           </div>{" "}
-          <div className="flex flex-row flex-nowrap w-full gap-5">
+          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-5">
             <div className="mb-4 w-full">
               <label className="block font-semibold">Jméno citovaného</label>
               <div className="relative">
@@ -187,8 +187,8 @@ const TestimonialGenerator = () => {
       </div>
 
       {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
-      <div className="w-1/2 pointer-events-none max-h-screen overflow-hidden">
-        <div className="scale-50" style={{ transformOrigin: "center 25%" }}>
+      <div className="w-full lg:w-1/2 pointer-events-none max-h-screen overflow-hidden">
+        <div className="scale-[35%] lg:scale-50 origin-top-left lg:origin-[50%_25%]">
           <div
             ref={previewRef}
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap testimonial"

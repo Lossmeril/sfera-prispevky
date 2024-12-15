@@ -74,8 +74,8 @@ const AnnouncementImageGenerator = () => {
   };
 
   return (
-    <div className="p-4 h-auto flex flex-row">
-      <div className="w-1/2 p-10 border-r">
+    <div className="p-4 h-auto flex flex-col lg:flex-row">
+      <div className="w-full lg:w-1/2 p-10 border-r">
         {/* --- INPUT SECTION -------------------------------------------------------------- */}
         <h1 className="text-xl font-bold mb-4">
           Generátor: Oznámení s obrázkem
@@ -241,8 +241,8 @@ const AnnouncementImageGenerator = () => {
       </div>
 
       {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
-      <div className="w-1/2 pointer-events-none max-h-screen overflow-hidden">
-        <div className="scale-50" style={{ transformOrigin: "center 25%" }}>
+      <div className="w-full lg:w-1/2 pointer-events-none max-h-screen overflow-hidden">
+        <div className="scale-[35%] lg:scale-50 origin-top-left lg:origin-[50%_25%]">
           <div
             ref={previewRef}
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap announcement"

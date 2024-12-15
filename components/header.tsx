@@ -3,7 +3,7 @@ import { RiExternalLinkLine } from "react-icons/ri";
 
 const Header = () => {
   return (
-    <nav className="w-full h-20 border-b flex flex-row items-center justify-between px-14 font-medium shadow-sm">
+    <nav className="w-full h-20 border-b border-black flex flex-row items-center justify-between px-14 font-medium">
       <div>
         <Link href="/">Domů</Link>
       </div>

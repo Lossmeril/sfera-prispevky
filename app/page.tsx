@@ -5,16 +5,18 @@ import Link from "next/link";
 const GeneratorsHomePage = () => {
   return (
     <div className="w-screen h-auto mt-8 flex flex-col justify-center px-[10%]">
-      <p className="above-heading mt-14">Generátor sférických příspěvků</p>
-      <h1 className="text-[4.5em] font-bold text-center leading-none mb-14">
+      <p className="above-heading mt-14 mb-3 text-xl md:text-2xl xl:text-3xl">
+        Generátor sférických příspěvků
+      </p>
+      <h1 className="text-[3em] md:text-[3.5em] xl:text-[4.5em] font-bold text-center leading-none mb-14">
         Co budeme dneska generovat?
       </h1>
 
-      <div className=" flex flex-row flex-nowrap gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
         {generatableImages.map((post) => (
           <Link
             href={"/" + post.link}
-            className="border rounded-lg w-1/4 aspect-[3/4] hover:scale-105 transition-all overflow-hidden hover:shadow-md"
+            className="border rounded-lg w-full aspect-[3/4] hover:scale-105 transition-all overflow-hidden hover:shadow-md"
             key={post.link}
           >
             <div className="w-full aspect-square border-b relative">

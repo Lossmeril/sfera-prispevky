@@ -103,8 +103,8 @@ const Post2ImagesGenerator = () => {
   };
 
   return (
-    <div className="p-4 h-auto flex flex-row">
-      <div className="w-1/2 p-10 border-r">
+    <div className="p-4 h-auto flex flex-col lg:flex-row">
+      <div className="w-full lg:w-1/2 p-10 border-r">
         {/* --- INPUT SECTION -------------------------------------------------------------- */}
         <h1 className="text-xl font-bold mb-4">
           Generátor: Příspěvek se dvěma symboly
@@ -112,8 +112,8 @@ const Post2ImagesGenerator = () => {
 
         {/* --- NAME, TYPE AND DESCRIPTION SECTION --- */}
         <div className="w-full py-5 border-b">
-          <div className="flex flex-row flex-nowrap w-full gap-5">
-            <div className="mb-4 w-1/3">
+          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-5">
+            <div className="mb-4 w-full lg:w-1/3">
               <label className="block font-semibold">
                 Typ akce<span className="text-sos"> *</span>
               </label>
@@ -125,7 +125,7 @@ const Post2ImagesGenerator = () => {
               />
             </div>
 
-            <div className="mb-4 w-2/3">
+            <div className="mb-4 w-full lg:w-2/3">
               <label className="block font-semibold">
                 Název akce<span className="text-sos"> *</span>
               </label>
@@ -182,8 +182,8 @@ const Post2ImagesGenerator = () => {
 
         {/* --- DATE AND TIME SECTION --- */}
         <div className="w-full py-5 border-b">
-          <div className="flex flex-row flex-nowrap gap-3">
-            <div className="mb-4 w-1/3">
+          <div className="flex flex-col lg:flex-row flex-nowrap gap-3">
+            <div className="mb-4 w-full lg:w-1/3">
               <label className="block font-semibold">Datum</label>
               <div className="relative">
                 <input
@@ -195,7 +195,7 @@ const Post2ImagesGenerator = () => {
               </div>
             </div>
 
-            <div className="mb-4 w-1/3">
+            <div className="mb-4 w-full lg:w-1/3">
               <label className="block font-semibold">Čas začátku</label>
               <div className="relative">
                 <input
@@ -207,7 +207,7 @@ const Post2ImagesGenerator = () => {
               </div>
             </div>
 
-            <div className="mb-4 w-1/3">
+            <div className="mb-4 w-full lg:w-1/3">
               <label className="block font-semibold">Čas konce</label>
               <div className="relative">
                 <input
@@ -223,7 +223,7 @@ const Post2ImagesGenerator = () => {
 
         {/* --- IMAGES SECTION --- */}
         <div className="w-full py-5 border-b">
-          <div className="flex flex-row flex-nowrap w-full gap-3">
+          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0">
             <div className="w-full">
               <label className="block font-semibold">První prvek</label>
               <select
@@ -280,7 +280,7 @@ const Post2ImagesGenerator = () => {
             </div>
           </div>
 
-          <div className="flex flex-row flex-nowrap w-full gap-3">
+          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-3">
             <div className="w-full">
               <label className="block font-semibold">Druhý prvek</label>
               <select
@@ -429,8 +429,8 @@ const Post2ImagesGenerator = () => {
       </div>
 
       {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
-      <div className="w-1/2 pointer-events-none max-h-screen overflow-hidden">
-        <div className="scale-50" style={{ transformOrigin: "center 25%" }}>
+      <div className="w-full lg:w-1/2 pointer-events-none max-h-screen overflow-hidden">
+        <div className="scale-[35%] lg:scale-50 origin-top-left lg:origin-[50%_25%]">
           <div
             ref={previewRef}
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
