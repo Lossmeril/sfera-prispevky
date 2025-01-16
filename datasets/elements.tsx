@@ -31,7 +31,7 @@ const baseElementSets: elementSetType[] = [
   {
     name: dilnaDreva.name,
     elementPrefix: "Dřevo_",
-    numberOfElements: 30,
+    numberOfElements: 31,
   },
   {
     name: dilnaKovu.name,
