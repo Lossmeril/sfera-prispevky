@@ -201,7 +201,7 @@ const TestimonialGenerator = () => {
             <div className="w-[880px] h-full border-black border-r-2">
               <div className="h-[100px] w-full border-black border-b-2"></div>
               <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="mx-[120px] h-full flex flex-col py-[20px] justify-center gap-10">
+                <div className="mx-[120px] h-full flex flex-col py-[20px] justify-center items-center gap-10">
                   {image1 && (
                     <div className="w-40 h-40 relative overflow-hidden mx-auto rounded-full">
                       <Image
