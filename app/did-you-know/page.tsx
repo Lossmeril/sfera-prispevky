@@ -5,17 +5,20 @@ import React, { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 
 import Image from "next/image";
+import ErrorText from "@/components/error-text";
 
 import { removeEmojis } from "@/utils/formatters";
 import {
   bgColorsValidate,
-  lengthValidate,
+  didYouKnowQuestionValidate,
   uppercaseValidate,
 } from "@/utils/validators";
+
 import { facilities } from "@/datasets/facilities";
-import ErrorText from "@/components/error-text";
+
 import { elementSets } from "@/datasets/elements";
 import { accents } from "@/datasets/colors";
+import SplitParagraph from "@/utils/splitParagraphs";
 
 const DidYouKnowGenerator = () => {
   const didYouKnows = ["Víte, že", "Věděli jste, že", "Víte,", "Věděli jste,"];
@@ -23,6 +26,7 @@ const DidYouKnowGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
   const [didYouKnow, setdidYouKnow] = useState(didYouKnows[0]);
   const [heading, setHeading] = useState("");
+  const [imagePost, setImagePost] = useState(0);
 
   const [elementSet1, setElementSet1] = useState(elementSets[0]);
   const [element1No, setElement1No] = useState(1);
@@ -38,15 +42,6 @@ const DidYouKnowGenerator = () => {
 
   const [facility, setFacility] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
-
-  //--- UPLOAD FUNCTION --------------------------------------------------------------
-  const handleImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setImage: React.Dispatch<React.SetStateAction<File | null>>
-  ) => {
-    const file = e.target.files?.[0] || null;
-    setImage(file);
-  };
 
   //--- UPDATE IMAGE FUNCTION --------------------------------------------------------------
 
@@ -87,6 +82,8 @@ const DidYouKnowGenerator = () => {
 
   const isHeadingNotUppercase = uppercaseValidate(heading);
 
+  const doesContainQuestionMark = didYouKnowQuestionValidate(heading);
+
   //--- IMAGE GENERATOR --------------------------------------------------------------
   const handleGenerate = async () => {
     if (previewRef.current) {
@@ -95,14 +92,7 @@ const DidYouKnowGenerator = () => {
         height: 1080,
       });
       const link = document.createElement("a");
-      link.download =
-        "SFÉRA_1080x1080px_" +
-        heading
-          .split(":")[0]
-          .replace(/ /g, "-")
-          .replace(/[#%&:*!?]/, "")
-          .toLowerCase() +
-        "-prispevek.png";
+      link.download = "SFÉRA_1080x1080px_vite-ze-prispevek.png";
       link.href = pngData;
       link.click();
     }
@@ -134,18 +124,17 @@ const DidYouKnowGenerator = () => {
                 Fakt<span className="text-sos"> *</span>
               </label>
               <div className="relative">
-                <input
-                  type="text"
+                <textarea
                   value={heading}
                   onChange={(e) => setHeading(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
-                  maxLength={80}
+                  maxLength={175}
                   style={{
                     borderColor: isHeadingNotUppercase ? "" : "var(--sos)",
                   }}
                 />
                 <p className="absolute text-slate-400 right-3 top-2">
-                  {80 - heading.length}
+                  {175 - heading.length}
                 </p>
               </div>
             </div>
@@ -154,7 +143,38 @@ const DidYouKnowGenerator = () => {
 
         {/* --- IMAGES SECTION --- */}
         <div className="w-full py-5 border-b">
-          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-3">
+          <div className="mb-4 w-full">
+            <label className="block font-semibold">
+              Chcete zobrazit prvky?
+            </label>
+            <div className="flex flex-row gap-2">
+              <input
+                type="radio"
+                id="image-yes"
+                name="fav_language"
+                value="CSS"
+                checked={imagePost === 1}
+                onChange={() => setImagePost(1)}
+              />
+              <label className="mr-6" onChange={() => setImagePost(1)}>
+                Ano
+              </label>
+              <input
+                type="radio"
+                id="image-no"
+                name="fav_language"
+                value="JavaScript"
+                checked={imagePost === 0}
+                onChange={() => setImagePost(0)}
+              />
+              <label onChange={() => setImagePost(0)}>Ne</label>
+            </div>
+          </div>
+
+          <div
+            className="flex flex-col lg:flex-row flex-nowrap w-full gap-3"
+            style={{ display: imagePost === 1 ? "flex" : "none" }}
+          >
             <div className="w-full">
               <label className="block font-semibold">První prvek</label>
               <select
@@ -163,7 +183,8 @@ const DidYouKnowGenerator = () => {
                 }
                 className="border-2 px-6 py-1 mb-2"
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {elementSets.map((set, index) => (
@@ -187,7 +208,8 @@ const DidYouKnowGenerator = () => {
                 min={1}
                 max={elementSet1.numberOfElements}
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               />
             </div>
@@ -199,7 +221,8 @@ const DidYouKnowGenerator = () => {
                 style={{
                   backgroundColor:
                     element1BG !== "var(--white)" ? element1BG : "",
-                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areBGColorsNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {accents.map((accent) => (
@@ -211,7 +234,10 @@ const DidYouKnowGenerator = () => {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0">
+          <div
+            className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0"
+            style={{ display: imagePost === 1 ? "flex" : "none" }}
+          >
             <div className="w-full">
               <label className="block font-semibold">Druhý prvek</label>
               <select
@@ -220,7 +246,8 @@ const DidYouKnowGenerator = () => {
                 }
                 className="border-2 px-6 py-1 mb-2"
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {elementSets.map((set, index) => (
@@ -245,7 +272,8 @@ const DidYouKnowGenerator = () => {
                 min={1}
                 max={elementSet2.numberOfElements}
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               />
             </div>
@@ -257,7 +285,8 @@ const DidYouKnowGenerator = () => {
                 style={{
                   backgroundColor:
                     element2BG !== "var(--white)" ? element2BG : "",
-                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areBGColorsNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {accents.map((accent) => (
@@ -269,7 +298,10 @@ const DidYouKnowGenerator = () => {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0">
+          <div
+            className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0"
+            style={{ display: imagePost === 1 ? "flex" : "none" }}
+          >
             <div className="w-full">
               <label className="block font-semibold">Třetí prvek</label>
               <select
@@ -278,7 +310,8 @@ const DidYouKnowGenerator = () => {
                 }
                 className="border-2 px-6 py-1 mb-2"
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {elementSets.map((set, index) => (
@@ -302,7 +335,8 @@ const DidYouKnowGenerator = () => {
                 min={1}
                 max={elementSet3.numberOfElements}
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               />
             </div>
@@ -314,7 +348,8 @@ const DidYouKnowGenerator = () => {
                 style={{
                   backgroundColor:
                     element1BG !== "var(--white)" ? element3BG : "",
-                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areBGColorsNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {accents.map((accent) => (
@@ -350,10 +385,12 @@ const DidYouKnowGenerator = () => {
             isHeadingSet &&
             // Is the title not all uppercase?
             isHeadingNotUppercase &&
+            // Is there a question mark?
+            doesContainQuestionMark &&
             // Are the images not same?
-            areImagesNotSame &&
+            (areImagesNotSame || imagePost === 0) &&
             // Are the colors not same
-            areBGColorsNotSame ? (
+            (areBGColorsNotSame || imagePost === 0) ? (
               <button
                 onClick={handleGenerate}
                 className="mt-4 border-2 border-black px-8 py-4 font-bold"
@@ -376,20 +413,23 @@ const DidYouKnowGenerator = () => {
                 ) : (
                   <></>
                 )}
-                {!isHeadingSet ? (
-                  <ErrorText>Prosím, vyplň text</ErrorText>
-                ) : (
-                  <></>
-                )}
-                {!areImagesNotSame ? (
+                {!areImagesNotSame && imagePost === 1 ? (
                   <ErrorText>
                     Na příspěvku nesmí být dva stejné symboly
                   </ErrorText>
                 ) : (
                   <></>
                 )}
-                {!areBGColorsNotSame ? (
+                {!areBGColorsNotSame && imagePost === 1 ? (
                   <ErrorText>Barvy pozadí nesmí být stejné</ErrorText>
+                ) : (
+                  <></>
+                )}
+                {!doesContainQuestionMark ? (
+                  <ErrorText>
+                    Fakt neobsahuje otazník, a tudíž nenavazuje na otázku v
+                    úvodu
+                  </ErrorText>
                 ) : (
                   <></>
                 )}
@@ -414,7 +454,10 @@ const DidYouKnowGenerator = () => {
             <div className="w-[880px] h-full border-black border-r-2">
               <div className="h-[100px] w-full border-black border-b-2"></div>
               <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="w-full grid grid-cols-3 border-b-2 border-black">
+                <div
+                  className="w-full grid grid-cols-3 border-b-2 border-black"
+                  style={{ display: imagePost === 1 ? "grid" : "none" }}
+                >
                   <div
                     className="w-full aspect-square border-black border-r-2 relative"
                     style={{ backgroundColor: element1BG }}
@@ -435,7 +478,7 @@ const DidYouKnowGenerator = () => {
                     )}
                   </div>
                   <div
-                    className="w-[293.33px] aspect-square border-black  border-r-2 relative"
+                    className="w-full aspect-square border-black  border-r-2 relative"
                     style={{ backgroundColor: element2BG }}
                   >
                     {elementSet2 && (
@@ -454,7 +497,7 @@ const DidYouKnowGenerator = () => {
                     )}
                   </div>
                   <div
-                    className="w-[293.33px] aspect-square border-black relative"
+                    className="w-full aspect-square border-black relative"
                     style={{ backgroundColor: element3BG }}
                   >
                     {elementSet3 && (
@@ -490,11 +533,14 @@ const DidYouKnowGenerator = () => {
                 ) : (
                   <></>
                 )}
-                <div className="mx-[60px] h-full flex flex-col justify-center gap-10 py-[20px]">
-                  <p className="dyk-heading">{didYouKnow}</p>
+                <div className="mx-[60px] h-full flex flex-col justify-center gap-6 py-[20px] px-10">
+                  <h2 className="dyk-heading text-left">{didYouKnow}</h2>
                   <div className="">
                     {heading ? (
-                      <h2 className="dyk-heading">{heading + "?"}</h2>
+                      <SplitParagraph
+                        cssStyles="text-[35px] text-left mb-5"
+                        text={heading}
+                      />
                     ) : (
                       <></>
                     )}

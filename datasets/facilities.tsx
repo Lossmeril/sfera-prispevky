@@ -98,7 +98,7 @@ export const kreativniUceni: facilityType = {
   name: "Kreativní Učení",
   nameEn: "Creative Learning",
 
-  colorBgVarName: "kreativniuceni",
+  colorBgVarName: "white",
   id: 12,
 };
 
