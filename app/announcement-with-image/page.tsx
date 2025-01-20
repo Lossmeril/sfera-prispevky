@@ -287,7 +287,7 @@ const AnnouncementImageGenerator = () => {
                 <div className="mx-[60px] h-full flex flex-col justify-center gap-10 py-[20px]">
                   <div className="">
                     {heading ? (
-                      <h2 className="main-heading">{heading}</h2>
+                      <h2 className="main-heading alt-glyphs">{heading}</h2>
                     ) : (
                       <></>
                     )}

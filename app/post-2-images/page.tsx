@@ -523,7 +523,7 @@ const Post2ImagesGenerator = () => {
                       <></>
                     )}
                     {heading ? (
-                      <h2 className="main-heading">{heading}</h2>
+                      <h2 className="main-heading alt-glyphs">{heading}</h2>
                     ) : (
                       <></>
                     )}
