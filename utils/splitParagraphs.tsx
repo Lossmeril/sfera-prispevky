@@ -6,12 +6,12 @@ interface SplitParagraphProps {
 const SplitParagraph: React.FC<SplitParagraphProps> = ({ text, cssStyles }) => {
   // Function to split the text into an array of segments at "n-"
   const splitText = (inputText: string): string[] => {
-    return inputText.split(/n-/);
+    return inputText.split(/p-/);
   };
 
   // Function to replace "p-" with a <br /> element
   const processSegment = (segment: string): React.ReactNode[] => {
-    const parts = segment.split(/p-/);
+    const parts = segment.split(/n-/);
     return parts.flatMap((part, index) =>
       index < parts.length - 1 ? [part, <br key={`br-${index}`} />] : [part]
     );
