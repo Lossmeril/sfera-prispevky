@@ -1,30 +1,32 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import Image from "next/image";
 
 import { toPng } from "html-to-image";
 
-import { formatDate, formatTime, removeEmojis } from "@/utils/formatters";
+import Image from "next/image";
+import ErrorText from "@/components/error-text";
+
+import { removeEmojis } from "@/utils/formatters";
 import {
   bgColorsValidate,
-  lengthValidate,
+  didYouKnowQuestionValidate,
   uppercaseValidate,
 } from "@/utils/validators";
-import { accents } from "@/datasets/colors";
+
 import { facilities } from "@/datasets/facilities";
-import ErrorText from "@/components/error-text";
+
 import { elementSets } from "@/datasets/elements";
+import { accents } from "@/datasets/colors";
+import SplitParagraph from "@/utils/splitParagraphs";
 
-const Post2ImagesGenerator = () => {
+const DidYouKnowGenerator = () => {
+  const didYouKnows = ["Víte, že", "Věděli jste, že", "Víte,", "Věděli jste,"];
+
   //--- STATES AND REFS --------------------------------------------------------------
-  const [eventType, setEventType] = useState("");
+  const [didYouKnow, setdidYouKnow] = useState(didYouKnows[0]);
   const [heading, setHeading] = useState("");
-  const [description, setDescription] = useState("");
-
-  const [date, setDate] = useState("");
-  const [beginningTime, setBeginningTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [imagePost, setImagePost] = useState(0);
 
   const [elementSet1, setElementSet1] = useState(elementSets[0]);
   const [element1No, setElement1No] = useState(1);
@@ -33,6 +35,10 @@ const Post2ImagesGenerator = () => {
   const [elementSet2, setElementSet2] = useState(elementSets[0]);
   const [element2No, setElement2No] = useState(1);
   const [element2BG, setElement2BG] = useState("");
+
+  const [elementSet3, setElementSet3] = useState(elementSets[0]);
+  const [element3No, setElement3No] = useState(1);
+  const [element3BG, setElement3BG] = useState("");
 
   const [facility, setFacility] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -50,36 +56,33 @@ const Post2ImagesGenerator = () => {
         setElementSet2(elementSets[index]);
         setElement2No(1);
         return;
+
+      case 3:
+        setElementSet3(elementSets[index]);
+        setElement3No(1);
+        return;
     }
   };
 
-  const formattedDate = formatDate(date);
-  const formattedTimes = [formatTime(beginningTime), formatTime(endTime)];
-
-  //--- VALIDATOR VARIABLES --------------------------------------------------------------
-
-  const descLengthLong = 100;
-  const descLengthShort = 50;
-  const isTextShort = date || beginningTime || endTime ? true : false;
-
   //--- VALIDATOR FUNCTIONS --------------------------------------------------------------
-  const descLengthValidate = lengthValidate(
-    description.length,
-    descLengthShort,
-    descLengthLong,
-    isTextShort
-  );
 
-  const areBGColorsNotSame = bgColorsValidate([element1BG, element2BG]);
-  const isEventTypeSet = eventType !== "";
+  const areBGColorsNotSame = bgColorsValidate([
+    element1BG,
+    element2BG,
+    element3BG,
+  ]);
+
+  const areImagesNotSame = bgColorsValidate([
+    elementSet1.elementPrefix + element1No,
+    elementSet2.elementPrefix + element2No,
+    elementSet3.elementPrefix + element3No,
+  ]);
+
   const isHeadingSet = heading !== "";
-  const isDescSet = description !== "";
-  const areImagesNotSame =
-    elementSet1.elementPrefix + element1No !==
-    elementSet2.elementPrefix + element2No;
 
   const isHeadingNotUppercase = uppercaseValidate(heading);
-  const isDescNotUppercase = uppercaseValidate(description);
+
+  const doesContainQuestionMark = didYouKnowQuestionValidate(heading);
 
   //--- IMAGE GENERATOR --------------------------------------------------------------
   const handleGenerate = async () => {
@@ -89,14 +92,7 @@ const Post2ImagesGenerator = () => {
         height: 1080,
       });
       const link = document.createElement("a");
-      link.download =
-        "SFÉRA_1080x1080px_" +
-        heading
-          .split(":")[0]
-          .replace(/ /g, "-")
-          .replace(/[#%&:*!?]/, "")
-          .toLowerCase() +
-        "-prispevek.png";
+      link.download = "SFÉRA_1080x1080px_vite-ze-prispevek.png";
       link.href = pngData;
       link.click();
     }
@@ -106,116 +102,40 @@ const Post2ImagesGenerator = () => {
     <div className="p-4 h-auto flex flex-col lg:flex-row">
       <div className="w-full lg:w-1/2 p-10 border-r">
         {/* --- INPUT SECTION -------------------------------------------------------------- */}
-        <h1 className="text-xl font-bold mb-4">
-          Generátor: Příspěvek se dvěma symboly
-        </h1>
+        <h1 className="text-xl font-bold mb-4">Generátor: Víte, že?</h1>
+
+        <div className="w-full">
+          <label className="block font-semibold">Začátek věty</label>
+          <select
+            onChange={(e) => setdidYouKnow(e.target.value)}
+            className="border-2 px-6 py-1 w-full"
+          >
+            {didYouKnows.map((start) => (
+              <option key={start}>{start}</option>
+            ))}
+          </select>
+        </div>
 
         {/* --- NAME, TYPE AND DESCRIPTION SECTION --- */}
         <div className="w-full py-5 border-b">
-          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-5">
-            <div className="mb-4 w-full lg:w-1/3">
+          <div className="flex flex-row flex-nowrap w-full gap-5">
+            <div className="mb-4 w-full">
               <label className="block font-semibold">
-                Typ akce<span className="text-sos"> *</span>
-              </label>
-              <input
-                type="text"
-                value={eventType}
-                onChange={(e) => setEventType(removeEmojis(e.target.value))}
-                className="border p-2 w-full"
-              />
-            </div>
-
-            <div className="mb-4 w-full lg:w-2/3">
-              <label className="block font-semibold">
-                Název akce<span className="text-sos"> *</span>
+                Fakt<span className="text-sos"> *</span>
               </label>
               <div className="relative">
-                <input
-                  type="text"
+                <textarea
                   value={heading}
                   onChange={(e) => setHeading(removeEmojis(e.target.value))}
                   className="border p-2 w-full"
-                  maxLength={36}
+                  maxLength={175}
                   style={{
                     borderColor: isHeadingNotUppercase ? "" : "var(--sos)",
                   }}
                 />
                 <p className="absolute text-slate-400 right-3 top-2">
-                  {36 - heading.length}
+                  {175 - heading.length}
                 </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <label className="block font-semibold">
-              Popisek<span className="text-sos"> *</span>
-            </label>
-            <div className="relative">
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(removeEmojis(e.target.value))}
-                className="border p-2 w-full relative"
-                style={{
-                  borderColor:
-                    descLengthValidate && isDescNotUppercase ? "" : "red",
-                }}
-                maxLength={isTextShort ? descLengthShort : descLengthLong}
-              />
-              <p
-                className="absolute right-3 top-2 text-slate-400"
-                style={{ color: descLengthValidate ? "" : "var(--sos)" }}
-              >
-                {(isTextShort ? descLengthShort : descLengthLong) -
-                  description.length}
-              </p>
-              {!descLengthValidate ? (
-                <ErrorText>
-                  <>Prosím, zkrať popisek, nebo odeber datum a čas</>
-                </ErrorText>
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* --- DATE AND TIME SECTION --- */}
-        <div className="w-full py-5 border-b">
-          <div className="flex flex-col lg:flex-row flex-nowrap gap-3">
-            <div className="mb-4 w-full lg:w-1/3">
-              <label className="block font-semibold">Datum</label>
-              <div className="relative">
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="border p-2 w-full relative"
-                />
-              </div>
-            </div>
-
-            <div className="mb-4 w-full lg:w-1/3">
-              <label className="block font-semibold">Čas začátku</label>
-              <div className="relative">
-                <input
-                  type="time"
-                  value={beginningTime}
-                  onChange={(e) => setBeginningTime(e.target.value)}
-                  className="border p-2 w-full relative"
-                />
-              </div>
-            </div>
-
-            <div className="mb-4 w-full lg:w-1/3">
-              <label className="block font-semibold">Čas konce</label>
-              <div className="relative">
-                <input
-                  type="time"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
-                  className="border p-2 w-full relative"
-                />
               </div>
             </div>
           </div>
@@ -223,7 +143,38 @@ const Post2ImagesGenerator = () => {
 
         {/* --- IMAGES SECTION --- */}
         <div className="w-full py-5 border-b">
-          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0">
+          <div className="mb-4 w-full">
+            <label className="block font-semibold">
+              Chcete zobrazit prvky?
+            </label>
+            <div className="flex flex-row gap-2">
+              <input
+                type="radio"
+                id="image-yes"
+                name="fav_language"
+                value="CSS"
+                checked={imagePost === 1}
+                onChange={() => setImagePost(1)}
+              />
+              <label className="mr-6" onChange={() => setImagePost(1)}>
+                Ano
+              </label>
+              <input
+                type="radio"
+                id="image-no"
+                name="fav_language"
+                value="JavaScript"
+                checked={imagePost === 0}
+                onChange={() => setImagePost(0)}
+              />
+              <label onChange={() => setImagePost(0)}>Ne</label>
+            </div>
+          </div>
+
+          <div
+            className="flex flex-col lg:flex-row flex-nowrap w-full gap-3"
+            style={{ display: imagePost === 1 ? "flex" : "none" }}
+          >
             <div className="w-full">
               <label className="block font-semibold">První prvek</label>
               <select
@@ -232,7 +183,8 @@ const Post2ImagesGenerator = () => {
                 }
                 className="border-2 px-6 py-1 mb-2"
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {elementSets.map((set, index) => (
@@ -256,7 +208,8 @@ const Post2ImagesGenerator = () => {
                 min={1}
                 max={elementSet1.numberOfElements}
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               />
             </div>
@@ -268,7 +221,8 @@ const Post2ImagesGenerator = () => {
                 style={{
                   backgroundColor:
                     element1BG !== "var(--white)" ? element1BG : "",
-                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areBGColorsNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {accents.map((accent) => (
@@ -280,7 +234,10 @@ const Post2ImagesGenerator = () => {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row flex-nowrap w-full gap-3">
+          <div
+            className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0"
+            style={{ display: imagePost === 1 ? "flex" : "none" }}
+          >
             <div className="w-full">
               <label className="block font-semibold">Druhý prvek</label>
               <select
@@ -289,7 +246,8 @@ const Post2ImagesGenerator = () => {
                 }
                 className="border-2 px-6 py-1 mb-2"
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {elementSets.map((set, index) => (
@@ -314,7 +272,8 @@ const Post2ImagesGenerator = () => {
                 min={1}
                 max={elementSet2.numberOfElements}
                 style={{
-                  borderColor: areImagesNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               />
             </div>
@@ -326,7 +285,71 @@ const Post2ImagesGenerator = () => {
                 style={{
                   backgroundColor:
                     element2BG !== "var(--white)" ? element2BG : "",
-                  borderColor: areBGColorsNotSame ? "" : "var(--sos)",
+                  borderColor:
+                    areBGColorsNotSame || imagePost === 0 ? "" : "var(--sos)",
+                }}
+              >
+                {accents.map((accent) => (
+                  <option value={accent.cssVar} key={accent.cssVar}>
+                    {accent.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div
+            className="flex flex-col lg:flex-row flex-nowrap w-full gap-3 mb-12 lg:mb-0"
+            style={{ display: imagePost === 1 ? "flex" : "none" }}
+          >
+            <div className="w-full">
+              <label className="block font-semibold">Třetí prvek</label>
+              <select
+                onChange={(e) =>
+                  updateSetAndNumber(parseInt(e.target.value), 3)
+                }
+                className="border-2 px-6 py-1 mb-2"
+                style={{
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
+                }}
+              >
+                {elementSets.map((set, index) => (
+                  <option value={index} key={set.name}>
+                    {set.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Číslo prvku</label>
+              <input
+                type="number"
+                className="border-2 px-6 py-1 mb-2 w-full"
+                value={
+                  element1No > elementSet3.numberOfElements
+                    ? elementSet3.numberOfElements
+                    : element3No
+                }
+                onChange={(e) => setElement3No(parseInt(e.target.value))}
+                min={1}
+                max={elementSet3.numberOfElements}
+                style={{
+                  borderColor:
+                    areImagesNotSame || imagePost === 0 ? "" : "var(--sos)",
+                }}
+              />
+            </div>
+            <div className="w-full">
+              <label className="block font-semibold">Podkladová barva 3</label>
+              <select
+                onChange={(e) => setElement3BG(e.target.value)}
+                className="border-2 px-6 py-1 w-full"
+                style={{
+                  backgroundColor:
+                    element1BG !== "var(--white)" ? element3BG : "",
+                  borderColor:
+                    areBGColorsNotSame || imagePost === 0 ? "" : "var(--sos)",
                 }}
               >
                 {accents.map((accent) => (
@@ -341,7 +364,7 @@ const Post2ImagesGenerator = () => {
 
         {/* --- FACILITY SECTION --- */}
         <div className="w-full py-5 border-b">
-          <label className="block font-semibold">Kdo zaštiťuje akci?</label>
+          <label className="block font-semibold">Kdo sdílí fakt?</label>
           <select
             onChange={(e) => setFacility(parseInt(e.target.value))}
             className="border-2 px-6 py-1"
@@ -358,22 +381,16 @@ const Post2ImagesGenerator = () => {
         {/* --- DOWNLOAD SECTION --- */}
         <div className="w-full py-5">
           {
-            // Is the text not overflowing?
-            descLengthValidate &&
-            // Are the colors not same?
-            areBGColorsNotSame &&
-            // Are the images not same?
-            areImagesNotSame &&
-            // Is the event type set?
-            isEventTypeSet &&
             // Is the title set?
             isHeadingSet &&
             // Is the title not all uppercase?
             isHeadingNotUppercase &&
-            // Is the description set?
-            isDescSet &&
-            // Is the description not all uppercase?
-            isDescNotUppercase ? (
+            // Is there a question mark?
+            doesContainQuestionMark &&
+            // Are the images not same?
+            (areImagesNotSame || imagePost === 0) &&
+            // Are the colors not same
+            (areBGColorsNotSame || imagePost === 0) ? (
               <button
                 onClick={handleGenerate}
                 className="mt-4 border-2 border-black px-8 py-4 font-bold"
@@ -385,39 +402,33 @@ const Post2ImagesGenerator = () => {
                 <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
                   Stáhnout příspěvek (.png)
                 </button>
-                {!isEventTypeSet ? (
-                  <ErrorText>Prosím, vyplň typ události</ErrorText>
-                ) : (
-                  <></>
-                )}
+
                 {!isHeadingSet ? (
-                  <ErrorText>Prosím, vyplň název události</ErrorText>
+                  <ErrorText>Prosím, vyplň fakt</ErrorText>
                 ) : (
                   <></>
                 )}
                 {!isHeadingNotUppercase ? (
-                  <ErrorText>Nadpis nepíšeme velkými písmeny</ErrorText>
+                  <ErrorText>Fakt nepíšeme velkými písmeny</ErrorText>
                 ) : (
                   <></>
                 )}
-                {!isDescSet ? (
-                  <ErrorText>Prosím, vyplň krátký popisek</ErrorText>
+                {!areImagesNotSame && imagePost === 1 ? (
+                  <ErrorText>
+                    Na příspěvku nesmí být dva stejné symboly
+                  </ErrorText>
                 ) : (
                   <></>
                 )}
-                {!isDescNotUppercase ? (
-                  <ErrorText>Popisek nepíšeme velkými písmeny</ErrorText>
-                ) : (
-                  <></>
-                )}
-                {!areBGColorsNotSame ? (
+                {!areBGColorsNotSame && imagePost === 1 ? (
                   <ErrorText>Barvy pozadí nesmí být stejné</ErrorText>
                 ) : (
                   <></>
                 )}
-                {!areImagesNotSame ? (
+                {!doesContainQuestionMark ? (
                   <ErrorText>
-                    Na příspěvku nesmí být dva stejné symboly
+                    Fakt neobsahuje otazník, a tudíž nenavazuje na otázku v
+                    úvodu
                   </ErrorText>
                 ) : (
                   <></>
@@ -433,7 +444,7 @@ const Post2ImagesGenerator = () => {
         <div className="scale-[35%] lg:scale-50 origin-top-left lg:origin-[50%_25%]">
           <div
             ref={previewRef}
-            className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
+            className="relative pointer-events-none border bg-white flex flex-row flex-nowrap announcement"
             style={{ width: "1080px", height: "1080px" }}
           >
             <div className="w-[100px] h-full border-black border-r-2">
@@ -443,21 +454,14 @@ const Post2ImagesGenerator = () => {
             <div className="w-[880px] h-full border-black border-r-2">
               <div className="h-[100px] w-full border-black border-b-2"></div>
               <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="flex flex-row flex-nowrap">
+                <div
+                  className="w-full grid grid-cols-3 border-b-2 border-black"
+                  style={{ display: imagePost === 1 ? "grid" : "none" }}
+                >
                   <div
-                    className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
+                    className="w-full aspect-square border-black border-r-2 relative"
                     style={{ backgroundColor: element1BG }}
                   >
-                    {/* {image1 && (
-                      <Image
-                        src={URL.createObjectURL(image1)}
-                        alt="Image 1"
-                        className="object-cover"
-                        fill
-                      />
-                      
-                    )} */}
-
                     {elementSet1 && (
                       <Image
                         src={
@@ -474,7 +478,7 @@ const Post2ImagesGenerator = () => {
                     )}
                   </div>
                   <div
-                    className="w-[440px] aspect-square border-black border-b-2 relative"
+                    className="w-full aspect-square border-black  border-r-2 relative"
                     style={{ backgroundColor: element2BG }}
                   >
                     {elementSet2 && (
@@ -492,10 +496,29 @@ const Post2ImagesGenerator = () => {
                       />
                     )}
                   </div>
+                  <div
+                    className="w-full aspect-square border-black relative"
+                    style={{ backgroundColor: element3BG }}
+                  >
+                    {elementSet3 && (
+                      <Image
+                        src={
+                          "/img/elements/" +
+                          elementSet3.elementPrefix +
+                          "motiv" +
+                          element3No +
+                          ".png"
+                        }
+                        alt="Image 3"
+                        className="object-cover"
+                        fill
+                      />
+                    )}
+                  </div>
                 </div>
                 {facility !== 0 ? (
                   <div
-                    className="w-full h-32 border-b-2 border-black flex flex-row justify-center items-center text-center"
+                    className="w-full h-16 border-b-2 border-black flex flex-row justify-center items-center text-center"
                     style={{
                       backgroundColor:
                         "var(--" +
@@ -510,51 +533,18 @@ const Post2ImagesGenerator = () => {
                 ) : (
                   <></>
                 )}
-                <div
-                  className={
-                    "mx-[60px] h-full flex flex-col justify-around " +
-                    (facility !== 0 ? "my-[25px]" : "my-[50px]")
-                  }
-                >
-                  <div>
-                    {eventType ? (
-                      <p className="above-heading mb-3">{eventType}</p>
-                    ) : (
-                      <></>
-                    )}
+                <div className="mx-[60px] h-full flex flex-col justify-center gap-6 py-[20px] px-10">
+                  <h2 className="dyk-heading text-left">{didYouKnow}</h2>
+                  <div className="">
                     {heading ? (
-                      <h2 className="main-heading alt-glyphs">{heading}</h2>
+                      <SplitParagraph
+                        cssStyles="text-[35px] text-left mb-5"
+                        text={heading}
+                      />
                     ) : (
                       <></>
                     )}
                   </div>
-                  <p
-                    className="desc m-0"
-                    style={{
-                      maxHeight:
-                        formattedDate !== "" || formattedTimes[0] !== ""
-                          ? "36px"
-                          : "72px",
-                    }}
-                  >
-                    {description.split(/n-/g)[0]}
-                    {description.split(/n-/g)[1] ? <br /> : <></>}
-                    {description.split(/n-/g)[1] ? (
-                      description.split(/n-/g)[1]
-                    ) : (
-                      <></>
-                    )}
-                  </p>
-                  <p className="desc m-0">
-                    {formattedDate}
-                    {"  "}
-                    {formattedTimes[0] && date ? " | " : ""}
-                    {"  "}
-                    {formattedTimes[0]}
-                    {formattedTimes[0]
-                      ? (formattedTimes[1] ? "—" : "") + formattedTimes[1]
-                      : ""}
-                  </p>
                 </div>
               </div>
             </div>
@@ -569,4 +559,4 @@ const Post2ImagesGenerator = () => {
   );
 };
 
-export default Post2ImagesGenerator;
+export default DidYouKnowGenerator;

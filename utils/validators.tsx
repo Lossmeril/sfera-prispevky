@@ -38,3 +38,7 @@ export const bgColorsValidate = (arr: string[]) => {
 export const uppercaseValidate = (str: string) => {
   return str !== str.toUpperCase() || str === "SFÉRA" || str === "";
 };
+
+export const didYouKnowQuestionValidate = (str: string) => {
+  return str.includes("?");
+};

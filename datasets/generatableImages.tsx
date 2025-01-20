@@ -8,4 +8,5 @@ export const generatableImages: PostType[] = [
   { name: "Příspěvek se čtyřmi obrázky", link: "post-4-images" },
   { name: "Oznámení s obrázkem", link: "announcement-with-image" },
   { name: "Reference, či citát", link: "testimonial" },
+  { name: "Víte, že...", link: "did-you-know" },
 ];
