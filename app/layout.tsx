@@ -29,7 +29,7 @@ const youthRounded = localFont({
   src: [
     {
       path: "../public/fonts/Youth-Rounded-Bold.woff2",
-      weight: "700",
+      weight: "400",
       style: "normal",
     },
   ],

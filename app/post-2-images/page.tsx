@@ -37,7 +37,7 @@ const Post2ImagesGenerator = () => {
   const [facility, setFacility] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
 
-  //--- UPDARE IMAGE FUNCTION --------------------------------------------------------------
+  //--- UPDATE IMAGE FUNCTION --------------------------------------------------------------
 
   const updateSetAndNumber = (index: number, elementNumber: number): void => {
     switch (elementNumber) {

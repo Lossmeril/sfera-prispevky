@@ -64,6 +64,20 @@ body {
   max-height: 168px;
 }
 
+.dyk-heading {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  font-size: 83px;
+  text-align: center;
+
+  font-feature-settings: "ss02" 2;
+
+  padding-top: 2px;
+  line-height: 83px;
+  display: block;
+  overflow: hidden;
+}
+
 .announcement .main-heading {
   font-weight: 700;
   letter-spacing: -0.035em;
