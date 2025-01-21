@@ -9,6 +9,9 @@ import { lengthValidate, uppercaseValidate } from "@/utils/validators";
 import ErrorText from "@/components/error-text";
 import { removeEmojis } from "@/utils/formatters";
 import PostGrid from "@/components/posts/postGrid";
+import GenerateImageButton, {
+  InactiveGenerateButton,
+} from "@/utils/imageGenerator";
 
 const TestimonialGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -155,17 +158,13 @@ const TestimonialGenerator = () => {
             isTextNotUppercase &&
             // Is the author's name not all uppercase?
             isAuthorNotUppercase ? (
-              <button
-                onClick={handleGenerate}
-                className="mt-4 border-2 border-black px-8 py-4 font-bold"
-              >
-                Stáhnout příspěvek (.png)
-              </button>
+              <GenerateImageButton
+                postReference={previewRef}
+                postTitle="reference"
+              />
             ) : (
               <>
-                <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
-                  Stáhnout příspěvek (.png)
-                </button>
+                <InactiveGenerateButton />
                 {!isTextSet ? (
                   <ErrorText>Prosím, vyplň referenci</ErrorText>
                 ) : (

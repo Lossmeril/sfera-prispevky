@@ -8,6 +8,7 @@ import { toPng } from "html-to-image";
 import { accents } from "@/datasets/colors";
 import { elementSets } from "@/datasets/elements";
 import PostGrid from "@/components/posts/postGrid";
+import GenerateImageButton from "@/utils/imageGenerator";
 
 const Post2ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -105,12 +106,10 @@ const Post2ImagesGenerator = () => {
 
         {/* --- DOWNLOAD SECTION --- */}
         <div className="w-full py-5">
-          <button
-            onClick={handleGenerate}
-            className="mt-4 border-2 border-black px-8 py-4 font-bold"
-          >
-            Stáhnout příspěvek (.png)
-          </button>
+          <GenerateImageButton
+            postReference={previewRef}
+            postTitle="jeden-prvek"
+          />
         </div>
       </div>
 

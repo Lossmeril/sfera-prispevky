@@ -20,6 +20,9 @@ import { elementSets } from "@/datasets/elements";
 import { accents } from "@/datasets/colors";
 import SplitParagraph from "@/utils/splitParagraphs";
 import PostGrid from "@/components/posts/postGrid";
+import GenerateImageButton, {
+  InactiveGenerateButton,
+} from "@/utils/imageGenerator";
 
 const DidYouKnowGenerator = () => {
   const didYouKnows = ["Víte, že", "Věděli jste, že", "Víte,", "Věděli jste,"];
@@ -392,17 +395,13 @@ const DidYouKnowGenerator = () => {
             (areImagesNotSame || imagePost === 0) &&
             // Are the colors not same
             (areBGColorsNotSame || imagePost === 0) ? (
-              <button
-                onClick={handleGenerate}
-                className="mt-4 border-2 border-black px-8 py-4 font-bold"
-              >
-                Stáhnout příspěvek (.png)
-              </button>
+              <GenerateImageButton
+                postReference={previewRef}
+                postTitle={didYouKnow}
+              />
             ) : (
               <>
-                <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
-                  Stáhnout příspěvek (.png)
-                </button>
+                <InactiveGenerateButton />
 
                 {!isHeadingSet ? (
                   <ErrorText>Prosím, vyplň fakt</ErrorText>

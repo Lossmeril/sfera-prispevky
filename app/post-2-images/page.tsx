@@ -16,6 +16,9 @@ import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
 import { elementSets } from "@/datasets/elements";
 import PostGrid from "@/components/posts/postGrid";
+import GenerateImageButton, {
+  InactiveGenerateButton,
+} from "@/utils/imageGenerator";
 
 const Post2ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -375,17 +378,13 @@ const Post2ImagesGenerator = () => {
             isDescSet &&
             // Is the description not all uppercase?
             isDescNotUppercase ? (
-              <button
-                onClick={handleGenerate}
-                className="mt-4 border-2 border-black px-8 py-4 font-bold"
-              >
-                Stáhnout příspěvek (.png)
-              </button>
+              <GenerateImageButton
+                postReference={previewRef}
+                postTitle={heading}
+              />
             ) : (
               <>
-                <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
-                  Stáhnout příspěvek (.png)
-                </button>
+                <InactiveGenerateButton />
                 {!isEventTypeSet ? (
                   <ErrorText>Prosím, vyplň typ události</ErrorText>
                 ) : (

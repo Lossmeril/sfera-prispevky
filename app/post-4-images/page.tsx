@@ -10,6 +10,9 @@ import { accents } from "@/datasets/colors";
 import ErrorText from "@/components/error-text";
 import { elementSets } from "@/datasets/elements";
 import PostGrid from "@/components/posts/postGrid";
+import GenerateImageButton, {
+  InactiveGenerateButton,
+} from "@/utils/imageGenerator";
 
 const Post4ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -339,17 +342,13 @@ const Post4ImagesGenerator = () => {
             areImagesNotSame &&
             // Are the colors not same
             areBGColorsNotSame ? (
-              <button
-                onClick={handleGenerate}
-                className="mt-4 border-2 border-black px-8 py-4 font-bold"
-              >
-                Stáhnout příspěvek (.png)
-              </button>
+              <GenerateImageButton
+                postReference={previewRef}
+                postTitle="čtyři-prvky"
+              />
             ) : (
               <>
-                <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
-                  Stáhnout příspěvek (.png)
-                </button>
+                <InactiveGenerateButton />
 
                 {!areImagesNotSame ? (
                   <ErrorText>

@@ -3,8 +3,6 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 
-import { toPng } from "html-to-image";
-
 import { removeEmojis } from "@/utils/formatters";
 import {
   imageUploadValidate,
@@ -14,6 +12,9 @@ import {
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
 import PostGrid from "@/components/posts/postGrid";
+import GenerateImageButton, {
+  InactiveGenerateButton,
+} from "@/utils/imageGenerator";
 
 const AnnouncementImageGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -52,27 +53,6 @@ const AnnouncementImageGenerator = () => {
 
   const isHeadingNotUppercase = uppercaseValidate(heading);
   const isDescNotUppercase = uppercaseValidate(description);
-
-  //--- IMAGE GENERATOR --------------------------------------------------------------
-  const handleGenerate = async () => {
-    if (previewRef.current) {
-      const pngData = await toPng(previewRef.current, {
-        width: 1080,
-        height: 1350,
-      });
-      const link = document.createElement("a");
-      link.download =
-        "SFÉRA_1080x1350px_" +
-        heading
-          .split(":")[0]
-          .replace(/ /g, "-")
-          .replace(/[#%&:*!?]/, "")
-          .toLowerCase() +
-        "-prispevek.png";
-      link.href = pngData;
-      link.click();
-    }
-  };
 
   return (
     <div className="p-4 h-auto flex flex-col lg:flex-row">
@@ -198,17 +178,13 @@ const AnnouncementImageGenerator = () => {
             isDescSet &&
             // Is the description not all uppercase?
             isDescNotUppercase ? (
-              <button
-                onClick={handleGenerate}
-                className="mt-4 border-2 border-black px-8 py-4 font-bold"
-              >
-                Stáhnout příspěvek (.png)
-              </button>
+              <GenerateImageButton
+                postReference={previewRef}
+                postTitle={heading}
+              />
             ) : (
               <>
-                <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
-                  Stáhnout příspěvek (.png)
-                </button>
+                <InactiveGenerateButton />
 
                 {!isHeadingSet ? (
                   <ErrorText>Prosím, vyplň nadpis</ErrorText>
