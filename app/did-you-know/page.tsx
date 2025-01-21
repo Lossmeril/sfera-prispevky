@@ -90,10 +90,10 @@ const DidYouKnowGenerator = () => {
     if (previewRef.current) {
       const pngData = await toPng(previewRef.current, {
         width: 1080,
-        height: 1080,
+        height: 1350,
       });
       const link = document.createElement("a");
-      link.download = "SFÉRA_1080x1080px_vite-ze-prispevek.png";
+      link.download = "SFÉRA_1080x1350px_vite-ze-prispevek.png";
       link.href = pngData;
       link.click();
     }
@@ -446,7 +446,7 @@ const DidYouKnowGenerator = () => {
           <div
             ref={previewRef}
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap announcement"
-            style={{ width: "1080px", height: "1080px" }}
+            style={{ width: "1080px", height: "1350px" }}
           >
             <PostGrid>
               <div

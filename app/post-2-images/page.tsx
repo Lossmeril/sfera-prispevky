@@ -87,11 +87,11 @@ const Post2ImagesGenerator = () => {
     if (previewRef.current) {
       const pngData = await toPng(previewRef.current, {
         width: 1080,
-        height: 1080,
+        height: 1350,
       });
       const link = document.createElement("a");
       link.download =
-        "SFÉRA_1080x1080px_" +
+        "SFÉRA_1080x1350px_" +
         heading
           .split(":")[0]
           .replace(/ /g, "-")
@@ -435,7 +435,7 @@ const Post2ImagesGenerator = () => {
           <div
             ref={previewRef}
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
-            style={{ width: "1080px", height: "1080px" }}
+            style={{ width: "1080px", height: "1350px" }}
           >
             <PostGrid>
               <div className="flex flex-row flex-nowrap">
