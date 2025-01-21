@@ -61,7 +61,7 @@ const baseElementSets: elementSetType[] = [
   {
     name: sferickeHriste.name,
     elementPrefix: "Hřiště_",
-    numberOfElements: 27,
+    numberOfElements: 30,
   },
   {
     name: scienceOnSphere.name,
