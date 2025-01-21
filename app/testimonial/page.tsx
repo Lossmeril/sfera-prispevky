@@ -11,7 +11,7 @@ import { removeEmojis } from "@/utils/formatters";
 import PostGrid from "@/components/posts/postGrid";
 import GenerateImageButton, {
   InactiveGenerateButton,
-} from "@/utils/imageGenerator";
+} from "@/components/posts/imageGeneratorButton";
 
 const TestimonialGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------

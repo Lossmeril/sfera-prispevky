@@ -1,6 +1,14 @@
 import React, { RefObject } from "react";
 import { toPng } from "html-to-image";
 
+export const InactiveGenerateButton = () => {
+  return (
+    <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
+      Stáhnout příspěvek (.png)
+    </button>
+  );
+};
+
 interface GenerateImageButtonProps {
   postReference: RefObject<HTMLElement>;
   postTitle: string;
@@ -45,11 +53,3 @@ const GenerateImageButton: React.FC<GenerateImageButtonProps> = ({
 };
 
 export default GenerateImageButton;
-
-export const InactiveGenerateButton = () => {
-  return (
-    <button className="my-4 border-2 border-gray-400 bg-gray-300 px-8 py-4 font-bold text-gray-400">
-      Stáhnout příspěvek (.png)
-    </button>
-  );
-};

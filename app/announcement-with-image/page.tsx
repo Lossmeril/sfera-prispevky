@@ -9,16 +9,16 @@ import {
   lengthValidate,
   uppercaseValidate,
 } from "@/utils/validators";
+
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
 import PostGrid from "@/components/posts/postGrid";
 import GenerateImageButton, {
   InactiveGenerateButton,
-} from "@/utils/imageGenerator";
+} from "@/components/posts/imageGeneratorButton";
 
 const AnnouncementImageGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
-  const [eventType, setEventType] = useState("");
   const [heading, setHeading] = useState("");
   const [description, setDescription] = useState("");
 

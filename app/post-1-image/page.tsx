@@ -8,7 +8,7 @@ import { toPng } from "html-to-image";
 import { accents } from "@/datasets/colors";
 import { elementSets } from "@/datasets/elements";
 import PostGrid from "@/components/posts/postGrid";
-import GenerateImageButton from "@/utils/imageGenerator";
+import GenerateImageButton from "@/components/posts/imageGeneratorButton";
 
 const Post2ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------

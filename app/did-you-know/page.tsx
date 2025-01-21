@@ -22,7 +22,7 @@ import SplitParagraph from "@/utils/splitParagraphs";
 import PostGrid from "@/components/posts/postGrid";
 import GenerateImageButton, {
   InactiveGenerateButton,
-} from "@/utils/imageGenerator";
+} from "@/components/posts/imageGeneratorButton";
 
 const DidYouKnowGenerator = () => {
   const didYouKnows = ["Víte, že", "Věděli jste, že", "Víte,", "Věděli jste,"];
