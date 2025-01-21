@@ -13,6 +13,7 @@ import {
 } from "@/utils/validators";
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
+import PostGrid from "@/components/posts/postGrid";
 
 const AnnouncementImageGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -248,71 +249,58 @@ const AnnouncementImageGenerator = () => {
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap announcement"
             style={{ width: "1080px", height: "1080px" }}
           >
-            <div className="w-[100px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
-            <div className="w-[880px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="flex flex-row flex-nowrap">
-                  <div className="w-[880px] h-[440px] border-black border-b-2 relative">
-                    {image1 && (
-                      <Image
-                        src={URL.createObjectURL(image1)}
-                        alt="Image 1"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
-                </div>
-                {facility !== 0 ? (
-                  <div
-                    className="w-full h-32 border-b-2 border-black flex flex-row justify-center items-center text-center"
-                    style={{
-                      backgroundColor:
-                        "var(--" +
-                        facilities[facility - 1].colorBgVarName +
-                        ")",
-                    }}
-                  >
-                    <p className="facility text-white">
-                      {facilities[facility - 1].name}
-                    </p>
-                  </div>
-                ) : (
-                  <></>
-                )}
-                <div className="mx-[60px] h-full flex flex-col justify-center gap-10 py-[20px]">
-                  <div className="">
-                    {heading ? (
-                      <h2 className="main-heading alt-glyphs">{heading}</h2>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <p
-                    className="desc m-0"
-                    style={{
-                      maxHeight: "180px",
-                    }}
-                  >
-                    {description.split(/n-/g)[0]}
-                    {description.split(/n-/g)[1] ? <br /> : <></>}
-                    {description.split(/n-/g)[1] ? (
-                      description.split(/n-/g)[1]
-                    ) : (
-                      <></>
-                    )}
-                  </p>
+            <PostGrid>
+              <div className="flex flex-row flex-nowrap">
+                <div className="w-[880px] h-[440px] border-black border-b-2 relative">
+                  {image1 && (
+                    <Image
+                      src={URL.createObjectURL(image1)}
+                      alt="Image 1"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="w-[100px] h-full border-black ">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
+              {facility !== 0 ? (
+                <div
+                  className="w-full h-32 border-b-2 border-black flex flex-row justify-center items-center text-center"
+                  style={{
+                    backgroundColor:
+                      "var(--" + facilities[facility - 1].colorBgVarName + ")",
+                  }}
+                >
+                  <p className="facility text-white">
+                    {facilities[facility - 1].name}
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
+              <div className="mx-[60px] h-full flex flex-col justify-center gap-10 py-[20px]">
+                <div className="">
+                  {heading ? (
+                    <h2 className="main-heading alt-glyphs">{heading}</h2>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <p
+                  className="desc m-0"
+                  style={{
+                    maxHeight: "180px",
+                  }}
+                >
+                  {description.split(/n-/g)[0]}
+                  {description.split(/n-/g)[1] ? <br /> : <></>}
+                  {description.split(/n-/g)[1] ? (
+                    description.split(/n-/g)[1]
+                  ) : (
+                    <></>
+                  )}
+                </p>
+              </div>
+            </PostGrid>
           </div>
         </div>
       </div>

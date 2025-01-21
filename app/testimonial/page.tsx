@@ -8,6 +8,7 @@ import { toPng } from "html-to-image";
 import { lengthValidate, uppercaseValidate } from "@/utils/validators";
 import ErrorText from "@/components/error-text";
 import { removeEmojis } from "@/utils/formatters";
+import PostGrid from "@/components/posts/postGrid";
 
 const TestimonialGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -194,41 +195,30 @@ const TestimonialGenerator = () => {
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap testimonial"
             style={{ width: "1080px", height: "1080px" }}
           >
-            <div className="w-[100px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
-            <div className="w-[880px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="mx-[120px] h-full flex flex-col py-[20px] justify-center items-center gap-10">
-                  {image1 && (
-                    <div className="w-40 h-40 relative overflow-hidden mx-auto rounded-full">
-                      <Image
-                        src={URL.createObjectURL(image1)}
-                        alt="Image 1"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                  <p className="desc m-0 font-medium">{text}</p>
-                  {author && (
-                    <div>
-                      {author ? (
-                        <h2 className="author font-medium">&mdash; {author}</h2>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  )}
-                </div>
+            <PostGrid>
+              <div className="mx-[120px] h-full flex flex-col py-[20px] justify-center items-center gap-10">
+                {image1 && (
+                  <div className="w-40 h-40 relative overflow-hidden mx-auto rounded-full">
+                    <Image
+                      src={URL.createObjectURL(image1)}
+                      alt="Image 1"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <p className="desc m-0 font-medium">{text}</p>
+                {author && (
+                  <div>
+                    {author ? (
+                      <h2 className="author font-medium">&mdash; {author}</h2>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                )}
               </div>
-            </div>
-            <div className="w-[100px] h-full border-black ">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
+            </PostGrid>
           </div>
         </div>
       </div>

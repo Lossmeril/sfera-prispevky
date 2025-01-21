@@ -19,6 +19,7 @@ import { facilities } from "@/datasets/facilities";
 import { elementSets } from "@/datasets/elements";
 import { accents } from "@/datasets/colors";
 import SplitParagraph from "@/utils/splitParagraphs";
+import PostGrid from "@/components/posts/postGrid";
 
 const DidYouKnowGenerator = () => {
   const didYouKnows = ["Víte, že", "Věděli jste, že", "Víte,", "Věděli jste,"];
@@ -447,111 +448,98 @@ const DidYouKnowGenerator = () => {
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap announcement"
             style={{ width: "1080px", height: "1080px" }}
           >
-            <div className="w-[100px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
-            <div className="w-[880px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
+            <PostGrid>
+              <div
+                className="w-full grid grid-cols-3 border-b-2 border-black"
+                style={{ display: imagePost === 1 ? "grid" : "none" }}
+              >
                 <div
-                  className="w-full grid grid-cols-3 border-b-2 border-black"
-                  style={{ display: imagePost === 1 ? "grid" : "none" }}
+                  className="w-full aspect-square border-black border-r-2 relative"
+                  style={{ backgroundColor: element1BG }}
                 >
-                  <div
-                    className="w-full aspect-square border-black border-r-2 relative"
-                    style={{ backgroundColor: element1BG }}
-                  >
-                    {elementSet1 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet1.elementPrefix +
-                          "motiv" +
-                          element1No +
-                          ".png"
-                        }
-                        alt="Image 1"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
-                  <div
-                    className="w-full aspect-square border-black  border-r-2 relative"
-                    style={{ backgroundColor: element2BG }}
-                  >
-                    {elementSet2 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet2.elementPrefix +
-                          "motiv" +
-                          element2No +
-                          ".png"
-                        }
-                        alt="Image 2"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
-                  <div
-                    className="w-full aspect-square border-black relative"
-                    style={{ backgroundColor: element3BG }}
-                  >
-                    {elementSet3 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet3.elementPrefix +
-                          "motiv" +
-                          element3No +
-                          ".png"
-                        }
-                        alt="Image 3"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
+                  {elementSet1 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet1.elementPrefix +
+                        "motiv" +
+                        element1No +
+                        ".png"
+                      }
+                      alt="Image 1"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
-                {facility !== 0 ? (
-                  <div
-                    className="w-full h-16 border-b-2 border-black flex flex-row justify-center items-center text-center"
-                    style={{
-                      backgroundColor:
-                        "var(--" +
-                        facilities[facility - 1].colorBgVarName +
-                        ")",
-                    }}
-                  >
-                    <p className="facility text-white">
-                      {facilities[facility - 1].name}
-                    </p>
-                  </div>
-                ) : (
-                  <></>
-                )}
-                <div className="mx-[60px] h-full flex flex-col justify-center gap-6 py-[20px] px-10">
-                  <h2 className="dyk-heading text-left">{didYouKnow}</h2>
-                  <div className="">
-                    {heading ? (
-                      <SplitParagraph
-                        cssStyles="text-[35px] text-left mb-5"
-                        text={heading}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+                <div
+                  className="w-full aspect-square border-black  border-r-2 relative"
+                  style={{ backgroundColor: element2BG }}
+                >
+                  {elementSet2 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet2.elementPrefix +
+                        "motiv" +
+                        element2No +
+                        ".png"
+                      }
+                      alt="Image 2"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
+                </div>
+                <div
+                  className="w-full aspect-square border-black relative"
+                  style={{ backgroundColor: element3BG }}
+                >
+                  {elementSet3 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet3.elementPrefix +
+                        "motiv" +
+                        element3No +
+                        ".png"
+                      }
+                      alt="Image 3"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="w-[100px] h-full border-black ">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
+              {facility !== 0 ? (
+                <div
+                  className="w-full h-16 border-b-2 border-black flex flex-row justify-center items-center text-center"
+                  style={{
+                    backgroundColor:
+                      "var(--" + facilities[facility - 1].colorBgVarName + ")",
+                  }}
+                >
+                  <p className="facility text-white">
+                    {facilities[facility - 1].name}
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
+              <div className="mx-[60px] h-full flex flex-col justify-center gap-6 py-[20px] px-10">
+                <h2 className="dyk-heading text-left">{didYouKnow}</h2>
+                <div className="">
+                  {heading ? (
+                    <SplitParagraph
+                      cssStyles="text-[35px] text-left mb-5"
+                      text={heading}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+            </PostGrid>
           </div>
         </div>
       </div>

@@ -15,6 +15,7 @@ import { accents } from "@/datasets/colors";
 import { facilities } from "@/datasets/facilities";
 import ErrorText from "@/components/error-text";
 import { elementSets } from "@/datasets/elements";
+import PostGrid from "@/components/posts/postGrid";
 
 const Post2ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -436,19 +437,13 @@ const Post2ImagesGenerator = () => {
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
             style={{ width: "1080px", height: "1080px" }}
           >
-            <div className="w-[100px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
-            <div className="w-[880px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="flex flex-row flex-nowrap">
-                  <div
-                    className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
-                    style={{ backgroundColor: element1BG }}
-                  >
-                    {/* {image1 && (
+            <PostGrid>
+              <div className="flex flex-row flex-nowrap">
+                <div
+                  className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
+                  style={{ backgroundColor: element1BG }}
+                >
+                  {/* {image1 && (
                       <Image
                         src={URL.createObjectURL(image1)}
                         alt="Image 1"
@@ -458,110 +453,103 @@ const Post2ImagesGenerator = () => {
                       
                     )} */}
 
-                    {elementSet1 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet1.elementPrefix +
-                          "motiv" +
-                          element1No +
-                          ".png"
-                        }
-                        alt="Image 1"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
-                  <div
-                    className="w-[440px] aspect-square border-black border-b-2 relative"
-                    style={{ backgroundColor: element2BG }}
-                  >
-                    {elementSet2 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet2.elementPrefix +
-                          "motiv" +
-                          element2No +
-                          ".png"
-                        }
-                        alt="Image 2"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
+                  {elementSet1 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet1.elementPrefix +
+                        "motiv" +
+                        element1No +
+                        ".png"
+                      }
+                      alt="Image 1"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
-                {facility !== 0 ? (
-                  <div
-                    className="w-full h-32 border-b-2 border-black flex flex-row justify-center items-center text-center"
-                    style={{
-                      backgroundColor:
-                        "var(--" +
-                        facilities[facility - 1].colorBgVarName +
-                        ")",
-                    }}
-                  >
-                    <p className="facility text-white">
-                      {facilities[facility - 1].name}
-                    </p>
-                  </div>
-                ) : (
-                  <></>
-                )}
                 <div
-                  className={
-                    "mx-[60px] h-full flex flex-col justify-around " +
-                    (facility !== 0 ? "my-[25px]" : "my-[50px]")
-                  }
+                  className="w-[440px] aspect-square border-black border-b-2 relative"
+                  style={{ backgroundColor: element2BG }}
                 >
-                  <div>
-                    {eventType ? (
-                      <p className="above-heading mb-3">{eventType}</p>
-                    ) : (
-                      <></>
-                    )}
-                    {heading ? (
-                      <h2 className="main-heading alt-glyphs">{heading}</h2>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <p
-                    className="desc m-0"
-                    style={{
-                      maxHeight:
-                        formattedDate !== "" || formattedTimes[0] !== ""
-                          ? "36px"
-                          : "72px",
-                    }}
-                  >
-                    {description.split(/n-/g)[0]}
-                    {description.split(/n-/g)[1] ? <br /> : <></>}
-                    {description.split(/n-/g)[1] ? (
-                      description.split(/n-/g)[1]
-                    ) : (
-                      <></>
-                    )}
-                  </p>
-                  <p className="desc m-0">
-                    {formattedDate}
-                    {"  "}
-                    {formattedTimes[0] && date ? " | " : ""}
-                    {"  "}
-                    {formattedTimes[0]}
-                    {formattedTimes[0]
-                      ? (formattedTimes[1] ? "—" : "") + formattedTimes[1]
-                      : ""}
-                  </p>
+                  {elementSet2 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet2.elementPrefix +
+                        "motiv" +
+                        element2No +
+                        ".png"
+                      }
+                      alt="Image 2"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="w-[100px] h-full border-black ">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
+              {facility !== 0 ? (
+                <div
+                  className="w-full h-32 border-b-2 border-black flex flex-row justify-center items-center text-center"
+                  style={{
+                    backgroundColor:
+                      "var(--" + facilities[facility - 1].colorBgVarName + ")",
+                  }}
+                >
+                  <p className="facility text-white">
+                    {facilities[facility - 1].name}
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
+              <div
+                className={
+                  "mx-[60px] h-full flex flex-col justify-around " +
+                  (facility !== 0 ? "my-[25px]" : "my-[50px]")
+                }
+              >
+                <div>
+                  {eventType ? (
+                    <p className="above-heading mb-3">{eventType}</p>
+                  ) : (
+                    <></>
+                  )}
+                  {heading ? (
+                    <h2 className="main-heading alt-glyphs">{heading}</h2>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <p
+                  className="desc m-0"
+                  style={{
+                    maxHeight:
+                      formattedDate !== "" || formattedTimes[0] !== ""
+                        ? "36px"
+                        : "72px",
+                  }}
+                >
+                  {description.split(/n-/g)[0]}
+                  {description.split(/n-/g)[1] ? <br /> : <></>}
+                  {description.split(/n-/g)[1] ? (
+                    description.split(/n-/g)[1]
+                  ) : (
+                    <></>
+                  )}
+                </p>
+                <p className="desc m-0">
+                  {formattedDate}
+                  {"  "}
+                  {formattedTimes[0] && date ? " | " : ""}
+                  {"  "}
+                  {formattedTimes[0]}
+                  {formattedTimes[0]
+                    ? (formattedTimes[1] ? "—" : "") + formattedTimes[1]
+                    : ""}
+                </p>
+              </div>
+            </PostGrid>
           </div>
         </div>
       </div>

@@ -9,8 +9,9 @@ import { bgColorsValidate, imageUploadValidate } from "@/utils/validators";
 import { accents } from "@/datasets/colors";
 import ErrorText from "@/components/error-text";
 import { elementSets } from "@/datasets/elements";
+import PostGrid from "@/components/posts/postGrid";
 
-const Post2ImagesGenerator = () => {
+const Post4ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
 
   const [elementSet1, setElementSet1] = useState(elementSets[0]);
@@ -376,100 +377,89 @@ const Post2ImagesGenerator = () => {
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
             style={{ width: "1080px", height: "1080px" }}
           >
-            <div className="w-[100px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
-            <div className="w-[880px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="flex flex-row flex-nowrap">
-                  <div
-                    className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
-                    style={{ backgroundColor: element1BG }}
-                  >
-                    {elementSet1 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet1.elementPrefix +
-                          "motiv" +
-                          element1No +
-                          ".png"
-                        }
-                        alt="Image 2"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
-                  <div
-                    className="w-[440px] aspect-square border-black border-b-2 relative"
-                    style={{ backgroundColor: element2BG }}
-                  >
-                    {elementSet2 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet2.elementPrefix +
-                          "motiv" +
-                          element2No +
-                          ".png"
-                        }
-                        alt="Image 2"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
+            <PostGrid>
+              <div className="flex flex-row flex-nowrap">
+                <div
+                  className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
+                  style={{ backgroundColor: element1BG }}
+                >
+                  {elementSet1 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet1.elementPrefix +
+                        "motiv" +
+                        element1No +
+                        ".png"
+                      }
+                      alt="Image 2"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
-
-                <div className="flex flex-row flex-nowrap">
-                  <div
-                    className="w-[440px] aspect-square border-black border-r-2 relative"
-                    style={{ backgroundColor: element3BG }}
-                  >
-                    {elementSet3 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet3.elementPrefix +
-                          "motiv" +
-                          element3No +
-                          ".png"
-                        }
-                        alt="Image 2"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
-                  <div
-                    className="w-[440px] aspect-square relative"
-                    style={{ backgroundColor: element4BG }}
-                  >
-                    {elementSet4 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet4.elementPrefix +
-                          "motiv" +
-                          element4No +
-                          ".png"
-                        }
-                        alt="Image 2"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
+                <div
+                  className="w-[440px] aspect-square border-black border-b-2 relative"
+                  style={{ backgroundColor: element2BG }}
+                >
+                  {elementSet2 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet2.elementPrefix +
+                        "motiv" +
+                        element2No +
+                        ".png"
+                      }
+                      alt="Image 2"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="w-[100px] h-full border-black ">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
+
+              <div className="flex flex-row flex-nowrap">
+                <div
+                  className="w-[440px] aspect-square border-black border-r-2 relative"
+                  style={{ backgroundColor: element3BG }}
+                >
+                  {elementSet3 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet3.elementPrefix +
+                        "motiv" +
+                        element3No +
+                        ".png"
+                      }
+                      alt="Image 2"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
+                </div>
+                <div
+                  className="w-[440px] aspect-square relative"
+                  style={{ backgroundColor: element4BG }}
+                >
+                  {elementSet4 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet4.elementPrefix +
+                        "motiv" +
+                        element4No +
+                        ".png"
+                      }
+                      alt="Image 2"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
+                </div>
+              </div>
+            </PostGrid>
           </div>
         </div>
       </div>
@@ -477,4 +467,4 @@ const Post2ImagesGenerator = () => {
   );
 };
 
-export default Post2ImagesGenerator;
+export default Post4ImagesGenerator;

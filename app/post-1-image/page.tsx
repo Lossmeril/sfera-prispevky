@@ -7,6 +7,7 @@ import { toPng } from "html-to-image";
 
 import { accents } from "@/datasets/colors";
 import { elementSets } from "@/datasets/elements";
+import PostGrid from "@/components/posts/postGrid";
 
 const Post2ImagesGenerator = () => {
   //--- STATES AND REFS --------------------------------------------------------------
@@ -121,40 +122,29 @@ const Post2ImagesGenerator = () => {
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
             style={{ width: "1080px", height: "1080px" }}
           >
-            <div className="w-[100px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
-            <div className="w-[880px] h-full border-black border-r-2">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2 flex flex-col overflow-hidden">
-                <div className="flex flex-row flex-nowrap">
-                  <div
-                    className="w-full h-[880px] relative"
-                    style={{ backgroundColor: element1BG }}
-                  >
-                    {elementSet1 && (
-                      <Image
-                        src={
-                          "/img/elements/" +
-                          elementSet1.elementPrefix +
-                          "motiv" +
-                          element1No +
-                          ".png"
-                        }
-                        alt="Image 1"
-                        className="object-cover"
-                        fill
-                      />
-                    )}
-                  </div>
+            <PostGrid>
+              <div className="flex flex-row flex-nowrap">
+                <div
+                  className="w-full h-[880px] relative"
+                  style={{ backgroundColor: element1BG }}
+                >
+                  {elementSet1 && (
+                    <Image
+                      src={
+                        "/img/elements/" +
+                        elementSet1.elementPrefix +
+                        "motiv" +
+                        element1No +
+                        ".png"
+                      }
+                      alt="Image 1"
+                      className="object-cover"
+                      fill
+                    />
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="w-[100px] h-full border-black ">
-              <div className="h-[100px] w-full border-black border-b-2"></div>
-              <div className="h-[880px] w-full border-black border-b-2"></div>
-            </div>
+            </PostGrid>
           </div>
         </div>
       </div>
