@@ -21,7 +21,7 @@ const baseElementSets: elementSetType[] = [
   {
     name: dilnaTextilu.name,
     elementPrefix: "Textil_",
-    numberOfElements: 39,
+    numberOfElements: 42,
   },
   {
     name: dilnaGrafiky.name,
