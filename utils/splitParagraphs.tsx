@@ -4,12 +4,12 @@ interface SplitParagraphProps {
 }
 
 const SplitParagraph: React.FC<SplitParagraphProps> = ({ text, cssStyles }) => {
-  // Function to split the text into an array of segments at "n-"
+  // Split paragraphs by p-
   const splitText = (inputText: string): string[] => {
     return inputText.split(/p-/);
   };
 
-  // Function to replace "p-" with a <br /> element
+  // Replace n- with a line break
   const processSegment = (segment: string): React.ReactNode[] => {
     const parts = segment.split(/n-/);
     return parts.flatMap((part, index) =>
