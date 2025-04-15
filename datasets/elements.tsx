@@ -17,7 +17,7 @@ export type elementSetType = {
   numberOfElements: number;
 };
 
-const baseElementSets: elementSetType[] = [
+export const baseElementSets: elementSetType[] = [
   {
     name: dilnaTextilu.name,
     elementPrefix: "Textil_",
