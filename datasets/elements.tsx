@@ -36,7 +36,7 @@ export const baseElementSets: elementSetType[] = [
   {
     name: dilnaKovu.name,
     elementPrefix: "Kov Elektro_",
-    numberOfElements: 32,
+    numberOfElements: 33,
   },
   {
     name: laboratorITVR.name,
