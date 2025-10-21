@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { PostGridSimple } from "@/components/posts/postGrid";
+import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import { ElementKey, Facility } from "@/utils/types";
 import ElementSelector from "@/components/elementSelector";
 

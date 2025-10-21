@@ -57,7 +57,9 @@ export default function ElementSelector({
           alt=""
           className="aspect-squareh-full object-cover border border-black border-r-0"
         />
-        <div className="px-5 py-3 border border-black fit-content">{label}</div>
+        <div className="px-5 py-3 border border-black grid place-content-center">
+          {label}
+        </div>
       </div>
 
       {/* The modal */}
