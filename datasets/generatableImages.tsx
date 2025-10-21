@@ -8,13 +8,13 @@ export const generatablePosts: GeneratorType[] = [
 ];
 
 export const generatableScreens: GeneratorType[] = [
-  { name: "Obrazovka se čtyřmi prvky", link: "/screens/four-elements" },
+  { name: "Obrazovka se čtyřmi prvky", link: "" },
 ];
 
 export const generatableWebThumbs: GeneratorType[] = [
-  { name: "Víkendovka", link: "web/weekend" },
+  { name: "Víkendovka", link: "" },
 ];
 
 export const generatablePosters: GeneratorType[] = [
-  { name: "Plakátek se dvěma prvky", link: "posters/two-elements" },
+  { name: "Plakátek se dvěma prvky", link: "" },
 ];

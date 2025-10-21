@@ -3,14 +3,19 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { PostGridSimple } from "@/components/posts/postGrid";
-import { Facility } from "@/utils/apiTypes";
+import { ElementKey, Facility } from "@/utils/types";
+import ElementSelector from "@/components/elementSelector";
 
 const PostTwoElementsGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [element1No, setElement1No] = useState("");
-  const [element2No, setElement2No] = useState("");
+  const [elements, setElements] = useState<Record<ElementKey, string | null>>({
+    element1: null,
+    element2: null,
+    element3: null,
+    element4: null,
+  });
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -37,25 +42,24 @@ const PostTwoElementsGenerator = () => {
         <h1 className="text-xl font-bold mb-4">
           Generátor: Příspěvek se dvěma prvky
         </h1>
-        {facilities.length > 0 ? (
-          <div className="mb-4">
-            <label className="block mb-2 font-medium">První prvek:</label>
-            <select
-              className="w-full p-2 border"
-              value={element1No}
-              onChange={(e) => setElement1No(e.target.value)}
-            >
-              <option value="">Vyberte prvek</option>
-              {facilities.map((facility) => (
-                <option key={facility.id} value={facility.id}>
-                  {facility.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        ) : (
-          <p>Načítání...</p>
-        )}
+
+        <div className="mb-4 flex flex-row gap-2">
+          <ElementSelector
+            label="Vybrat prvek 1"
+            imageUrl={elements.element1 || ""}
+            onSelect={(url) =>
+              setElements((prev) => ({ ...prev, element1: url }))
+            }
+          />
+
+          <ElementSelector
+            label="Vybrat prvek 2"
+            imageUrl={elements.element2 || ""}
+            onSelect={(url) =>
+              setElements((prev) => ({ ...prev, element2: url }))
+            }
+          />
+        </div>
       </div>
 
       {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
@@ -78,9 +82,9 @@ const PostTwoElementsGenerator = () => {
                       
                     )} */}
 
-                  {element1No && (
+                  {elements.element1 && (
                     <Image
-                      src={element1No}
+                      src={elements.element1}
                       alt="Image 1"
                       className="object-cover"
                       fill
@@ -88,20 +92,14 @@ const PostTwoElementsGenerator = () => {
                   )}
                 </div>
                 <div className="w-[440px] aspect-square border-black border-b-2 relative">
-                  {/* {elementSet2 && (
+                  {elements.element2 && (
                     <Image
-                      src={
-                        "/img/elements/" +
-                        elementSet2.elementPrefix +
-                        "motiv" +
-                        element2No +
-                        ".png"
-                      }
+                      src={elements.element2}
                       alt="Image 2"
                       className="object-cover"
                       fill
                     />
-                  )} */}
+                  )}
                 </div>
               </div>
               {/* {facility !== 0 ? (

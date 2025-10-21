@@ -1,3 +1,8 @@
+export type ElementKey = `element${number}`;
+
+// --------------------------------
+// API types
+// --------------------------------
 export type Facility = {
   id: number;
   name: string;
