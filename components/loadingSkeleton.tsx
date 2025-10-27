@@ -14,16 +14,17 @@ const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
   rounded = true,
 }) => {
   return (
-    <div className="animate-pulse space-y-2">
+    <>
       {Array.from({ length: count }).map((_, i) => (
-        <div
-          key={i}
-          className={`bg-gray-300 w-full ${width} ${height} ${
-            rounded ? "rounded-md" : ""
-          }`}
-        />
+        <div className="animate-pulse" key={i}>
+          <div
+            className={`bg-gray-300 w-full ${width} ${height} ${
+              rounded ? "rounded-md" : ""
+            }`}
+          />{" "}
+        </div>
       ))}
-    </div>
+    </>
   );
 };
 

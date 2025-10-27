@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
 import Image from "next/image";
-import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
+
 import { ElementKey, Facility } from "@/utils/types";
+
 import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
+import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import LoadingSkeleton from "@/components/loadingSkeleton";
 
 const PostTwoElementsGenerator = () => {
@@ -30,7 +33,7 @@ const PostTwoElementsGenerator = () => {
     const fetchItems = async () => {
       try {
         const res = await fetch(
-          "https://branding.sferagrafika.eu/api/facilities"
+          "https://branding.sferagrafika.eu/api/facilities",
         );
         if (!res.ok) throw new Error("Failed to fetch items");
         const data: Facility[] = await res.json();
@@ -57,39 +60,51 @@ const PostTwoElementsGenerator = () => {
         <MenuBlock>
           <h2 className="font-bold mb-2">Prvky a pozadí</h2>
           <ElementSelectorGrid>
-            <ElementSelector
-              label="Vybrat prvek 1"
-              imageUrl={elements.element1?.image || ""}
-              onSelect={(url) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element1: { bg: prev.element1?.bg || "", image: url },
-                }))
-              }
-              onColorSelect={(color) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element1: { bg: color, image: prev.element1?.image || null },
-                }))
-              }
-            />
+            {facilities.length === 0 || loading ? (
+              <LoadingSkeleton height="h-24" count={2} />
+            ) : (
+              <>
+                <ElementSelector
+                  label="Vybrat prvek 1"
+                  imageUrl={elements.element1?.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element1: { bg: prev.element1?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element1: {
+                        bg: color,
+                        image: prev.element1?.image || null,
+                      },
+                    }))
+                  }
+                />
 
-            <ElementSelector
-              label="Vybrat prvek 2"
-              imageUrl={elements.element2?.image || ""}
-              onSelect={(url) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element2: { bg: prev.element2?.bg || "", image: url },
-                }))
-              }
-              onColorSelect={(color) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element2: { bg: color, image: prev.element2?.image || null },
-                }))
-              }
-            />
+                <ElementSelector
+                  label="Vybrat prvek 2"
+                  imageUrl={elements.element2?.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element2: { bg: prev.element2?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element2: {
+                        bg: color,
+                        image: prev.element2?.image || null,
+                      },
+                    }))
+                  }
+                />
+              </>
+            )}
           </ElementSelectorGrid>
         </MenuBlock>
         <MenuBlock>

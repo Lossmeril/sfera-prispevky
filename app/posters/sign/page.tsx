@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
 import Image from "next/image";
 
+import splitParagraphs from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
+
 import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
-import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
-
-import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
 import LongTextInput from "@/components/inputs/longTextInput";
-import splitParagraphs from "@/utils/splitParagraphs";
+import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
+import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
+import LoadingSkeleton from "@/components/loadingSkeleton";
 
 const PostTwoElementsGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
@@ -33,7 +35,7 @@ const PostTwoElementsGenerator = () => {
     const fetchItems = async () => {
       try {
         const res = await fetch(
-          "https://branding.sferagrafika.eu/api/facilities"
+          "https://branding.sferagrafika.eu/api/facilities",
         );
         if (!res.ok) throw new Error("Failed to fetch items");
         const data: Facility[] = await res.json();
@@ -58,73 +60,92 @@ const PostTwoElementsGenerator = () => {
         <MenuBlock>
           <h2 className="font-bold mb-2">Prvky a pozadí</h2>
           <ElementSelectorGrid>
-            <ElementSelector
-              label="Vybrat prvek 1"
-              imageUrl={elements.element1.image || ""}
-              onSelect={(url) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element1: { bg: prev.element1?.bg || "", image: url },
-                }))
-              }
-              onColorSelect={(color) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element1: { bg: color, image: prev.element1?.image || null },
-                }))
-              }
-            />
+            {" "}
+            {facilities.length === 0 || loading ? (
+              <LoadingSkeleton height="h-24" count={4} />
+            ) : (
+              <>
+                <ElementSelector
+                  label="Vybrat prvek 1"
+                  imageUrl={elements.element1.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element1: { bg: prev.element1?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element1: {
+                        bg: color,
+                        image: prev.element1?.image || null,
+                      },
+                    }))
+                  }
+                />
 
-            <ElementSelector
-              label="Vybrat prvek 2"
-              imageUrl={elements.element2.image || ""}
-              onSelect={(url) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element2: { bg: prev.element2?.bg || "", image: url },
-                }))
-              }
-              onColorSelect={(color) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element2: { bg: color, image: prev.element2?.image || null },
-                }))
-              }
-            />
+                <ElementSelector
+                  label="Vybrat prvek 2"
+                  imageUrl={elements.element2.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element2: { bg: prev.element2?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element2: {
+                        bg: color,
+                        image: prev.element2?.image || null,
+                      },
+                    }))
+                  }
+                />
 
-            <ElementSelector
-              label="Vybrat prvek 3"
-              imageUrl={elements.element3.image || ""}
-              onSelect={(url) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element3: { bg: prev.element3?.bg || "", image: url },
-                }))
-              }
-              onColorSelect={(color) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element3: { bg: color, image: prev.element3?.image || null },
-                }))
-              }
-            />
+                <ElementSelector
+                  label="Vybrat prvek 3"
+                  imageUrl={elements.element3.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element3: { bg: prev.element3?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element3: {
+                        bg: color,
+                        image: prev.element3?.image || null,
+                      },
+                    }))
+                  }
+                />
 
-            <ElementSelector
-              label="Vybrat prvek 4"
-              imageUrl={elements.element4.image || ""}
-              onSelect={(url) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element4: { bg: prev.element4?.bg || "", image: url },
-                }))
-              }
-              onColorSelect={(color) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element4: { bg: color, image: prev.element4?.image || null },
-                }))
-              }
-            />
+                <ElementSelector
+                  label="Vybrat prvek 4"
+                  imageUrl={elements.element4.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element4: { bg: prev.element4?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element4: {
+                        bg: color,
+                        image: prev.element4?.image || null,
+                      },
+                    }))
+                  }
+                />
+              </>
+            )}
           </ElementSelectorGrid>
         </MenuBlock>
         <MenuBlock>

@@ -12,6 +12,7 @@ import ElementSelector, {
 } from "@/components/inputs/elementSelector";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
+import LoadingSkeleton from "@/components/loadingSkeleton";
 
 const PostOneElementGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
@@ -56,22 +57,29 @@ const PostOneElementGenerator = () => {
         <MenuBlock>
           <h2 className="font-bold mb-2">Prvky a pozadí</h2>
           <ElementSelectorGrid>
-            <ElementSelector
-              label="Vybrat prvek 1"
-              imageUrl={elements.element1?.image || ""}
-              onSelect={(url) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element1: { bg: prev.element1?.bg || "", image: url },
-                }))
-              }
-              onColorSelect={(color) =>
-                setElements((prev) => ({
-                  ...prev,
-                  element1: { bg: color, image: prev.element1?.image || null },
-                }))
-              }
-            />
+            {facilities.length === 0 || loading ? (
+              <LoadingSkeleton height="h-24" />
+            ) : (
+              <ElementSelector
+                label="Vybrat prvek 1"
+                imageUrl={elements.element1?.image || ""}
+                onSelect={(url) =>
+                  setElements((prev) => ({
+                    ...prev,
+                    element1: { bg: prev.element1?.bg || "", image: url },
+                  }))
+                }
+                onColorSelect={(color) =>
+                  setElements((prev) => ({
+                    ...prev,
+                    element1: {
+                      bg: color,
+                      image: prev.element1?.image || null,
+                    },
+                  }))
+                }
+              />
+            )}
           </ElementSelectorGrid>
         </MenuBlock>
       </MenuSection>
