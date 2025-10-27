@@ -1,10 +1,11 @@
 // app/generators/page.tsx (or wherever this page lives)
-import GeneratorGrid from "@/components/homeGrid";
 import {
   generatablePosters,
   generatablePosts,
   generatableScreens,
 } from "@/datasets/generatableImages";
+
+import GeneratorGrid from "@/components/homeGrid";
 
 const GeneratorsHomePage = () => {
   return (

@@ -22,24 +22,22 @@ const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
         {items.map((item) => (
           <Link
             href={item.link}
-            className="hover:grayscale transition-all"
+            className="hover:grayscale transition-all border-l last-of-type:border-r border-black w-full overflow-hidden aspect-[3/4]"
             key={item.link}
           >
-            <div className="border-l last-of-type:border-r border-black w-full overflow-hidden aspect-[3/4]">
-              <div className="w-full aspect-square border-b border-black relative">
-                <Image
-                  src={
-                    item.link
-                      ? `/img${item.link}.jpg`
-                      : "https://placehold.co/400?text=Coming+Soon"
-                  }
-                  fill
-                  alt={item.name}
-                />
-              </div>
-              <div className="h-1/4 w-full p-5 flex flex-col justify-center text-center">
-                <h2 className="font-medium leading-tight">{item.name}</h2>
-              </div>
+            <div className="w-full aspect-square border-b border-black relative bg-gray-100">
+              <Image
+                src={
+                  item.link
+                    ? `/img${item.link}.jpg`
+                    : "https://placehold.co/400?text=Coming+Soon"
+                }
+                fill
+                alt={item.name}
+              />
+            </div>
+            <div className="h-1/4 w-full p-5 flex flex-col justify-center text-center">
+              <h2 className="font-medium leading-tight">{item.name}</h2>
             </div>
           </Link>
         ))}

@@ -4,6 +4,7 @@ type GeneratorType = {
 };
 
 export const generatablePosts: GeneratorType[] = [
+  { name: "Příspěvek s jedním prvkem", link: "/posts/one-element" },
   { name: "Příspěvek se dvěma prvky", link: "/posts/two-elements" },
 ];
 
