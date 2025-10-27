@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ElementSet } from "@/utils/types";
+import { Color, ElementSet } from "@/utils/types";
 import LoadingSkeleton from "../loadingSkeleton";
 import { SectionProps } from "../layout";
-import { accentColors } from "@/datasets/colors";
 
 export type ElementSelectorElement = {
   bg: string;
@@ -29,9 +28,28 @@ export default function ElementSelector({
   const [elementSets, setElementSets] = useState<ElementSet[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [accentColors, setAccentColors] = useState<Color[]>([]);
+  const [colorsLoading, setColorsLoading] = useState(true);
+
   const [browsingSet, setBrowsingSet] = useState<ElementSet | null>(null);
 
   useEffect(() => {
+    const fetchAccentColors = async () => {
+      try {
+        const res = await fetch(
+          "https://branding.sferagrafika.eu/api/accentColors"
+        );
+        if (!res.ok) throw new Error("Failed to fetch items");
+        const data: Color[] = await res.json();
+        setAccentColors(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setColorsLoading(false);
+      }
+    };
+    fetchAccentColors();
+
     if (!open) return;
     const fetchElementSets = async () => {
       try {
@@ -47,6 +65,7 @@ export default function ElementSelector({
         setLoading(false);
       }
     };
+
     fetchElementSets();
   }, [open]);
 
@@ -76,17 +95,20 @@ export default function ElementSelector({
               : label}
           </div>
         </div>
-        <select
-          className="border p-2 mb-4 rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
-          onChange={(event) => onColorSelect(event.target.value)}
-        >
-          <option value="">-- Vyberte barvu --</option>
-          {Object.entries(accentColors).map(([key, color]) => (
-            <option key={key} value={color.hex}>
-              {color.name}
-            </option>
-          ))}
-        </select>
+
+        {colorsLoading && <LoadingSkeleton height="h-10" />}
+        {accentColors.length > 0 && (
+          <select
+            className="border p-2 mb-4 rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
+            onChange={(event) => onColorSelect(event.target.value)}
+          >
+            {accentColors.map((color) => (
+              <option key={color.id} value={color.hex}>
+                {color.nameSimple}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       {/* The modal */}
