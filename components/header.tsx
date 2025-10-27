@@ -3,9 +3,11 @@ import { RiExternalLinkLine } from "react-icons/ri";
 
 const Header = () => {
   return (
-    <nav className="w-full h-20 border-b border-black flex flex-row items-center justify-between px-14 font-medium">
+    <nav className="w-full h-20 border-b border-black flex flex-row items-center justify-between px-10">
       <div>
-        <Link href="/">Domů</Link>
+        <Link href="/" className="hover:underline">
+          Domů
+        </Link>
       </div>
       <Link
         href="https://manual.sferagrafika.eu"
