@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ElementSet } from "@/utils/types";
-import LoadingSkeleton from "./loadingSkeleton";
+import LoadingSkeleton from "../loadingSkeleton";
 
 interface ElementSelectorProps {
   label: string;

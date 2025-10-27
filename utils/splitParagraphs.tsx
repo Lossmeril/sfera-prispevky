@@ -4,14 +4,14 @@ interface SplitParagraphProps {
 }
 
 const SplitParagraph: React.FC<SplitParagraphProps> = ({ text, cssStyles }) => {
-  // Split paragraphs by p-
+  // Split paragraphs by ¶
   const splitText = (inputText: string): string[] => {
-    return inputText.split(/p-/);
+    return inputText.split("¶");
   };
 
-  // Replace n- with a line break
+  // Replace ↵ with a line break
   const processSegment = (segment: string): React.ReactNode[] => {
-    const parts = segment.split(/n-/);
+    const parts = segment.split("↵");
     return parts.flatMap((part, index) =>
       index < parts.length - 1 ? [part, <br key={`br-${index}`} />] : [part]
     );
@@ -20,13 +20,13 @@ const SplitParagraph: React.FC<SplitParagraphProps> = ({ text, cssStyles }) => {
   const segments = splitText(text);
 
   return (
-    <div>
+    <>
       {segments.map((segment, index) => (
         <p key={index} className={cssStyles}>
           {processSegment(segment)}
         </p>
       ))}
-    </div>
+    </>
   );
 };
 

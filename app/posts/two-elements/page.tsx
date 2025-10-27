@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import { ElementKey, Facility } from "@/utils/types";
-import ElementSelector from "@/components/elementSelector";
+import ElementSelector from "@/components/inputs/elementSelector";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import LoadingSkeleton from "@/components/loadingSkeleton";
 

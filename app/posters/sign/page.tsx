@@ -4,16 +4,18 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { ElementKey, Facility } from "@/utils/types";
-import ElementSelector from "@/components/elementSelector";
+import ElementSelector from "@/components/inputs/elementSelector";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 
 import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
+import LongTextInput from "@/components/inputs/longTextInput";
+import splitParagraphs from "@/utils/splitParagraphs";
 
 const PostTwoElementsGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [text, setText] = useState("Váš nápis zde");
+  const [text, setText] = useState<string>("Váš nápis zde");
   const [elements, setElements] = useState<Record<ElementKey, string | null>>({
     element1: null,
     element2: null,
@@ -84,11 +86,7 @@ const PostTwoElementsGenerator = () => {
         </MenuBlock>
         <MenuBlock>
           <h2 className="font-bold">Nápis</h2>
-          <textarea
-            className="w-full h-32 border rounded-md mt-2 p-2 resize-none"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          ></textarea>
+          <LongTextInput text={text} setText={setText} />
         </MenuBlock>
       </MenuSection>
 
@@ -144,9 +142,11 @@ const PostTwoElementsGenerator = () => {
               </div>
 
               <div className="w-full h-full grid text-left overflow-hidden my-[9rem]">
-                <p className="text-[9.2em] font-bold leading-[1.3] alt-glyphs tracking-[-0.02em] ml-44 mr-32">
-                  {text}
-                </p>
+                {splitParagraphs({
+                  text,
+                  cssStyles:
+                    "text-[9.2em] font-bold leading-[1.3] alt-glyphs tracking-[-0.02em] ml-44 mr-32",
+                })}
               </div>
             </PosterSignGrid>
           </div>
