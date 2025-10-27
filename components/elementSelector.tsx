@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ElementSet } from "@/utils/types";
+import LoadingSkeleton from "./loadingSkeleton";
 
 interface ElementSelectorProps {
   label: string;
@@ -47,18 +48,16 @@ export default function ElementSelector({
     <>
       {/* The button */}
       <div
-        className="flex flex-row h-14 hover:cursor-pointer hover:bg-neutral-200 transition-all"
+        className="flex flex-row h-14 hover:cursor-pointer hover:bg-neutral-200 transition-all max-w-full overflow-hidden border border-black"
         onClick={() => setOpen(true)}
       >
         <img
-          src={
-            imageUrl ? imageUrl : "https://placehold.co/400?text=Coming+Soon"
-          }
+          src={imageUrl ? imageUrl : "https://placehold.co/400?text=Nevybráno"}
           alt=""
-          className="aspect-squareh-full object-cover border border-black border-r-0"
+          className="aspect-square h-full object-cover border "
         />
-        <div className="px-5 py-3 border border-black grid place-content-center">
-          {label}
+        <div className="px-5 py-3 border-l border-black grid place-content-center text-xs">
+          {imageUrl ? imageUrl.split("/").pop()?.split("?")[0] : label}
         </div>
       </div>
 
@@ -87,7 +86,10 @@ export default function ElementSelector({
               <p className="font-bold text-2xl mb-4">Vyberte prvek</p>
 
               {loading ? (
-                <p>Načítání…</p>
+                <>
+                  <label className="block">Sada:</label>
+                  <LoadingSkeleton height="h-10" />
+                </>
               ) : (
                 <>
                   <label className="block mb-2">Sada:</label>
@@ -109,6 +111,14 @@ export default function ElementSelector({
                       </option>
                     ))}
                   </select>
+
+                  {browsingSet && browsingSet.name === "Unique" && (
+                    <p className="w-full bg-red-200 p-3 mb-4">
+                      Unikátní prvky musí být používané pouze v rámci propagace
+                      akcí, pro které byly vytvořeny. Použití mimo tento rámec
+                      musí být konzultováno s Michalem.
+                    </p>
+                  )}
 
                   {/* Elements grid */}
                   <div className="grid grid-cols-6 gap-2 overflow-y-auto">
