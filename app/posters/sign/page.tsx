@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { ElementKey, Facility } from "@/utils/types";
-import ElementSelector from "@/components/inputs/elementSelector";
+import ElementSelector, {
+  ElementSelectorElement,
+  ElementSelectorGrid,
+} from "@/components/inputs/elementSelector";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 
 import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
@@ -16,11 +19,14 @@ const PostTwoElementsGenerator = () => {
   const [loading, setLoading] = useState(true);
 
   const [text, setText] = useState<string>("Váš nápis zde");
-  const [elements, setElements] = useState<Record<ElementKey, string | null>>({
-    element1: null,
-    element2: null,
-    element3: null,
-    element4: null,
+
+  const [elements, setElements] = useState<
+    Record<ElementKey, ElementSelectorElement>
+  >({
+    element1: { bg: "white", image: null },
+    element2: { bg: "white", image: null },
+    element3: { bg: "white", image: null },
+    element4: { bg: "white", image: null },
   });
 
   useEffect(() => {
@@ -51,39 +57,75 @@ const PostTwoElementsGenerator = () => {
 
         <MenuBlock>
           <h2 className="font-bold mb-2">Prvky a pozadí</h2>
-          <div className="grid grid-cols-4 gap-2">
+          <ElementSelectorGrid>
             <ElementSelector
               label="Vybrat prvek 1"
-              imageUrl={elements.element1 || ""}
+              imageUrl={elements.element1.image || ""}
               onSelect={(url) =>
-                setElements((prev) => ({ ...prev, element1: url }))
+                setElements((prev) => ({
+                  ...prev,
+                  element1: { bg: prev.element1?.bg || "", image: url },
+                }))
+              }
+              onColorSelect={(color) =>
+                setElements((prev) => ({
+                  ...prev,
+                  element1: { bg: color, image: prev.element1?.image || null },
+                }))
               }
             />
 
             <ElementSelector
               label="Vybrat prvek 2"
-              imageUrl={elements.element2 || ""}
+              imageUrl={elements.element2.image || ""}
               onSelect={(url) =>
-                setElements((prev) => ({ ...prev, element2: url }))
+                setElements((prev) => ({
+                  ...prev,
+                  element2: { bg: prev.element2?.bg || "", image: url },
+                }))
+              }
+              onColorSelect={(color) =>
+                setElements((prev) => ({
+                  ...prev,
+                  element2: { bg: color, image: prev.element2?.image || null },
+                }))
               }
             />
 
             <ElementSelector
               label="Vybrat prvek 3"
-              imageUrl={elements.element3 || ""}
+              imageUrl={elements.element3.image || ""}
               onSelect={(url) =>
-                setElements((prev) => ({ ...prev, element3: url }))
+                setElements((prev) => ({
+                  ...prev,
+                  element3: { bg: prev.element3?.bg || "", image: url },
+                }))
+              }
+              onColorSelect={(color) =>
+                setElements((prev) => ({
+                  ...prev,
+                  element3: { bg: color, image: prev.element3?.image || null },
+                }))
               }
             />
 
             <ElementSelector
               label="Vybrat prvek 4"
-              imageUrl={elements.element4 || ""}
+              imageUrl={elements.element4.image || ""}
               onSelect={(url) =>
-                setElements((prev) => ({ ...prev, element4: url }))
+                setElements((prev) => ({
+                  ...prev,
+                  element4: { bg: prev.element4?.bg || "", image: url },
+                }))
+              }
+              onColorSelect={(color) =>
+                setElements((prev) => ({
+                  ...prev,
+                  element4: { bg: color, image: prev.element4?.image || null },
+                }))
               }
             />
-          </div>
+          </ElementSelectorGrid>
         </MenuBlock>
         <MenuBlock>
           <h2 className="font-bold mb-2">Text cedule</h2>
@@ -100,40 +142,52 @@ const PostTwoElementsGenerator = () => {
           >
             <PosterSignGrid>
               <div className="flex flex-row flex-nowrap">
-                <div className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative">
-                  {elements.element1 && (
+                <div
+                  className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative"
+                  style={{ backgroundColor: elements.element1.bg }}
+                >
+                  {elements.element1.image && (
                     <Image
-                      src={elements.element1}
+                      src={elements.element1.image}
                       alt="Image 1"
                       className="object-cover"
                       fill
                     />
                   )}
                 </div>
-                <div className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative">
-                  {elements.element2 && (
+                <div
+                  className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative"
+                  style={{ backgroundColor: elements.element2.bg }}
+                >
+                  {elements.element2.image && (
                     <Image
-                      src={elements.element2}
+                      src={elements.element2.image}
                       alt="Image 2"
                       className="object-cover"
                       fill
                     />
                   )}
                 </div>
-                <div className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative">
-                  {elements.element3 && (
+                <div
+                  className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative"
+                  style={{ backgroundColor: elements.element3.bg }}
+                >
+                  {elements.element3.image && (
                     <Image
-                      src={elements.element3}
+                      src={elements.element3.image}
                       alt="Image 3"
                       className="object-cover"
                       fill
                     />
                   )}
                 </div>
-                <div className="w-[566.5px] aspect-square border-black border-b-2 relative">
-                  {elements.element4 && (
+                <div
+                  className="w-[566.5px] aspect-square border-black border-b-2 relative"
+                  style={{ backgroundColor: elements.element4.bg }}
+                >
+                  {elements.element4.image && (
                     <Image
-                      src={elements.element4}
+                      src={elements.element4.image}
                       alt="Image 4"
                       className="object-cover"
                       fill

@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import { ElementKey, Facility } from "@/utils/types";
-import ElementSelector from "@/components/inputs/elementSelector";
+import ElementSelector, {
+  ElementSelectorElement,
+  ElementSelectorGrid,
+} from "@/components/inputs/elementSelector";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import LoadingSkeleton from "@/components/loadingSkeleton";
 
@@ -12,11 +15,13 @@ const PostTwoElementsGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [elements, setElements] = useState<Record<ElementKey, string | null>>({
-    element1: null,
-    element2: null,
-    element3: null,
-    element4: null,
+  const [elements, setElements] = useState<
+    Record<ElementKey, ElementSelectorElement>
+  >({
+    element1: { bg: "white", image: null },
+    element2: { bg: "white", image: null },
+    element3: { bg: "white", image: null },
+    element4: { bg: "white", image: null },
   });
 
   const [facility, setFacility] = useState<number>(0);
@@ -51,23 +56,41 @@ const PostTwoElementsGenerator = () => {
 
         <MenuBlock>
           <h2 className="font-bold mb-2">Prvky a pozadí</h2>
-          <div className="flex flex-row gap-2">
+          <ElementSelectorGrid>
             <ElementSelector
               label="Vybrat prvek 1"
-              imageUrl={elements.element1 || ""}
+              imageUrl={elements.element1?.image || ""}
               onSelect={(url) =>
-                setElements((prev) => ({ ...prev, element1: url }))
+                setElements((prev) => ({
+                  ...prev,
+                  element1: { bg: prev.element1?.bg || "", image: url },
+                }))
+              }
+              onColorSelect={(color) =>
+                setElements((prev) => ({
+                  ...prev,
+                  element1: { bg: color, image: prev.element1?.image || null },
+                }))
               }
             />
 
             <ElementSelector
               label="Vybrat prvek 2"
-              imageUrl={elements.element2 || ""}
+              imageUrl={elements.element2?.image || ""}
               onSelect={(url) =>
-                setElements((prev) => ({ ...prev, element2: url }))
+                setElements((prev) => ({
+                  ...prev,
+                  element2: { bg: prev.element2?.bg || "", image: url },
+                }))
+              }
+              onColorSelect={(color) =>
+                setElements((prev) => ({
+                  ...prev,
+                  element2: { bg: color, image: prev.element2?.image || null },
+                }))
               }
             />
-          </div>
+          </ElementSelectorGrid>
         </MenuBlock>
         <MenuBlock>
           <h2 className="font-bold">Kdo zaštiťuje akci?</h2>
@@ -78,7 +101,7 @@ const PostTwoElementsGenerator = () => {
             )}
             {facilities.length > 0 && (
               <select
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
                 value={facility}
                 onChange={(e) => setFacility(Number(e.target.value))}
               >
@@ -105,30 +128,34 @@ const PostTwoElementsGenerator = () => {
           >
             <PostGridSimple>
               <div className="flex flex-row flex-nowrap">
-                <div className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative">
-                  {/* {image1 && (
-                      <Image
-                        src={URL.createObjectURL(image1)}
-                        alt="Image 1"
-                        className="object-cover"
-                        fill
-                      />
-                      
-                    )} */}
-
-                  {elements.element1 && (
+                <div
+                  className="w-[440px] aspect-square border-black border-b-2 border-r-2 relative"
+                  style={{
+                    backgroundColor: elements.element1
+                      ? elements.element1.bg
+                      : "white",
+                  }}
+                >
+                  {elements.element1.image && (
                     <Image
-                      src={elements.element1}
+                      src={elements.element1.image}
                       alt="Image 1"
                       className="object-cover"
                       fill
                     />
                   )}
                 </div>
-                <div className="w-[440px] aspect-square border-black border-b-2 relative">
-                  {elements.element2 && (
+                <div
+                  className="w-[440px] aspect-square border-black border-b-2 relative"
+                  style={{
+                    backgroundColor: elements.element2
+                      ? elements.element2.bg
+                      : "white",
+                  }}
+                >
+                  {elements.element2.image && (
                     <Image
-                      src={elements.element2}
+                      src={elements.element2.image}
                       alt="Image 2"
                       className="object-cover"
                       fill
@@ -138,7 +165,7 @@ const PostTwoElementsGenerator = () => {
               </div>
               {facility !== 0 ? (
                 <div
-                  className="w-full h-14 border-b-2 border-black flex flex-row justify-center items-center text-center"
+                  className="w-full h-[50px] border-b-2 border-black flex flex-row justify-center items-center text-center"
                   style={{
                     backgroundColor: facilities[facility].colorBg,
                   }}

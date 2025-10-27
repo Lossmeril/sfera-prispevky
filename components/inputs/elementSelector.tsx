@@ -3,21 +3,32 @@
 import { useEffect, useState } from "react";
 import { ElementSet } from "@/utils/types";
 import LoadingSkeleton from "../loadingSkeleton";
+import { SectionProps } from "../layout";
+import { accentColors } from "@/datasets/colors";
+
+export type ElementSelectorElement = {
+  bg: string;
+  image: string | null;
+};
 
 interface ElementSelectorProps {
   label: string;
   imageUrl?: string;
   onSelect: (url: string) => void;
+  onColorSelect: (color: string) => void;
 }
 
 export default function ElementSelector({
   label,
   imageUrl,
   onSelect,
+  onColorSelect,
 }: ElementSelectorProps) {
   const [open, setOpen] = useState(false);
+
   const [elementSets, setElementSets] = useState<ElementSet[]>([]);
   const [loading, setLoading] = useState(true);
+
   const [browsingSet, setBrowsingSet] = useState<ElementSet | null>(null);
 
   useEffect(() => {
@@ -47,18 +58,35 @@ export default function ElementSelector({
   return (
     <>
       {/* The button */}
-      <div
-        className="flex flex-row h-14 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 transition-all max-w-full overflow-hidden border rounded-md font-medium"
-        onClick={() => setOpen(true)}
-      >
-        <img
-          src={imageUrl ? imageUrl : "/img/element-placeholder.svg"}
-          alt=""
-          className="aspect-square h-full object-cover border "
-        />
-        <div className="px-5 py-3 border-l grid place-content-center text-xs">
-          {imageUrl ? imageUrl.split("/").pop()?.split("?")[0] : label}
+      <div className="flex flex-col gap-2">
+        <div
+          className="flex flex-row h-14 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 transition-all max-w-full overflow-hidden border rounded-md font-medium"
+          onClick={() => setOpen(true)}
+        >
+          <img
+            src={imageUrl ? imageUrl : "/img/element-placeholder.svg"}
+            alt=""
+            className="aspect-square h-full object-cover border "
+          />
+          <div className="px-5 py-3 border-l grid place-content-center text-xs">
+            {imageUrl
+              ? imageUrl.split("/").pop()?.split("_")[0] +
+                "_" +
+                imageUrl.split("/").pop()?.split("_")[1]
+              : label}
+          </div>
         </div>
+        <select
+          className="border p-2 mb-4 rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
+          onChange={(event) => onColorSelect(event.target.value)}
+        >
+          <option value="">-- Vyberte barvu --</option>
+          {Object.entries(accentColors).map(([key, color]) => (
+            <option key={key} value={color.hex}>
+              {color.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* The modal */}
@@ -102,7 +130,7 @@ export default function ElementSelector({
                         ) || null
                       )
                     }
-                    className="border p-2 rounded mb-4"
+                    className="border p-2 mb-4 rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
                   >
                     <option value="">-- Vyberte sadu --</option>
                     {elementSets.map((set) => (
@@ -145,3 +173,7 @@ export default function ElementSelector({
     </>
   );
 }
+
+export const ElementSelectorGrid: React.FC<SectionProps> = ({ children }) => {
+  return <div className="grid grid-cols-4 gap-2">{children}</div>;
+};
