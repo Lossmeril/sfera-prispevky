@@ -50,6 +50,7 @@ const PostTwoElementsGenerator = () => {
         </MenuBlock>
 
         <MenuBlock>
+          <h2 className="font-bold mb-2">Prvky a pozadí</h2>
           <div className="flex flex-row gap-2">
             <ElementSelector
               label="Vybrat prvek 1"
@@ -81,7 +82,7 @@ const PostTwoElementsGenerator = () => {
                 value={facility}
                 onChange={(e) => setFacility(Number(e.target.value))}
               >
-                <option value={0}>Bez zaštítění</option>
+                <option value={0}>-- Vyberte dílnu / laboratoř --</option>
                 {facilities
                   .filter((facility) => facility.id !== 0)
                   .map((facility) => (

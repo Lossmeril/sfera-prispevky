@@ -48,15 +48,15 @@ export default function ElementSelector({
     <>
       {/* The button */}
       <div
-        className="flex flex-row h-14 hover:cursor-pointer hover:bg-neutral-200 transition-all max-w-full overflow-hidden border border-black"
+        className="flex flex-row h-14 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 transition-all max-w-full overflow-hidden border rounded-md font-medium"
         onClick={() => setOpen(true)}
       >
         <img
-          src={imageUrl ? imageUrl : "https://placehold.co/400?text=Nevybráno"}
+          src={imageUrl ? imageUrl : "/img/element-placeholder.svg"}
           alt=""
           className="aspect-square h-full object-cover border "
         />
-        <div className="px-5 py-3 border-l border-black grid place-content-center text-xs">
+        <div className="px-5 py-3 border-l grid place-content-center text-xs">
           {imageUrl ? imageUrl.split("/").pop()?.split("?")[0] : label}
         </div>
       </div>

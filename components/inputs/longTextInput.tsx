@@ -7,7 +7,7 @@ const LongTextInput = ({ text, setText }: LongTextInputProps) => {
   return (
     <div>
       <textarea
-        className="w-full h-32 border rounded-md mt-2 p-2 resize-none"
+        className="w-full h-32 border rounded-md p-2 resize-none"
         value={text}
         onChange={(e) => setText(e.target.value)}
       ></textarea>

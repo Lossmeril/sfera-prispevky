@@ -50,6 +50,7 @@ const PostTwoElementsGenerator = () => {
         </MenuBlock>
 
         <MenuBlock>
+          <h2 className="font-bold mb-2">Prvky a pozadí</h2>
           <div className="grid grid-cols-4 gap-2">
             <ElementSelector
               label="Vybrat prvek 1"
@@ -85,7 +86,7 @@ const PostTwoElementsGenerator = () => {
           </div>
         </MenuBlock>
         <MenuBlock>
-          <h2 className="font-bold">Nápis</h2>
+          <h2 className="font-bold mb-2">Text cedule</h2>
           <LongTextInput text={text} setText={setText} />
         </MenuBlock>
       </MenuSection>
