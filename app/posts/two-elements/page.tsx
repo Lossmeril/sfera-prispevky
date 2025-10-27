@@ -5,6 +5,8 @@ import Image from "next/image";
 import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import { ElementKey, Facility } from "@/utils/types";
 import ElementSelector from "@/components/elementSelector";
+import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
+import LoadingSkeleton from "@/components/loadingSkeleton";
 
 const PostTwoElementsGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
@@ -16,6 +18,8 @@ const PostTwoElementsGenerator = () => {
     element3: null,
     element4: null,
   });
+
+  const [facility, setFacility] = useState<number>(0);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -37,34 +41,63 @@ const PostTwoElementsGenerator = () => {
   }, []);
 
   return (
-    <div className="p-4 h-auto flex flex-col lg:flex-row">
-      <div className="w-full lg:w-1/2 p-10 border-r">
-        <h1 className="text-xl font-bold mb-4">
-          Generátor: Příspěvek se dvěma prvky
-        </h1>
+    <div className="h-auto flex flex-col lg:flex-row">
+      <MenuSection>
+        <MenuBlock>
+          <h1 className="text-xl font-bold">
+            Generátor: Příspěvek se dvěma prvky
+          </h1>
+        </MenuBlock>
 
-        <div className="mb-4 flex flex-row gap-2">
-          <ElementSelector
-            label="Vybrat prvek 1"
-            imageUrl={elements.element1 || ""}
-            onSelect={(url) =>
-              setElements((prev) => ({ ...prev, element1: url }))
-            }
-          />
+        <MenuBlock>
+          <div className="flex flex-row gap-2">
+            <ElementSelector
+              label="Vybrat prvek 1"
+              imageUrl={elements.element1 || ""}
+              onSelect={(url) =>
+                setElements((prev) => ({ ...prev, element1: url }))
+              }
+            />
 
-          <ElementSelector
-            label="Vybrat prvek 2"
-            imageUrl={elements.element2 || ""}
-            onSelect={(url) =>
-              setElements((prev) => ({ ...prev, element2: url }))
-            }
-          />
-        </div>
-      </div>
+            <ElementSelector
+              label="Vybrat prvek 2"
+              imageUrl={elements.element2 || ""}
+              onSelect={(url) =>
+                setElements((prev) => ({ ...prev, element2: url }))
+              }
+            />
+          </div>
+        </MenuBlock>
+        <MenuBlock>
+          <h2 className="font-bold">Kdo zaštiťuje akci?</h2>
+          <div className="w-full mt-2">
+            {loading && <LoadingSkeleton height="h-10" />}
+            {facilities.length === 0 && !loading && (
+              <p>Žádné místnosti nejsou k dispozici.</p>
+            )}
+            {facilities.length > 0 && (
+              <select
+                className="border p-2 w-full"
+                value={facility}
+                onChange={(e) => setFacility(Number(e.target.value))}
+              >
+                <option value={0}>Bez zaštítění</option>
+                {facilities
+                  .filter((facility) => facility.id !== 0)
+                  .map((facility) => (
+                    <option key={facility.id} value={facility.id}>
+                      {facility.name}
+                    </option>
+                  ))}
+              </select>
+            )}
+          </div>
+        </MenuBlock>
+      </MenuSection>
 
       {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
-      <div className="w-full lg:w-1/2 pointer-events-none max-h-screen overflow-hidden">
-        <div className="scale-[35%] lg:scale-50 origin-top-left lg:origin-[50%_25%]">
+      <PreviewSection>
+        <div className="scale-[35%] lg:scale-50 origin-top-left lg:origin-[50%_15%]">
           <div
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
             style={{ width: "1080px", height: "1350px" }}
@@ -102,25 +135,24 @@ const PostTwoElementsGenerator = () => {
                   )}
                 </div>
               </div>
-              {/* {facility !== 0 ? (
+              {facility !== 0 ? (
                 <div
-                  className="w-full h-32 border-b-2 border-black flex flex-row justify-center items-center text-center"
+                  className="w-full h-14 border-b-2 border-black flex flex-row justify-center items-center text-center"
                   style={{
-                    backgroundColor:
-                      "var(--" + facilities[facility - 1].colorBgVarName + ")",
+                    backgroundColor: facilities[facility].colorBg,
                   }}
                 >
                   <p className="facility text-white">
-                    {facilities[facility - 1].name}
+                    {facilities[facility].name}
                   </p>
                 </div>
               ) : (
                 <></>
-              )} */}
+              )}
             </PostGridSimple>
           </div>
         </div>
-      </div>
+      </PreviewSection>
     </div>
   );
 };
