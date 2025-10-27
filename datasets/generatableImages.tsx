@@ -17,4 +17,5 @@ export const generatableWebThumbs: GeneratorType[] = [
 
 export const generatablePosters: GeneratorType[] = [
   { name: "Plakátek se dvěma prvky", link: "" },
+  { name: "Informační cedule", link: "/posters/sign" },
 ];
