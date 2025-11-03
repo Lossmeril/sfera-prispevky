@@ -10,6 +10,7 @@ import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
+import GenerateImageButton from "@/components/inputs/generateImageButton";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import LoadingSkeleton from "@/components/loadingSkeleton";
@@ -81,6 +82,9 @@ const PostOneElementGenerator = () => {
               />
             )}
           </ElementSelectorGrid>
+        </MenuBlock>
+        <MenuBlock>
+          <GenerateImageButton previewRef={previewRef} />
         </MenuBlock>
       </MenuSection>
 

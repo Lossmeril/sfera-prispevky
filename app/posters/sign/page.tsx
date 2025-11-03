@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
@@ -11,6 +11,7 @@ import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
+import GenerateImageButton from "@/components/inputs/generateImageButton";
 import LongTextInput from "@/components/inputs/longTextInput";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
@@ -30,6 +31,8 @@ const PostTwoElementsGenerator = () => {
     element3: { bg: "white", image: null },
     element4: { bg: "white", image: null },
   });
+
+  const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -152,6 +155,9 @@ const PostTwoElementsGenerator = () => {
           <h2 className="font-bold mb-2">Text cedule</h2>
           <LongTextInput text={text} setText={setText} />
         </MenuBlock>
+        <MenuBlock>
+          <GenerateImageButton previewRef={previewRef} />
+        </MenuBlock>
       </MenuSection>
 
       {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
@@ -160,6 +166,7 @@ const PostTwoElementsGenerator = () => {
           <div
             className="relative pointer-events-none bg-white flex flex-row flex-nowrap overflow-hidden"
             style={{ height: "1786px", width: "2526px" }}
+            ref={previewRef}
           >
             <PosterSignGrid>
               <div className="flex flex-row flex-nowrap">

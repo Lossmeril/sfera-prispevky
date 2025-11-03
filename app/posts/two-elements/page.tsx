@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
@@ -10,6 +10,7 @@ import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
+import GenerateImageButton from "@/components/inputs/generateImageButton";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import LoadingSkeleton from "@/components/loadingSkeleton";
@@ -28,6 +29,8 @@ const PostTwoElementsGenerator = () => {
   });
 
   const [facility, setFacility] = useState<number>(0);
+
+  const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -132,6 +135,9 @@ const PostTwoElementsGenerator = () => {
             )}
           </div>
         </MenuBlock>
+        <MenuBlock>
+          <GenerateImageButton previewRef={previewRef} />
+        </MenuBlock>
       </MenuSection>
 
       {/* --- LIVE PREVIEW SECTION -------------------------------------------------------------- */}
@@ -140,6 +146,7 @@ const PostTwoElementsGenerator = () => {
           <div
             className="relative pointer-events-none border bg-white flex flex-row flex-nowrap"
             style={{ width: "1080px", height: "1350px" }}
+            ref={previewRef}
           >
             <PostGridSimple>
               <div className="flex flex-row flex-nowrap">

@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import { Color, ElementSet } from "@/utils/types";
-import LoadingSkeleton from "../loadingSkeleton";
+
 import { SectionProps } from "../layout";
+import LoadingSkeleton from "../loadingSkeleton";
 
 export type ElementSelectorElement = {
   bg: string;
@@ -37,9 +39,9 @@ export default function ElementSelector({
     const fetchAccentColors = async () => {
       try {
         const res = await fetch(
-          "https://branding.sferagrafika.eu/api/accentColors"
+          "https://branding.sferagrafika.eu/api/accentColors",
         );
-        if (!res.ok) throw new Error("Failed to fetch items");
+        if (!res.ok) throw new Error("Nepodařilo se načíst barvy");
         const data: Color[] = await res.json();
         setAccentColors(data);
       } catch (err) {
@@ -54,9 +56,9 @@ export default function ElementSelector({
     const fetchElementSets = async () => {
       try {
         const res = await fetch(
-          "https://branding.sferagrafika.eu/api/elementSets"
+          "https://branding.sferagrafika.eu/api/elementSets",
         );
-        if (!res.ok) throw new Error("Failed to fetch items");
+        if (!res.ok) throw new Error("Nepodařilo se načíst sady prvků");
         const data: ElementSet[] = await res.json();
         setElementSets(data);
       } catch (err) {
@@ -148,8 +150,8 @@ export default function ElementSelector({
                     onChange={(e) =>
                       setBrowsingSet(
                         elementSets.find(
-                          (set) => set.id === Number(e.target.value)
-                        ) || null
+                          (set) => set.id === Number(e.target.value),
+                        ) || null,
                       )
                     }
                     className="border p-2 mb-4 rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
