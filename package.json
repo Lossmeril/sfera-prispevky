@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "html-to-image": "1.11.11",
+    "jspdf": "^3.0.3",
     "next": "15.0.3",
     "prettier": "^3.6.2",
     "react": "18.3.1",
@@ -26,5 +27,11 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
-  }
+  },
+  "resolutions": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "html-to-image": "1.11.11"
+  },
+  "packageManager": "yarn@1.22.22"
 }

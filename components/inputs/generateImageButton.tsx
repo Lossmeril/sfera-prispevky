@@ -45,7 +45,7 @@ const GenerateImageButton: React.FC<GenerateImageButtonProps> = ({
             }
           }}
         >
-          Stáhnout obrázek (.png)
+          Stáhnout jako PNG
         </button>
       </div>
     </>

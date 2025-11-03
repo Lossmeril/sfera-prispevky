@@ -7,14 +7,16 @@ import Image from "next/image";
 import splitParagraphs from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 
+import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
+
 import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
-import GenerateImageButton from "@/components/inputs/generateImageButton";
+import GeneratePdfButton from "@/components/inputs/generatePdfButton";
 import LongTextInput from "@/components/inputs/longTextInput";
+
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
-import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
 import LoadingSkeleton from "@/components/loadingSkeleton";
 
 const PostTwoElementsGenerator = () => {
@@ -156,7 +158,7 @@ const PostTwoElementsGenerator = () => {
           <LongTextInput text={text} setText={setText} />
         </MenuBlock>
         <MenuBlock>
-          <GenerateImageButton previewRef={previewRef} />
+          <GeneratePdfButton previewRef={previewRef} />
         </MenuBlock>
       </MenuSection>
 
