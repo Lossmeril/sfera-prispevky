@@ -13,6 +13,8 @@ interface GeneratorGridProps {
 }
 
 const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
+  const emptySpaces = Array(4 - (items.length % 4)).fill(null);
+
   return (
     <>
       <h2 className="text-xl md:text-2xl xl:text-3xl font-bold text-left leading-none border border-black w-full p-4 border-b-0">
@@ -22,10 +24,10 @@ const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
         {items.map((item) => (
           <Link
             href={item.link}
-            className="hover:grayscale transition-all border-l last-of-type:border-r border-black w-full overflow-hidden aspect-[3/4]"
+            className="hover:grayscale transition-all border-l border-black w-full overflow-hidden aspect-[3/4] flex flex-col"
             key={item.link}
           >
-            <div className="w-full aspect-square border-b border-black relative bg-gray-100">
+            <div className="w-full aspect-square border-b border-black relative bg-gray-100 grid place-content-center">
               <Image
                 src={
                   item.link
@@ -36,10 +38,17 @@ const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
                 alt={item.name}
               />
             </div>
-            <div className="h-1/4 w-full p-5 flex flex-col justify-center text-center">
-              <h2 className="font-medium leading-tight">{item.name}</h2>
+            <div className="w-full h-32 text-center grid place-content-center">
+              <h2 className="font-medium leading-tight m-0">{item.name}</h2>
             </div>
           </Link>
+        ))}
+
+        {emptySpaces.map((_, index) => (
+          <div
+            key={`empty-${index}`}
+            className="border-l last-of-type:border-r border-black w-full overflow-hidden aspect-[3/4] bg-white hidden lg:block"
+          ></div>
         ))}
       </div>
     </>
