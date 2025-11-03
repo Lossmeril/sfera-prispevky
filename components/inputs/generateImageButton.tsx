@@ -27,7 +27,7 @@ const GenerateImageButton: React.FC<GenerateImageButtonProps> = ({
       <div className="w-full py-5">
         <button
           className="bg-gray-100 hover:bg-gray-200 border rounded-md transition-all px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={generatingLoading && !validated}
+          disabled={generatingLoading || !validated}
           onClick={async () => {
             if (previewRef.current) {
               setGeneratingLoading(true);

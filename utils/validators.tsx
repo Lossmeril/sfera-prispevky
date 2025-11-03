@@ -1,26 +1,26 @@
+import { ElementSelectorElement } from "@/components/inputs/elementSelector";
+
+import { ElementKey } from "./types";
+
 // return true if the length is valid
 export const lengthValidate = (
   length: number,
   shortTrashold: number,
   longTrashold: number,
-  conditionForShort: boolean
+  conditionForShort: boolean,
 ) => {
   return !conditionForShort ? length <= longTrashold : length <= shortTrashold;
 };
 
-// return true if enough images is uploaded
-export const imageUploadValidate = (
-  noOfImages: number,
-  image1: File | null,
-  image2?: File | null,
-  image3?: File | null,
-  image4?: File | null
+// return true if all the images are of different variety
+export const imageVarietyValidate = (
+  elements: Record<ElementKey, ElementSelectorElement>,
 ) => {
+  const values = Object.entries(elements).map(([, v]) => v.image || "");
+  console.log(values);
   return (
-    image1 &&
-    (noOfImages >= 2 ? image2 : true) &&
-    (noOfImages >= 3 ? image3 : true) &&
-    (noOfImages >= 4 ? image4 : true)
+    values.filter((item, index) => values.indexOf(item) !== index).length ===
+      0 && !values.includes("")
   );
 };
 

@@ -5,14 +5,17 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { ElementKey, Facility } from "@/utils/types";
+import { imageVarietyValidate } from "@/utils/validators";
+
+import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 
 import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
 import GenerateImageButton from "@/components/inputs/generateImageButton";
+
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
-import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 import LoadingSkeleton from "@/components/loadingSkeleton";
 
 const PostTwoElementsGenerator = () => {
@@ -24,8 +27,6 @@ const PostTwoElementsGenerator = () => {
   >({
     element1: { bg: "white", image: null },
     element2: { bg: "white", image: null },
-    element3: { bg: "white", image: null },
-    element4: { bg: "white", image: null },
   });
 
   const [facility, setFacility] = useState<number>(0);
