@@ -5,7 +5,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { ElementKey, Facility } from "@/utils/types";
-import { imageVarietyValidate } from "@/utils/validators";
+import {
+  bgColorsValidate,
+  imageVarietyValidate,
+  validate,
+} from "@/utils/validators";
 
 import { PostGridSimple } from "@/components/layoutTemplates/postGridBasic";
 
@@ -13,6 +17,7 @@ import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
+import ErrorDisplay from "@/components/inputs/error";
 import GenerateImageButton from "@/components/inputs/generateImageButton";
 
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
@@ -32,6 +37,13 @@ const PostTwoElementsGenerator = () => {
   const [facility, setFacility] = useState<number>(0);
 
   const previewRef = useRef<HTMLDivElement>(null);
+  const result = validate({
+    data: { elements },
+    validators: [
+      (d) => imageVarietyValidate(d.elements),
+      (d) => bgColorsValidate(d.elements),
+    ],
+  });
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -137,7 +149,11 @@ const PostTwoElementsGenerator = () => {
           </div>
         </MenuBlock>
         <MenuBlock>
-          <GenerateImageButton previewRef={previewRef} />
+          <GenerateImageButton
+            previewRef={previewRef}
+            validated={result.valid}
+          />
+          <ErrorDisplay errors={result.errors} />
         </MenuBlock>
       </MenuSection>
 

@@ -6,6 +6,11 @@ import Image from "next/image";
 
 import splitParagraphs from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
+import {
+  bgColorsValidate,
+  imageVarietyValidate,
+  validate,
+} from "@/utils/validators";
 
 import { PosterSignGrid } from "@/components/layoutTemplates/posterSign";
 
@@ -13,6 +18,7 @@ import ElementSelector, {
   ElementSelectorElement,
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
+import ErrorDisplay from "@/components/inputs/error";
 import GeneratePdfButton from "@/components/inputs/generatePdfButton";
 import LongTextInput from "@/components/inputs/longTextInput";
 
@@ -35,6 +41,13 @@ const PostTwoElementsGenerator = () => {
   });
 
   const previewRef = useRef<HTMLDivElement>(null);
+  const result = validate({
+    data: { elements, text },
+    validators: [
+      (d) => imageVarietyValidate(d.elements),
+      (d) => bgColorsValidate(d.elements),
+    ],
+  });
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -158,7 +171,8 @@ const PostTwoElementsGenerator = () => {
           <LongTextInput text={text} setText={setText} />
         </MenuBlock>
         <MenuBlock>
-          <GeneratePdfButton previewRef={previewRef} />
+          <GeneratePdfButton previewRef={previewRef} validated={result.valid} />
+          <ErrorDisplay errors={result.errors} />
         </MenuBlock>
       </MenuSection>
 

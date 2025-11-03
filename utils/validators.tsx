@@ -7,6 +7,8 @@ type ValidationResult = {
   errors: string[];
 };
 
+type Validator<T> = (data: T) => ValidationResult;
+
 // ✅ Length validator
 export const lengthValidate = (
   length: number,
@@ -70,55 +72,20 @@ export const bgColorsValidate = (
   return { valid, errors };
 };
 
-// ✅ SFÉRA capitalization validator
-export const sferaCapitalizationValidate = (
-  text: string,
-): {
-  valid: boolean;
-  errors: string[];
-} => {
-  const normalized = text.normalize("NFC");
-  const errors: string[] = [];
+export function validate<T>(options: {
+  data: T;
+  validators: Validator<T>[];
+}): ValidationResult {
+  const { data, validators } = options;
+  const allErrors: string[] = [];
 
-  // Regex patterns
-  const sferaPattern = /\bSFÉR(A|Y|U|OU|O|E|AMI|ÁM|ÁCH)\b/g;
-  const lowercaseSferaPattern =
-    /\b(sféra|sféry|sféře|sféru|sférou|sférách|sférami|sférám)\b/g;
-  const mixedCaseSferaPattern = /\b[Ss]f[ée]r[a-zá-ž]+\b/g;
-
-  const sphericalUpperPattern = /\bSFÉRICK(Ý|Á|É|ÉHO|ÉMU|ÝM|OU|ÝCH|ÝMI|ÉM)?\b/g;
-  const sferanUpperPattern = /\bSFÉŘAN(A|I|Y|OVI|EM|ŮM|ECH)?\b/g;
-
-  // Lowercase exceptions (allowed)
-  const sphericalLowerPattern = /\bsférick(ý|á|é|ého|ému|ým|ou|ých|ými|ém)?\b/g;
-  const sferanLowerPattern = /\bsféřan(a|i|y|ovi|em|ům|ech)?\b/g;
-
-  // Rule 1: SFÉRA and declensions must be fully uppercase
-  if (
-    normalized.match(lowercaseSferaPattern) ||
-    normalized.match(mixedCaseSferaPattern)
-  ) {
-    errors.push(
-      "Slovo „SFÉRA“ (včetně skloňování) musí být psáno verzálkami – např. SFÉŘE, SFÉRY, SFÉROU.",
-    );
-  }
-
-  // Rule 2: "sférický" must *not* be uppercase
-  if (normalized.match(sphericalUpperPattern)) {
-    errors.push(
-      "Přídavné jméno „sférický“ (a jeho tvary) se píše s malým písmenem.",
-    );
-  }
-
-  // Rule 3: "sféřan" must *not* be uppercase
-  if (normalized.match(sferanUpperPattern)) {
-    errors.push(
-      "Podstatné jméno „sféřan“ (a jeho tvary) se píše s malým písmenem.",
-    );
+  for (const validator of validators) {
+    const result = validator(data);
+    if (!result.valid) allErrors.push(...result.errors);
   }
 
   return {
-    valid: errors.length === 0,
-    errors,
+    valid: allErrors.length === 0,
+    errors: allErrors,
   };
-};
+}
