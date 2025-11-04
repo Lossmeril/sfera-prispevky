@@ -20,7 +20,7 @@ import ElementSelector, {
 } from "@/components/inputs/elementSelector";
 import ErrorDisplay from "@/components/inputs/error";
 import GeneratePdfButton from "@/components/inputs/generatePdfButton";
-import LongTextInput from "@/components/inputs/longTextInput";
+import LongTextInput from "@/components/inputs/textInputs";
 
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import LoadingSkeleton from "@/components/loadingSkeleton";

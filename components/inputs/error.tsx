@@ -4,11 +4,11 @@ interface errorProps {
 
 const ErrorDisplay: React.FC<errorProps> = ({ errors }) => {
   return (
-    <ul className="text-xs italic ml-4 text-red-600 ">
+    <div className="flex flex-col gap-1 text-xs italic text-red-600/50 ml-2">
       {errors.map((error, index) => (
-        <li key={index}>{error}</li>
+        <div key={index}>{error}</div>
       ))}
-    </ul>
+    </div>
   );
 };
 export default ErrorDisplay;
