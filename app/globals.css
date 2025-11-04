@@ -45,8 +45,8 @@ body {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 28px;
-  text-align: center;
+  /* font-size: 28px;
+  text-align: center; */
 }
 
 .alt-glyphs {
@@ -56,33 +56,14 @@ body {
 .main-heading {
   font-weight: 700;
   letter-spacing: -0.035em;
-  font-size: 83px;
+  /* font-size: 83px;
   text-align: center;
 
   padding-top: 2px;
   line-height: 83px;
   display: block;
   overflow: hidden;
-  max-height: 168px;
-}
-
-.dyk-heading {
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  font-size: 75px;
-
-  padding-top: 2px;
-  line-height: 83px;
-  display: block;
-  overflow: hidden;
-}
-
-.announcement .main-heading {
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  font-size: 72px;
-  line-height: 72px;
-  max-height: 144px;
+  max-height: 168px; */
 }
 
 .desc {
@@ -108,6 +89,10 @@ body {
 .facility {
   font-weight: 500;
   font-size: 33px;
+}
+
+.facility-screen {
+  font-size: 41px;
 }
 
 .color-dropdown {
