@@ -9,6 +9,7 @@ import { ElementKey, Facility } from "@/utils/types";
 import {
   bgColorsValidate,
   imageVarietyValidate,
+  inputValidate,
   validate,
 } from "@/utils/validators";
 
@@ -29,7 +30,7 @@ const PostTwoElementsGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [text, setText] = useState<string>("Váš nápis zde");
+  const [text, setText] = useState<string>("");
 
   const [elements, setElements] = useState<
     Record<ElementKey, ElementSelectorElement>
@@ -46,6 +47,7 @@ const PostTwoElementsGenerator = () => {
     validators: [
       (d) => imageVarietyValidate(d.elements),
       (d) => bgColorsValidate(d.elements),
+      (d) => inputValidate(d.text || "", "Text cedule"),
     ],
   });
 
@@ -168,7 +170,11 @@ const PostTwoElementsGenerator = () => {
         </MenuBlock>
         <MenuBlock>
           <h2 className="font-bold mb-2">Text cedule</h2>
-          <LongTextInput text={text} setText={setText} />
+          <LongTextInput
+            text={text}
+            setText={setText}
+            placeholder="Text cedule napište zde"
+          />
         </MenuBlock>
         <MenuBlock>
           <GeneratePdfButton previewRef={previewRef} validated={result.valid} />
@@ -244,7 +250,7 @@ const PostTwoElementsGenerator = () => {
                 {splitParagraphs({
                   text,
                   cssStyles:
-                    "text-[9.2em] font-bold leading-[1.3] alt-glyphs tracking-[-0.02em] ml-44 mr-32",
+                    "text-[9.2em] font-bold leading-[1.3] alt-glyphs tracking-[-0.02em] ml-44 mr-44 line-clamp-3",
                 })}
               </div>
             </PosterSignGrid>

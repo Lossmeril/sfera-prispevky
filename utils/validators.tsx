@@ -9,6 +9,24 @@ type ValidationResult = {
 
 type Validator<T> = (data: T) => ValidationResult;
 
+// ✅ text existence validator
+export const inputValidate = (
+  text: string,
+  typeOfText: string,
+  alternativeDeclension?: string,
+): ValidationResult => {
+  const valid = text.trim().length > 0;
+
+  const errors: string[] = [];
+  if (!valid) {
+    errors.push(
+      `${typeOfText} musí být ${alternativeDeclension || "vyplněn"}.`,
+    );
+  }
+
+  return { valid, errors };
+};
+
 // ✅ Length validator
 export const lengthValidate = (
   length: number,
