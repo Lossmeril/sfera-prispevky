@@ -90,6 +90,18 @@ export const bgColorsValidate = (
   return { valid, errors };
 };
 
+// ✅ Saturday date validator
+export const isSaturday = (dateString: string): ValidationResult => {
+  const valid = new Date(dateString).getDay() === 6;
+
+  const errors: string[] = [];
+  if (!valid) {
+    errors.push(`Datum musí být sobota.`);
+  }
+
+  return { valid, errors };
+};
+
 export function validate<T>(options: {
   data: T;
   validators: Validator<T>[];

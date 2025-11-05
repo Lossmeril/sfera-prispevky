@@ -17,6 +17,7 @@ interface ElementSelectorProps {
   imageUrl?: string;
   onSelect: (url: string) => void;
   onColorSelect: (color: string) => void;
+  noColorSelect?: boolean;
 }
 
 export default function ElementSelector({
@@ -24,6 +25,7 @@ export default function ElementSelector({
   imageUrl,
   onSelect,
   onColorSelect,
+  noColorSelect = false,
 }: ElementSelectorProps) {
   const [open, setOpen] = useState(false);
 
@@ -98,8 +100,8 @@ export default function ElementSelector({
           </div>
         </div>
 
-        {colorsLoading && <LoadingSkeleton height="h-10" />}
-        {accentColors.length > 0 && (
+        {!noColorSelect && colorsLoading && <LoadingSkeleton height="h-10" />}
+        {!noColorSelect && accentColors.length > 0 && (
           <select
             className="border p-2 mb-4 rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
             onChange={(event) => onColorSelect(event.target.value)}

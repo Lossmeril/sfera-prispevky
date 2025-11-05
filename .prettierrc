@@ -9,12 +9,12 @@
     "^@/datasets/.*$",
     "^\\.\\./.*$",
     "^@/components/layoutTemplates/.*$",
-    "^\\.\\./.*$",
+
     "^@/components/inputs/.*$",
-    "^\\.\\./.*$",
+
     "^@/components/.*$",
     "^@/app/.*$",
-    "^\\.\\./.*$",
+
     "^\\./.*$"
   ],
   "importOrderSeparation": true,
