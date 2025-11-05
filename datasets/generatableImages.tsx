@@ -14,7 +14,7 @@ export const generatableScreens: GeneratorType[] = [
 ];
 
 export const generatableWebThumbs: GeneratorType[] = [
-  { name: "Víkendovka", link: "" },
+  { name: "Víkendovka", link: "/web/weekend" },
 ];
 
 export const generatablePosters: GeneratorType[] = [

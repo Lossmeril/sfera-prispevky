@@ -3,6 +3,7 @@ import {
   generatablePosters,
   generatablePosts,
   generatableScreens,
+  generatableWebThumbs,
 } from "@/datasets/generatableImages";
 
 import GeneratorGrid from "@/components/homeGrid";
@@ -17,6 +18,7 @@ const GeneratorsHomePage = () => {
       <GeneratorGrid title="Příspěvky" items={generatablePosts} />
       <GeneratorGrid title="Digitální obrazovky" items={generatableScreens} />
       <GeneratorGrid title="Plakáty" items={generatablePosters} />
+      <GeneratorGrid title="Webové náhleďáky" items={generatableWebThumbs} />
     </div>
   );
 };
