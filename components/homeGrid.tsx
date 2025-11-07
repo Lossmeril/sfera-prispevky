@@ -40,7 +40,7 @@ const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
                 className="p-4"
               />
             </div>
-            <div className="w-full h-32 text-center grid place-content-center">
+            <div className="w-full h-32 px-10 text-center grid place-content-center">
               <h2 className="font-medium leading-tight m-0">{item.name}</h2>
             </div>
           </Link>

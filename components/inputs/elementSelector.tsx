@@ -18,6 +18,7 @@ interface ElementSelectorProps {
   onSelect: (url: string) => void;
   onColorSelect: (color: string) => void;
   noColorSelect?: boolean;
+  imageQuality?: "medium" | "high";
 }
 
 export default function ElementSelector({
@@ -26,6 +27,7 @@ export default function ElementSelector({
   onSelect,
   onColorSelect,
   noColorSelect = false,
+  imageQuality = "high",
 }: ElementSelectorProps) {
   const [open, setOpen] = useState(false);
 
@@ -180,7 +182,12 @@ export default function ElementSelector({
                       <div
                         key={element.id}
                         className="p-2 hover:bg-slate-100 cursor-pointer rounded"
-                        onClick={() => handleSelect(element.variants[2].url)}
+                        onClick={() =>
+                          handleSelect(
+                            element.variants[imageQuality === "medium" ? 1 : 2]
+                              .url,
+                          )
+                        }
                       >
                         <img
                           src={element.variants[0].url}

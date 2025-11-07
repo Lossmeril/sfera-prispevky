@@ -104,6 +104,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
 
                 <ElementSelector
@@ -125,6 +126,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
 
                 <ElementSelector
@@ -146,6 +148,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
 
                 <ElementSelector
@@ -167,6 +170,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
 
                 <ElementSelector
@@ -188,6 +192,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
 
                 <ElementSelector
@@ -209,6 +214,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
 
                 <ElementSelector
@@ -230,6 +236,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
 
                 <ElementSelector
@@ -251,6 +258,7 @@ const ScreenFourElementsGenerator = () => {
                     }))
                   }
                   noColorSelect
+                  imageQuality="medium"
                 />
               </>
             )}
