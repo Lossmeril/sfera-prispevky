@@ -25,7 +25,7 @@ const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
         {items.map((item, index) => (
           <Link
             href={item.link}
-            className="hover:grayscale transition-all border-l border-b border-black w-full overflow-hidden aspect-[3/4] flex flex-col"
+            className="hover:grayscale transition-all border-l border-b border-black w-full overflow-hidden aspect-[3/4] flex flex-col every-fourth"
             key={index}
           >
             <div className="w-full aspect-square border-b border-black relative bg-white grid place-content-center">
@@ -49,7 +49,7 @@ const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
         {emptySpaces.map((_, index) => (
           <div
             key={`empty-${index}`}
-            className="border-l last-of-type:border-r border-b border-black w-full overflow-hidden aspect-[3/4] bg-white hidden lg:block"
+            className="border-l last-of-type:border-r border-b border-black w-full overflow-hidden aspect-[3/4] bg-white hidden lg:block every-fourth"
           ></div>
         ))}
       </div>
