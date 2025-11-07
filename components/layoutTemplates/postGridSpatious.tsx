@@ -1,9 +1,6 @@
-export interface GridProps {
-  mode?: "dark" | "light";
-  children: React.ReactNode;
-}
+import { GridProps } from "./postGridBasic";
 
-export const PostGridSimple: React.FC<GridProps> = ({
+export const PostGridSpatious: React.FC<GridProps> = ({
   children,
   mode = "dark",
 }) => {
@@ -15,12 +12,12 @@ export const PostGridSimple: React.FC<GridProps> = ({
         } border-r-2`}
       >
         <div
-          className={`h-[235px] w-full ${
+          className={`h-[125px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
           } border-b-2`}
         ></div>
         <div
-          className={`h-[880px] w-full ${
+          className={`h-[1100px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
           } border-b-2`}
         ></div>
@@ -31,12 +28,12 @@ export const PostGridSimple: React.FC<GridProps> = ({
         } border-r-2`}
       >
         <div
-          className={`h-[235px] w-full ${
+          className={`h-[125px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
           } border-b-2`}
         ></div>
         <div
-          className={`h-[880px] w-full ${
+          className={`h-[1100px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
           } border-b-2 flex flex-col overflow-hidden`}
         >
@@ -49,12 +46,12 @@ export const PostGridSimple: React.FC<GridProps> = ({
         }`}
       >
         <div
-          className={`h-[235px] w-full ${
+          className={`h-[125px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
           } border-b-2`}
         ></div>
         <div
-          className={`h-[880px] w-full ${
+          className={`h-[1100px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
           } border-b-2`}
         ></div>

@@ -1,9 +1,6 @@
-interface PostGridProps {
-  mode?: "dark" | "light";
-  children: React.ReactNode;
-}
+import { GridProps } from "./postGridBasic";
 
-export const PosterSignGrid: React.FC<PostGridProps> = ({
+export const PosterSignGrid: React.FC<GridProps> = ({
   children,
   mode = "dark",
 }) => {

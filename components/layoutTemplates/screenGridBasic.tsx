@@ -1,9 +1,6 @@
-interface ScreenGridProps {
-  mode?: "dark" | "light";
-  children: React.ReactNode;
-}
+import { GridProps } from "./postGridBasic";
 
-export const ScreenGridBasic: React.FC<ScreenGridProps> = ({
+export const ScreenGridBasic: React.FC<GridProps> = ({
   children,
   mode = "dark",
 }) => {

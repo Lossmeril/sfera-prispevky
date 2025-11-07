@@ -13,7 +13,8 @@ interface GeneratorGridProps {
 }
 
 const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
-  const emptySpaces = Array(4 - (items.length % 4)).fill(null);
+  const emptySpaces =
+    items.length % 4 !== 0 ? Array(4 - (items.length % 4)).fill(null) : [];
 
   return (
     <>

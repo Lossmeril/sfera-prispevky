@@ -91,7 +91,7 @@ export default function ElementSelector({
             alt=""
             className="aspect-square h-full object-cover border "
           />
-          <div className="px-5 py-3 border-l grid place-content-center text-xs">
+          <div className="px-3 py-3 border-l grid place-content-center text-xs">
             {imageUrl
               ? imageUrl.split("/").pop()?.split("_")[0] +
                 "_" +
@@ -183,7 +183,7 @@ export default function ElementSelector({
                         onClick={() => handleSelect(element.variants[2].url)}
                       >
                         <img
-                          src={element.variants[1].url}
+                          src={element.variants[0].url}
                           alt={element.name}
                           className="w-full h-auto rounded"
                         />

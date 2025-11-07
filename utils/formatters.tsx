@@ -35,3 +35,21 @@ export const removeEmojis = (input: string): string => {
   // Replace emojis with an empty string
   return input.replace(emojiRegex, "");
 };
+
+export const constructFileName = (
+  input: string,
+  type: string,
+  suffix: string,
+  width: number,
+  height: number,
+): string => {
+  return removeEmojis(
+    `SFÉRA_${width}x${height}px_` +
+      input
+        .split(/[.:,;\-\/\\()[\]{}—]/)[0]
+        .replace(/ /g, "-")
+        .replace(/[#%&:*!?—]/, "")
+        .toLowerCase() +
+      `-${type}.${suffix}`,
+  );
+};
