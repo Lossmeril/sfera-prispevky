@@ -10,7 +10,7 @@ export const generatablePosts: GeneratorType[] = [
     link: "/posts/one-element-heading",
   },
   { name: "Příspěvek se dvěma prvky", link: "" },
-  { name: "Příspěvek se čtyřmi prvky", link: "" },
+  { name: "Příspěvek se čtyřmi prvky", link: "/posts/four-elements" },
 ];
 
 export const generatableScreens: GeneratorType[] = [

@@ -141,7 +141,7 @@ const PostOneElementWithHeadingGenerator = () => {
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
-            fileName={constructFileName(title, "příspěvek", "png", 1080, 1350)}
+            fileName={constructFileName(title, "příspěvek", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />
         </MenuBlock>
@@ -173,16 +173,20 @@ const PostOneElementWithHeadingGenerator = () => {
                   />
                 )}
               </div>
-              <div className="w-full h-full grid place-content-center text-center gap-6">
-                <p
-                  className="text-[1.5em] above-heading line-clamp-1"
-                  style={{ marginBottom: title !== "" ? "-20px" : "10px" }}
-                >
-                  {removeEmojis(eventType)}
-                </p>
-                <p className="text-[4.2em] leading-[0.9em] line-clamp-2 font-medium main-heading alt-glyphs px-5">
-                  {removeEmojis(title)}
-                </p>
+              <div className="w-full h-full grid place-content-center text-center gap-6 pb-2">
+                {eventType !== "" && (
+                  <p
+                    className="text-[1.5em] above-heading line-clamp-1"
+                    style={{ marginBottom: title !== "" ? "-20px" : "10px" }}
+                  >
+                    {removeEmojis(eventType)}
+                  </p>
+                )}
+                {title !== "" && (
+                  <p className="text-[4.2em] leading-[0.9em] line-clamp-2 font-medium main-heading alt-glyphs px-10">
+                    {removeEmojis(title)}
+                  </p>
+                )}
               </div>
             </PostGridSpatious>
           </div>

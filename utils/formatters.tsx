@@ -39,7 +39,6 @@ export const removeEmojis = (input: string): string => {
 export const constructFileName = (
   input: string,
   type: string,
-  suffix: string,
   width: number,
   height: number,
 ): string => {
@@ -50,6 +49,6 @@ export const constructFileName = (
         .replace(/ /g, "-")
         .replace(/[#%&:*!?—]/, "")
         .toLowerCase() +
-      `-${type}.${suffix}`,
+      `-${type}`,
   );
 };
