@@ -21,6 +21,7 @@ import ElementSelector, {
   ElementSelectorGrid,
 } from "@/components/inputs/elementSelector";
 import ErrorDisplay from "@/components/inputs/error";
+import FacilitySelector from "@/components/inputs/facilitySelector";
 import GenerateImageButton from "@/components/inputs/generateImageButton";
 import { Switch } from "@/components/inputs/switch";
 import LongTextInput, { TextInput } from "@/components/inputs/textInputs";
@@ -137,28 +138,12 @@ const PostTwoElementsGenerator = () => {
         </MenuBlock>
         <MenuBlock>
           <h2 className="font-bold">Kdo zaštiťuje akci?</h2>
-          <div className="w-full mt-2">
-            {loading && <LoadingSkeleton height="h-10" />}
-            {facilities.length === 0 && !loading && (
-              <p>Žádné místnosti nejsou k dispozici.</p>
-            )}
-            {facilities.length > 0 && (
-              <select
-                className="border p-2 w-full rounded-md bg-gray-100 hover:bg-gray-200 transition-all"
-                value={facility}
-                onChange={(e) => setFacility(Number(e.target.value))}
-              >
-                <option value={0}>-- Vyberte dílnu / laboratoř --</option>
-                {facilities
-                  .filter((facility) => facility.id !== 0)
-                  .map((facility) => (
-                    <option key={facility.id} value={facility.id}>
-                      {facility.name}
-                    </option>
-                  ))}
-              </select>
-            )}
-          </div>
+          <FacilitySelector
+            facilities={facilities}
+            facility={facility}
+            setFacility={setFacility}
+            loading={loading}
+          />
         </MenuBlock>
         <MenuBlock>
           <h2 className="font-bold mb-2">Detaily akce</h2>
