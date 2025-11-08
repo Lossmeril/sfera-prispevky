@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { constructFileName, removeEmojis } from "@/utils/formatters";
+import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
   imageVarietyValidate,
@@ -133,6 +134,7 @@ const PostOneElementWithHeadingGenerator = () => {
                 placeholder="Zadejte název akce"
                 id="title"
                 displayMDashButton
+                displayLineBreakButton
               />
             </div>
           </div>
@@ -182,10 +184,12 @@ const PostOneElementWithHeadingGenerator = () => {
                     {removeEmojis(eventType)}
                   </p>
                 )}
+
                 {title !== "" && (
-                  <p className="text-[4.2em] leading-[0.9em] line-clamp-2 font-medium main-heading alt-glyphs px-10">
-                    {removeEmojis(title)}
-                  </p>
+                  <SplitParagraph
+                    text={removeEmojis(title)}
+                    cssStyles="text-[4.2em] leading-[0.9em] line-clamp-2 font-medium main-heading alt-glyphs px-10"
+                  />
                 )}
               </div>
             </PostGridSpatious>

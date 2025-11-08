@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
+import { constructFileName } from "@/utils/formatters";
 import { ElementKey, Facility } from "@/utils/types";
 import { imageVarietyValidate, validate } from "@/utils/validators";
 
@@ -92,10 +93,11 @@ const PostOneElementGenerator = () => {
             )}
           </ElementSelectorGrid>
         </MenuBlock>
-        <MenuBlock>
+        <MenuBlock last>
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            fileName={constructFileName("příspěvek", "jeden-prvek", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />
         </MenuBlock>

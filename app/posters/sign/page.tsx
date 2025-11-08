@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
+import { constructFileName } from "@/utils/formatters";
 import splitParagraphs from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
@@ -177,7 +178,11 @@ const PostTwoElementsGenerator = () => {
           />
         </MenuBlock>
         <MenuBlock>
-          <GeneratePdfButton previewRef={previewRef} validated={result.valid} />
+          <GeneratePdfButton
+            previewRef={previewRef}
+            validated={result.valid}
+            fileName={"SFÉRA_A4_cedule"}
+          />
           <ErrorDisplay errors={result.errors} />
         </MenuBlock>
       </MenuSection>

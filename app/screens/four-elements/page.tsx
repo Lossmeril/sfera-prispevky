@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
+import { constructFileName } from "@/utils/formatters";
 import { ElementKey, Facility } from "@/utils/types";
 import {
   bgColorsValidate,
@@ -21,7 +22,7 @@ import ElementSelector, {
 import ErrorDisplay from "@/components/inputs/error";
 import GenerateImageButton from "@/components/inputs/generateImageButton";
 import { Switch } from "@/components/inputs/switch";
-import LongTextInput, { TextInput } from "@/components/inputs/textInputs";
+import { TextInput } from "@/components/inputs/textInputs";
 
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import LoadingSkeleton from "@/components/loadingSkeleton";
@@ -266,11 +267,12 @@ const ScreenFourElementsGenerator = () => {
           </div>
         </MenuBlock>
 
-        <MenuBlock>
+        <MenuBlock last>
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
             forceSize={{ width: 1920, height: 1080 }}
+            fileName={constructFileName(title, "obrazovka", 1920, 1080)}
           />
           <ErrorDisplay errors={result.errors} />
         </MenuBlock>

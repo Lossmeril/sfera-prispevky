@@ -165,11 +165,11 @@ const PostFourElementsGenerator = () => {
             )}
           </ElementSelectorGrid>
         </MenuBlock>
-        <MenuBlock>
+        <MenuBlock last>
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
-            fileName={constructFileName("čtyři prvky", "příspěvek", 1080, 1350)}
+            fileName={constructFileName("příspěvek", "čtyři-prvky", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />
         </MenuBlock>

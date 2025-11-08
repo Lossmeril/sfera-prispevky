@@ -14,7 +14,7 @@ interface GeneratePdfButtonProps {
 const GeneratePdfButton: React.FC<GeneratePdfButtonProps> = ({
   previewRef,
   validated = true,
-  fileName = "sfera_post.pdf",
+  fileName = "generated-file",
 }) => {
   const [generatingLoading, setGeneratingLoading] =
     React.useState<boolean>(false);
