@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { RiExternalLinkLine, RiFontFamily } from "react-icons/ri";
+import { RiExternalLinkLine, RiFolderDownloadLine } from "react-icons/ri";
 
 const Header = () => {
   return (
@@ -16,7 +16,7 @@ const Header = () => {
           download
           className="bg-gray-100 hover:bg-gray-200 border rounded-md transition-all px-4 py-2 flex flex-row items-center gap-2"
         >
-          Stáhnout sférické fonty <RiFontFamily size={20} />
+          Stáhnout sférické fonty <RiFolderDownloadLine size={20} />
         </a>
         <a
           href="https://manual.sferagrafika.eu"

@@ -1,6 +1,7 @@
 "use client";
 
 import { on } from "events";
+import { RiFolderDownloadLine } from "react-icons/ri";
 
 interface modalProps {
   isOpen: boolean;
@@ -25,9 +26,9 @@ export const Modal: React.FC<modalProps> = ({
         )}
         <div className="flex flex-col gap-4 text-center">
           {children}
-          <div className="flex flex-row gap-4 mt-6 justify-center">
+          <div className="flex flex-col gap-4 mt-6 justify-center w-2/3 mx-auto">
             <button
-              className="bg-gray-200 hover:bg-gray-300 border rounded-md transition-all px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed mx-auto"
+              className="bg-gray-200 hover:bg-gray-300 border rounded-md transition-all px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed mx-auto w-full"
               onClick={onClose}
             >
               Pokračovat do generátoru
@@ -35,9 +36,9 @@ export const Modal: React.FC<modalProps> = ({
             <a
               href="/downloads/SFÉRA_fonty.zip"
               download
-              className="bg-gray-100 hover:bg-gray-200 border rounded-md transition-all px-4 py-2 mx-auto"
+              className="bg-gray-100 hover:bg-gray-200 border rounded-md transition-all px-4 py-2 mx-auto flex items-center justify-center w-full"
             >
-              Stáhnout fonty
+              Stáhnout fonty <RiFolderDownloadLine className="ml-2" size={20} />
             </a>
           </div>
         </div>
