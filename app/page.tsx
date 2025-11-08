@@ -1,33 +1,50 @@
-import { generatableImages } from "@/datasets/generatableImages";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
+// app/generators/page.tsx (or wherever this page lives)
+import React from "react";
+
+import {
+  generatablePosters,
+  generatablePosts,
+  generatableScreens,
+  generatableWebThumbs,
+} from "@/datasets/generatableImages";
+
+import GeneratorGrid from "@/components/homeGrid";
+import { Modal } from "@/components/modal";
 
 const GeneratorsHomePage = () => {
+  const [modalOpen, setModalOpen] = React.useState(true);
+
   return (
     <div className="w-screen h-auto mt-8 flex flex-col justify-center px-[10%]">
-      <p className="above-heading mt-14 mb-3 text-xl md:text-2xl xl:text-3xl">
-        Generátor sférických příspěvků
-      </p>
-      <h1 className="text-[3em] md:text-[3.5em] xl:text-[4.5em] font-bold text-center leading-none mb-14">
-        Co budeme dneska generovat?
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Vítejte v nové verzi generátoru!"
+      >
+        <p>Ahoj! Vítejte v nové, přepracované verzi generátoru!</p>
+        <p className="">
+          Nová verze disponuje větší nabídkou prvků, lepším uživatelským
+          rozhraním a větší nabídkou obrázků ke generování.
+        </p>
+        <p className="">
+          Jelikož je tato verze stále ve vývoji, můžete narazit na různé chyby,
+          které budeme průběžně opravovat.
+        </p>
+        <p className="w-full bg-red-200 p-3 mb-4">
+          Pro jistotu úplné funkčnosti generátoru doporučujeme mít
+          nainstalovanou celou sadu sférických fontů.
+        </p>
+      </Modal>
+      <h1 className="above-heading mt-10 mb-14 text-xl md:text-2xl xl:text-3xl">
+        Generátor sférických příspěvků 2.0
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-20">
-        {generatableImages.map((post) => (
-          <Link
-            href={"/" + post.link}
-            className="border rounded-lg w-full aspect-[3/4] hover:scale-105 transition-all overflow-hidden hover:shadow-md"
-            key={post.link}
-          >
-            <div className="w-full aspect-square border-b relative">
-              <Image src={"/img/" + post.link + ".jpg"} fill alt={post.name} />
-            </div>
-            <div className="h-1/4 w-full p-5 flex flex-col justify-center text-center">
-              <h2 className="font-medium leading-tight">{post.name}</h2>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <GeneratorGrid title="Příspěvky" items={generatablePosts} />
+      <GeneratorGrid title="Digitální obrazovky" items={generatableScreens} />
+      <GeneratorGrid title="Plakáty" items={generatablePosters} />
+      <GeneratorGrid title="Webové náhleďáky" items={generatableWebThumbs} />
     </div>
   );
 };

@@ -1,44 +1,121 @@
-// return true if the length is valid
+import { ElementSelectorElement } from "@/components/inputs/elementSelector";
+
+import { ElementKey } from "./types";
+
+type ValidationResult = {
+  valid: boolean;
+  errors: string[];
+};
+
+type Validator<T> = (data: T) => ValidationResult;
+
+// ✅ text existence validator
+export const inputValidate = (
+  text: string,
+  typeOfText: string,
+  alternativeDeclension?: string,
+): ValidationResult => {
+  const valid = text.trim().length > 0;
+
+  const errors: string[] = [];
+  if (!valid) {
+    errors.push(
+      `${typeOfText} musí být ${alternativeDeclension || "vyplněn"}.`,
+    );
+  }
+
+  return { valid, errors };
+};
+
+// ✅ Length validator
 export const lengthValidate = (
   length: number,
-  shortTrashold: number,
-  longTrashold: number,
-  conditionForShort: boolean
-) => {
-  return !conditionForShort ? length <= longTrashold : length <= shortTrashold;
-};
+  shortThreshold: number,
+  longThreshold: number,
+  conditionForShort: boolean,
+): ValidationResult => {
+  const valid = !conditionForShort
+    ? length <= longThreshold
+    : length <= shortThreshold;
 
-// return true if enough images is uploaded
-export const imageUploadValidate = (
-  noOfImages: number,
-  image1: File | null,
-  image2?: File | null,
-  image3?: File | null,
-  image4?: File | null
-) => {
-  return (
-    image1 &&
-    (noOfImages >= 2 ? image2 : true) &&
-    (noOfImages >= 3 ? image3 : true) &&
-    (noOfImages >= 4 ? image4 : true)
-  );
-};
-
-export const bgColorsValidate = (arr: string[]) => {
-  const seen = new Set();
-  for (const item of arr) {
-    if (seen.has(item) && item !== "" && item !== "var(--white)") {
-      return false; // Duplicate found
-    }
-    seen.add(item);
+  const errors: string[] = [];
+  if (!valid) {
+    errors.push(
+      !conditionForShort
+        ? `Délka nesmí přesáhnout ${longThreshold} znaků.`
+        : `Délka nesmí přesáhnout ${shortThreshold} znaků.`,
+    );
   }
-  return true; // No duplicates
+
+  return { valid, errors };
 };
 
-export const uppercaseValidate = (str: string) => {
-  return str !== str.toUpperCase() || str === "SFÉRA" || str === "";
+// ✅ Image variety validator
+export const imageVarietyValidate = (
+  elements: Record<ElementKey, ElementSelectorElement>,
+): ValidationResult => {
+  const values = Object.entries(elements).map(([, v]) => v.image || "");
+
+  const hasDuplicates =
+    values.filter((item, index) => values.indexOf(item) !== index).length > 0;
+  const hasEmpty = values.includes("");
+
+  const valid = !hasDuplicates && !hasEmpty;
+  const errors: string[] = [];
+
+  if (hasEmpty) errors.push("Všechna pole musí mít vybraný prvek.");
+  if (hasDuplicates)
+    errors.push("Každý prvek musí být unikátní (žádné duplicity).");
+
+  return { valid, errors };
 };
 
-export const didYouKnowQuestionValidate = (str: string) => {
-  return str.includes("?");
+// ✅ Background color variety validator
+export const bgColorsValidate = (
+  elements: Record<ElementKey, ElementSelectorElement>,
+): ValidationResult => {
+  const values = Object.entries(elements).map(([, v]) => v.bg || "");
+
+  const hasDuplicates =
+    values.filter((item, index) => values.indexOf(item) !== index).length > 0;
+  const hasEmpty = values.includes("");
+
+  const valid = !hasDuplicates && !hasEmpty;
+  const errors: string[] = [];
+
+  if (hasEmpty) errors.push("Všechna pole musí mít vybranou barvu pozadí.");
+  if (hasDuplicates)
+    errors.push("Každá barva pozadí musí být unikátní (žádné duplicity).");
+
+  return { valid, errors };
 };
+
+// ✅ Saturday date validator
+export const isSaturday = (dateString: string): ValidationResult => {
+  const valid = new Date(dateString).getDay() === 6;
+
+  const errors: string[] = [];
+  if (!valid) {
+    errors.push(`Datum musí být sobota.`);
+  }
+
+  return { valid, errors };
+};
+
+export function validate<T>(options: {
+  data: T;
+  validators: Validator<T>[];
+}): ValidationResult {
+  const { data, validators } = options;
+  const allErrors: string[] = [];
+
+  for (const validator of validators) {
+    const result = validator(data);
+    if (!result.valid) allErrors.push(...result.errors);
+  }
+
+  return {
+    valid: allErrors.length === 0,
+    errors: allErrors,
+  };
+}

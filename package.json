@@ -9,13 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "html-to-image": "^1.11.11",
+    "html-to-image": "1.11.11",
+    "jspdf": "^3.0.3",
     "next": "15.0.3",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "prettier": "^3.6.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-icons": "^5.3.0"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -24,5 +27,11 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
-  }
+  },
+  "resolutions": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "html-to-image": "1.11.11"
+  },
+  "packageManager": "yarn@1.22.22"
 }
