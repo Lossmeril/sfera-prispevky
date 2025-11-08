@@ -4,6 +4,7 @@ interface TextInputProps {
   placeholder?: string;
   id?: string;
   displayMDashButton?: boolean;
+  displayLineBreakButton?: boolean;
 }
 
 export const TextInput = ({
@@ -12,6 +13,7 @@ export const TextInput = ({
   placeholder,
   id,
   displayMDashButton = false,
+  displayLineBreakButton = false,
 }: TextInputProps) => {
   return (
     <>
@@ -29,6 +31,14 @@ export const TextInput = ({
           className="bg-gray-100 hover:bg-gray-200 px-2 py-1 border rounded-md text-xs font-medium transition-all"
         >
           Vložit dlouhou pomlčku
+        </button>
+      )}
+      {displayLineBreakButton && (
+        <button
+          onClick={() => setText(text + "↵")}
+          className="bg-gray-100 hover:bg-gray-200 px-2 py-1 border rounded-md text-xs font-medium transition-all"
+        >
+          Zalomit řádek
         </button>
       )}
     </>

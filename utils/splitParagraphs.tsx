@@ -13,7 +13,7 @@ const SplitParagraph: React.FC<SplitParagraphProps> = ({ text, cssStyles }) => {
   const processSegment = (segment: string): React.ReactNode[] => {
     const parts = segment.split("↵");
     return parts.flatMap((part, index) =>
-      index < parts.length - 1 ? [part, <br key={`br-${index}`} />] : [part]
+      index < parts.length - 1 ? [part, <br key={`br-${index}`} />] : [part],
     );
   };
 

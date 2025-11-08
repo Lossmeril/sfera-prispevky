@@ -280,7 +280,7 @@ const ScreenFourElementsGenerator = () => {
           </div>
         </MenuBlock>
 
-        <MenuBlock>
+        <MenuBlock last>
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
