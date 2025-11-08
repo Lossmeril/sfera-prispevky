@@ -9,7 +9,7 @@ export const generatablePosts: GeneratorType[] = [
     name: "Příspěvek s jedním prvkem a názvem akce",
     link: "/posts/one-element-heading",
   },
-  { name: "Příspěvek se dvěma prvky", link: "" },
+  { name: "Příspěvek se dvěma prvky", link: "/posts/two-elements" },
   { name: "Příspěvek se čtyřmi prvky", link: "/posts/four-elements" },
 ];
 

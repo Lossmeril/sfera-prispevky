@@ -4,10 +4,13 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
+import { constructFileName, removeEmojis } from "@/utils/formatters";
+import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
   bgColorsValidate,
   imageVarietyValidate,
+  inputValidate,
   validate,
 } from "@/utils/validators";
 
@@ -19,6 +22,8 @@ import ElementSelector, {
 } from "@/components/inputs/elementSelector";
 import ErrorDisplay from "@/components/inputs/error";
 import GenerateImageButton from "@/components/inputs/generateImageButton";
+import { Switch } from "@/components/inputs/switch";
+import LongTextInput, { TextInput } from "@/components/inputs/textInputs";
 
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import LoadingSkeleton from "@/components/loadingSkeleton";
@@ -36,12 +41,19 @@ const PostTwoElementsGenerator = () => {
 
   const [facility, setFacility] = useState<number>(0);
 
+  const [eventType, setEventType] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+
   const previewRef = useRef<HTMLDivElement>(null);
   const result = validate({
-    data: { elements },
+    data: { elements, title, eventType, date },
     validators: [
       (d) => imageVarietyValidate(d.elements),
       (d) => bgColorsValidate(d.elements),
+      (d) => inputValidate(d.title || "", "Název akce"),
+      (d) => inputValidate(d.eventType || "", "Typ akce"),
+      (d) => inputValidate(d.date || "", "Datum akce", "vyplněno"),
     ],
   });
 
@@ -149,9 +161,54 @@ const PostTwoElementsGenerator = () => {
           </div>
         </MenuBlock>
         <MenuBlock>
+          <h2 className="font-bold mb-2">Detaily akce</h2>
+          <div className="grid grid-cols-8 gap-3">
+            <div className="col-span-3 border rounded p-4 bg-neutral-50">
+              <label
+                className="block font-medium mb-1 text-sm"
+                htmlFor="event-type"
+              >
+                Typ akce
+              </label>
+
+              <TextInput
+                text={eventType}
+                setText={setEventType}
+                placeholder="Zadejte typ akce"
+                id="event-type"
+              />
+            </div>
+
+            <div className="col-span-5 border rounded p-4 bg-neutral-50">
+              <label className="block font-medium mb-1 text-sm" htmlFor="title">
+                Název akce
+              </label>
+              <TextInput
+                text={title}
+                setText={setTitle}
+                placeholder="Zadejte název akce"
+                id="title"
+                displayMDashButton
+                displayLineBreakButton
+              />
+            </div>
+
+            <div className="col-span-8 border rounded p-4 bg-neutral-50">
+              <label
+                className="block font-medium mb-1 text-sm"
+                htmlFor="web-toggle"
+              >
+                Datum / popisek akce
+              </label>
+              <LongTextInput text={date} setText={setDate} id="date" />
+            </div>
+          </div>
+        </MenuBlock>
+        <MenuBlock last>
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            fileName={constructFileName(title, "příspěvek", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />
         </MenuBlock>
@@ -216,6 +273,24 @@ const PostTwoElementsGenerator = () => {
               ) : (
                 <></>
               )}
+              <div className="w-[90%] mx-auto h-full flex flex-col justify-center items-center text-center">
+                <p
+                  className="text-[1.75em] above-heading line-clamp-1"
+                  style={{ marginBottom: title !== "" ? "-20px" : "10px" }}
+                >
+                  {eventType}
+                </p>
+
+                <SplitParagraph
+                  text={removeEmojis(title)}
+                  cssStyles="text-[5.1em] line-clamp-1 font-medium main-heading alt-glyphs px-2"
+                />
+
+                <SplitParagraph
+                  text={removeEmojis(date)}
+                  cssStyles="text-[1.87em] leading-[1.2em] font-base line-clamp-3 mb-4"
+                />
+              </div>
             </PostGridSimple>
           </div>
         </div>
