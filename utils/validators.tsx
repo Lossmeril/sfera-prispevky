@@ -102,6 +102,21 @@ export const isSaturday = (dateString: string): ValidationResult => {
   return { valid, errors };
 };
 
+// ✅ Image is uploaded validator
+export const imageUploadedValidate = (
+  image: File | null,
+  elementName: string,
+): ValidationResult => {
+  const valid = image !== null;
+
+  const errors: string[] = [];
+  if (!valid) {
+    errors.push(`${elementName} musí být nahrán.`);
+  }
+
+  return { valid, errors };
+};
+
 export function validate<T>(options: {
   data: T;
   validators: Validator<T>[];
