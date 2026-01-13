@@ -40,6 +40,7 @@ const LargeImageElementWithHeadingGenerator = () => {
 
   const [eventType, setEventType] = useState("");
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [facility, setFacility] = useState<number>(0);
 
   const [image1, setImage1] = useState<File | null>(null);
@@ -176,6 +177,22 @@ const LargeImageElementWithHeadingGenerator = () => {
                 displayLineBreakButton
               />
             </div>
+            <div className="col-span-8 border rounded p-4 bg-neutral-50">
+              <label
+                className="block font-medium mb-1 text-sm"
+                htmlFor="description"
+              >
+                Popis akce
+              </label>
+              <TextInput
+                text={description}
+                setText={setDescription}
+                placeholder="Zadejte popis akce"
+                id="description"
+                displayLineBreakButton
+                displayMDashButton
+              />
+            </div>
           </div>
         </MenuBlock>
 
@@ -208,7 +225,10 @@ const LargeImageElementWithHeadingGenerator = () => {
             style={{ width: "1080px", height: "1350px" }}
           >
             <PostGridSpatious>
-              <div className="relative w-full aspect-square border-b-2 border-black">
+              <div
+                className="relative w-full border-b-2 border-black"
+                style={{ aspectRatio: description === "" ? "13/12" : "15/12" }}
+              >
                 {image1DataUrl && (
                   <div
                     className={`absolute inset-0 ${!isImagePortrait ? "p-8" : "p-12"} flex items-center justify-center`}
@@ -252,7 +272,14 @@ const LargeImageElementWithHeadingGenerator = () => {
                 {title !== "" && (
                   <SplitParagraph
                     text={removeEmojis(title)}
-                    cssStyles="text-[4.2em] leading-[1.05em] line-clamp-2 font-medium main-heading alt-glyphs px-10"
+                    cssStyles="text-[4.2em] leading-[1em] line-clamp-2 font-medium main-heading alt-glyphs px-10"
+                  />
+                )}
+
+                {description !== "" && (
+                  <SplitParagraph
+                    text={removeEmojis(description)}
+                    cssStyles="text-[1.87em] leading-[1.2em] font-base line-clamp-2 mb-4"
                   />
                 )}
               </div>
