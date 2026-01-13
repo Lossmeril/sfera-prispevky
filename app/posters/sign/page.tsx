@@ -79,11 +79,11 @@ const PostTwoElementsGenerator = () => {
         </MenuBlock>
 
         <MenuBlock>
-          <h2 className="font-bold mb-2">Prvky a pozadí</h2>
+          <h2 className="font-bold mb-[3px]">Prvky a pozadí</h2>
           <ElementSelectorGrid>
             {" "}
             {facilities.length === 0 || loading ? (
-              <LoadingSkeleton height="h-24" count={4} />
+              <LoadingSkeleton height="h-[3px]4" count={4} />
             ) : (
               <>
                 <ElementSelector
@@ -170,7 +170,7 @@ const PostTwoElementsGenerator = () => {
           </ElementSelectorGrid>
         </MenuBlock>
         <MenuBlock>
-          <h2 className="font-bold mb-2">Text cedule</h2>
+          <h2 className="font-bold mb-[3px]">Text cedule</h2>
           <LongTextInput
             text={text}
             setText={setText}
@@ -198,7 +198,7 @@ const PostTwoElementsGenerator = () => {
             <PosterSignGrid>
               <div className="flex flex-row flex-nowrap">
                 <div
-                  className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative"
+                  className="w-[565.5px] aspect-square border-black border-b-[3px] border-r-[3px] relative"
                   style={{ backgroundColor: elements.element1.bg }}
                 >
                   {elements.element1.image && (
@@ -211,7 +211,7 @@ const PostTwoElementsGenerator = () => {
                   )}
                 </div>
                 <div
-                  className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative"
+                  className="w-[565.5px] aspect-square border-black border-b-[3px] border-r-[3px] relative"
                   style={{ backgroundColor: elements.element2.bg }}
                 >
                   {elements.element2.image && (
@@ -224,7 +224,7 @@ const PostTwoElementsGenerator = () => {
                   )}
                 </div>
                 <div
-                  className="w-[566.5px] aspect-square border-black border-b-2 border-r-2 relative"
+                  className="w-[565.5px] aspect-square border-black border-b-[3px] border-r-[3px] relative"
                   style={{ backgroundColor: elements.element3.bg }}
                 >
                   {elements.element3.image && (
@@ -237,7 +237,7 @@ const PostTwoElementsGenerator = () => {
                   )}
                 </div>
                 <div
-                  className="w-[566.5px] aspect-square border-black border-b-2 relative"
+                  className="w-[566.25px] aspect-square border-black border-b-[3px] relative"
                   style={{ backgroundColor: elements.element4.bg }}
                 >
                   {elements.element4.image && (
@@ -251,7 +251,10 @@ const PostTwoElementsGenerator = () => {
                 </div>
               </div>
 
-              <div className="w-full h-full grid text-left overflow-hidden my-[9rem]">
+              <div
+                className="w-full h-full grid text-left overflow-hidden my-[9rem]"
+                style={{ fontFeatureSettings: '"ss02" 1' }}
+              >
                 {splitParagraphs({
                   text,
                   cssStyles:

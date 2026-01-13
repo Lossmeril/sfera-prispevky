@@ -9,33 +9,33 @@ export const PosterSignGrid: React.FC<GridProps> = ({
       <div
         className={`w-[130px] h-full ${
           mode === "dark" ? "border-black" : "border-white"
-        } border-r-2`}
+        } border-r-[3px]`}
       >
         <div
           className={`h-[130px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
-          } border-b-2`}
+          } border-b-[3px]`}
         ></div>
         <div
           className={`h-[1419px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
-          } border-b-2`}
+          } border-b-[3px]`}
         ></div>
       </div>
       <div
         className={`w-[2266px] h-full ${
           mode === "dark" ? "border-black" : "border-white"
-        } border-r-2`}
+        } border-r-[3px]`}
       >
         <div
           className={`h-[130px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
-          } border-b-2`}
+          } border-b-[3px]`}
         ></div>
         <div
           className={`h-[1419px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
-          } border-b-2 flex flex-col overflow-hidden`}
+          } border-b-[3px] flex flex-col overflow-hidden`}
         >
           {children}
         </div>
@@ -55,12 +55,12 @@ export const PosterSignGrid: React.FC<GridProps> = ({
         <div
           className={`h-[130px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
-          } border-b-2`}
+          } border-b-[3px]`}
         ></div>
         <div
           className={`h-[1419px] w-full ${
             mode === "dark" ? "border-black" : "border-white"
-          } border-b-2`}
+          } border-b-[3px]`}
         ></div>
       </div>
     </>

@@ -23,6 +23,14 @@ const GeneratePdfButton: React.FC<GeneratePdfButtonProps> = ({
     if (!previewRef.current) return;
     setGeneratingLoading(true);
 
+    // Ensure all fonts are ready
+    await document.fonts.ready;
+
+    // Force-load the exact family + weight you use (adjust weight if needed)
+    await document.fonts.load('700 16px "youth"');
+    await document.fonts.load('400 16px "youth"');
+    await document.fonts.load('500 16px "youth"');
+
     try {
       // Convert the element to a high-resolution PNG using html-to-image
       const dataUrl = await toPng(previewRef.current, {
