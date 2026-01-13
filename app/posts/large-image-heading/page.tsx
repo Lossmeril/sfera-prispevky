@@ -270,10 +270,12 @@ const LargeImageElementWithHeadingGenerator = () => {
                 )}
 
                 {title !== "" && (
-                  <SplitParagraph
-                    text={removeEmojis(title)}
-                    cssStyles="text-[4.2em] leading-[1em] line-clamp-2 font-medium main-heading alt-glyphs px-10"
-                  />
+                  <div style={{ fontFeatureSettings: '"ss02" 1' }}>
+                    <SplitParagraph
+                      text={removeEmojis(title)}
+                      cssStyles="text-[4.2em] leading-[1em] line-clamp-2 font-medium main-heading alt-glyphs px-10"
+                    />
+                  </div>
                 )}
 
                 {description !== "" && (

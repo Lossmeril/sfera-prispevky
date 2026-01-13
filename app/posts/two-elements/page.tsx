@@ -266,10 +266,12 @@ const PostTwoElementsGenerator = () => {
                   {eventType}
                 </p>
 
-                <SplitParagraph
-                  text={removeEmojis(title)}
-                  cssStyles="text-[5.1em] line-clamp-1 font-medium main-heading alt-glyphs px-2"
-                />
+                <div style={{ fontFeatureSettings: '"ss02" 1' }}>
+                  <SplitParagraph
+                    text={removeEmojis(title)}
+                    cssStyles="text-[5.1em] line-clamp-1 font-medium main-heading alt-glyphs px-2"
+                  />
+                </div>
 
                 <SplitParagraph
                   text={removeEmojis(date)}

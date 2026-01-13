@@ -186,10 +186,12 @@ const PostOneElementWithHeadingGenerator = () => {
                 )}
 
                 {title !== "" && (
-                  <SplitParagraph
-                    text={removeEmojis(title)}
-                    cssStyles="text-[4.2em] leading-[0.9em] line-clamp-2 font-medium main-heading alt-glyphs px-10"
-                  />
+                  <div style={{ fontFeatureSettings: '"ss02" 1' }}>
+                    <SplitParagraph
+                      text={removeEmojis(title)}
+                      cssStyles="text-[4.2em] leading-[0.9em] line-clamp-2 font-medium main-heading alt-glyphs px-10"
+                    />
+                  </div>
                 )}
               </div>
             </PostGridSpatious>

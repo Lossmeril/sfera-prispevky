@@ -18,7 +18,10 @@ const GeneratorGrid = ({ title, items }: GeneratorGridProps) => {
 
   return (
     <>
-      <h2 className="text-xl md:text-2xl xl:text-3xl font-bold text-left leading-none border border-black w-full p-4 border-b-0 alt-glyphs">
+      <h2
+        className="text-xl md:text-2xl xl:text-3xl font-bold text-left leading-none border border-black w-full p-4 border-b-0 alt-glyphs"
+        style={{ fontFeatureSettings: '"ss02" 1' }}
+      >
         {title}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mb-20 w-full border-t border-black">

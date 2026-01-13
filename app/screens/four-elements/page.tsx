@@ -353,7 +353,10 @@ const ScreenFourElementsGenerator = () => {
                     {eventType}
                   </p>
 
-                  <p className="text-[5.32em] line-clamp-1 font-medium main-heading alt-glyphs px-2">
+                  <p
+                    className="text-[5.32em] line-clamp-1 font-medium main-heading alt-glyphs px-2"
+                    style={{ fontFeatureSettings: '"ss02" 1' }}
+                  >
                     {title}
                   </p>
 
