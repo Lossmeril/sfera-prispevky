@@ -208,13 +208,21 @@ const LargeImageElementWithHeadingGenerator = () => {
             style={{ width: "1080px", height: "1350px" }}
           >
             <PostGridSpatious>
-              <div className="w-full aspect-[12/11] max-h-[1080px] relative border-b-2 border-black">
+              <div className="relative w-full aspect-square border-b-2 border-black">
                 {image1DataUrl && (
-                  <img
-                    src={image1DataUrl}
-                    alt="Image 1"
-                    className={`${!isImagePortrait ? "w-full h-full p-8 " : "h-full aspect-square rounded-full mx-auto p-12 "} object-cover `}
-                  />
+                  <div
+                    className={`absolute inset-0 ${!isImagePortrait ? "p-8" : "p-12"} flex items-center justify-center`}
+                  >
+                    <img
+                      src={image1DataUrl}
+                      alt="Image 1"
+                      className={
+                        !isImagePortrait
+                          ? "w-full h-full object-cover"
+                          : "h-full aspect-square object-cover rounded-full"
+                      }
+                    />
+                  </div>
                 )}
               </div>
 
