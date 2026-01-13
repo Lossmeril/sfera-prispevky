@@ -2,11 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import Image from "next/image";
-
 import { constructFileName, removeEmojis } from "@/utils/formatters";
 import SplitParagraph from "@/utils/splitParagraphs";
-import { ElementKey, Facility } from "@/utils/types";
+import { Facility } from "@/utils/types";
 import {
   imageUploadedValidate,
   inputValidate,
@@ -15,9 +13,6 @@ import {
 
 import { PostGridSpatious } from "@/components/layoutTemplates/postGridSpatious";
 
-import ElementSelector, {
-  ElementSelectorElement,
-} from "@/components/inputs/elementSelector";
 import ErrorDisplay from "@/components/inputs/error";
 import FacilitySelector from "@/components/inputs/facilitySelector";
 import GenerateImageButton from "@/components/inputs/generateImageButton";
@@ -25,7 +20,6 @@ import { Switch } from "@/components/inputs/switch";
 import { TextInput } from "@/components/inputs/textInputs";
 
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
-import LoadingSkeleton from "@/components/loadingSkeleton";
 
 /* ----------------------------
    FILE → DATA URL CONVERTER
@@ -44,12 +38,6 @@ const LargeImageElementWithHeadingGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [elements, setElements] = useState<
-    Record<ElementKey, ElementSelectorElement>
-  >({
-    element1: { bg: "white", image: null },
-  });
-
   const [eventType, setEventType] = useState("");
   const [title, setTitle] = useState("");
   const [facility, setFacility] = useState<number>(0);
@@ -61,7 +49,7 @@ const LargeImageElementWithHeadingGenerator = () => {
   const previewRef = useRef<HTMLDivElement>(null);
 
   const result = validate({
-    data: { elements, eventType, title, image1 },
+    data: { eventType, title, image1 },
     validators: [
       (d) => imageUploadedValidate(d.image1, "Obrázek"),
       (d) => inputValidate(d.eventType, "Typ akce"),
@@ -220,14 +208,7 @@ const LargeImageElementWithHeadingGenerator = () => {
             style={{ width: "1080px", height: "1350px" }}
           >
             <PostGridSpatious>
-              <div
-                className="w-full aspect-[12/11] relative border-b-2 border-black"
-                style={{
-                  backgroundColor: elements.element1
-                    ? elements.element1.bg
-                    : "white",
-                }}
-              >
+              <div className="w-full aspect-[12/11] max-h-[1080px] relative border-b-2 border-black">
                 {image1DataUrl && (
                   <img
                     src={image1DataUrl}
