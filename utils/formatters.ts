@@ -41,9 +41,10 @@ export const constructFileName = (
   type: string,
   width: number,
   height: number,
+  unit: string = "px",
 ): string => {
   return removeEmojis(
-    `SFÉRA_${width}x${height}px_` +
+    `SFÉRA_${width}x${height}${unit}_` +
       input
         .split(/[.:,;\-\/\\()[\]{}—]/)[0]
         .replace(/ /g, "-")

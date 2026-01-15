@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
-import { removeEmojis } from "@/utils/formatters";
+import { constructFileName, removeEmojis } from "@/utils/formatters";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
@@ -187,7 +187,7 @@ const PostTwoElementsGenerator = () => {
           <GeneratePdfButton
             previewRef={previewRef}
             validated={result.valid}
-            fileName={"SFÉRA_A4_cedule"}
+            fileName={constructFileName(title, "plakat", 297, 210, "mm")}
           />
           <ErrorDisplay errors={result.errors} />
         </MenuBlock>
