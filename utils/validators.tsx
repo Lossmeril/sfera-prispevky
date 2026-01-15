@@ -117,6 +117,21 @@ export const imageUploadedValidate = (
   return { valid, errors };
 };
 
+// ✅ Generic validator for functions that already return some sort of validation
+export const genericValidator = (
+  validated: boolean,
+  errorMessage: string,
+): ValidationResult => {
+  const valid = validated;
+
+  const errors: string[] = [];
+  if (!valid) {
+    errors.push(errorMessage);
+  }
+
+  return { valid, errors };
+};
+
 export function validate<T>(options: {
   data: T;
   validators: Validator<T>[];

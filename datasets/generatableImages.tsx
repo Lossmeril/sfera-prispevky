@@ -27,7 +27,7 @@ export const generatableWebThumbs: GeneratorType[] = [
 
 export const generatablePosters: GeneratorType[] = [
   { name: "Informační cedule", link: "/posters/sign" },
-  { name: "Plakátek A4 s jedním prvkem", link: "" },
+  { name: "Plakátek A4 s jedním prvkem", link: "/posters/one-element" },
   { name: "Plakátek A4 se dvěma prvky", link: "" },
   { name: "Plakátek A4 s obrázkem a prvkem", link: "" },
   { name: "Plakátek A4 s obrázkem a QR kódem", link: "" },
