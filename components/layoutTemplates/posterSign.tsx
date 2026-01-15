@@ -41,8 +41,12 @@ export const PosterSignGrid: React.FC<GridProps> = ({
         </div>
         <div className="w-full h-[237px] grid place-content-center">
           <img
-            src="/img/logo/logo-black.svg"
-            alt="Logo SFERA"
+            src={
+              mode === "dark"
+                ? "/img/logo/logo-black.svg"
+                : "/img/logo/logo-white.svg"
+            }
+            alt="Logo SFÉRA"
             className="w-[550px]"
           />
         </div>

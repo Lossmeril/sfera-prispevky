@@ -26,7 +26,9 @@ export const PosterGrid: React.FC<PosterGridProps> = ({
             mode === "dark" ? "border-black" : "border-white"
           } border-b-[3px] relative`}
         >
-          <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-90 w-[2186px] text-center text-4xl font-medium">
+          <p
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-90 w-[2186px] text-center text-4xl font-medium ${mode === "dark" ? "text-black" : "text-white"}`}
+          >
             {sideText}
           </p>
         </div>
@@ -50,8 +52,12 @@ export const PosterGrid: React.FC<PosterGridProps> = ({
         </div>
         <div className="w-full h-[225px] grid place-content-center">
           <img
-            src="/img/logo/logo-black.svg"
-            alt="Logo SFERA"
+            src={
+              mode === "dark"
+                ? "/img/logo/logo-black.svg"
+                : "/img/logo/logo-white.svg"
+            }
+            alt="Logo SFÉRA"
             className="w-[550px]"
           />
         </div>
@@ -71,7 +77,9 @@ export const PosterGrid: React.FC<PosterGridProps> = ({
             mode === "dark" ? "border-black" : "border-white"
           } border-b-[3px] relative`}
         >
-          <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-90 w-[2186px] text-center text-4xl font-medium">
+          <p
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-90 w-[2186px] text-center text-4xl font-medium ${mode === "dark" ? "text-black" : "text-white"}`}
+          >
             Vzdělávací centrum SFÉRA Pardubice
           </p>
         </div>

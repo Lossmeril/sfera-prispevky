@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { constructFileName, removeEmojis } from "@/utils/formatters";
+import { fileToDataURL } from "@/utils/images";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { Facility } from "@/utils/types";
 import {
@@ -24,15 +25,6 @@ import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 /* ----------------------------
    FILE → DATA URL CONVERTER
 ----------------------------- */
-
-const fileToDataURL = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-};
 
 const LargeImageElementWithHeadingGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
