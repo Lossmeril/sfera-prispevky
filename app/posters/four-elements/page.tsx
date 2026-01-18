@@ -4,14 +4,14 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
+import css from "styled-jsx/css";
+
 import { constructFileName, removeEmojis } from "@/utils/formatters";
-import { fileToDataURL } from "@/utils/images";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
   bgColorsValidate,
   genericValidator,
-  imageUploadedValidate,
   imageVarietyValidate,
   inputValidate,
   validate,
@@ -32,7 +32,7 @@ import { DateTimeRangeInput } from "@/components/inputs/timeAndDate";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import LoadingSkeleton from "@/components/loadingSkeleton";
 
-const PosterOneElementInverseGenerator = () => {
+const PosterFourElementsGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,40 +48,15 @@ const PosterOneElementInverseGenerator = () => {
     Record<ElementKey, ElementSelectorElement>
   >({
     element1: { bg: "white", image: null },
+    element2: { bg: "white", image: null },
+    element3: { bg: "white", image: null },
+    element4: { bg: "white", image: null },
   });
-  const [image1, setImage1] = useState<File | null>(null);
-  const [image1DataUrl, setImage1DataUrl] = useState<string | null>(null);
-
-  /* ----------------------------
-         IMAGE UPLOAD
-    ----------------------------- */
-  const handleImageUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setImage: React.Dispatch<React.SetStateAction<File | null>>,
-  ) => {
-    const file = e.target.files?.[0] || null;
-    setImage(file);
-
-    if (file) {
-      const dataUrl = await fileToDataURL(file);
-      setImage1DataUrl(dataUrl);
-    }
-  };
 
   const previewRef = useRef<HTMLDivElement>(null);
   const result = validate({
-    data: {
-      elements,
-      title,
-      eventType,
-      date,
-      dateValid,
-      text,
-      facility,
-      image1,
-    },
+    data: { elements, title, eventType, date, dateValid, text },
     validators: [
-      (d) => imageUploadedValidate(d.image1, "Obrázek"),
       (d) => imageVarietyValidate(d.elements),
       (d) => bgColorsValidate(d.elements),
       (d) => inputValidate(d.title || "", "Název akce"),
@@ -92,8 +67,6 @@ const PosterOneElementInverseGenerator = () => {
           d.dateValid,
           "Koncový čas nemůže být dříve než počáteční.",
         ),
-      (d) =>
-        genericValidator(d.facility !== 0, "Dílna/Laboratoř musí být vybrána."),
     ],
   });
 
@@ -121,18 +94,9 @@ const PosterOneElementInverseGenerator = () => {
       <MenuSection>
         <MenuBlock>
           <h1 className="text-xl font-bold">
-            Generátor: Inverzní plakát s jedním prvkem
+            Generátor: Plakát se čtyřmi prvky
           </h1>
-
-          <p className="w-full bg-red-200 p-3 my-4">
-            Tohle je relativně nový formát plakátu, který slouží jako pěkné
-            obohacení naší poměrně strohé vizuální identity.{" "}
-            <strong>Neměl by se používat příliš často</strong>, proto prosím
-            používejte jej jen pro akce, které jsou highlighty vaší nabídky a
-            maximálně tak na jednom z deseti plakátů.
-          </p>
         </MenuBlock>
-
         <MenuBlock>
           <h2 className="font-bold mb-2">Detaily akce</h2>
           <div className="grid grid-cols-8 gap-3">
@@ -183,34 +147,6 @@ const PosterOneElementInverseGenerator = () => {
             </div>
           </div>
         </MenuBlock>
-
-        <MenuBlock>
-          {/* --- IMAGES SECTION --- */}
-          <div className="w-full py-5">
-            <div className="grid grid-cols-5 gap-3">
-              <div className="col-span-3 border rounded p-4 bg-neutral-50 mb-4">
-                <label className="block font-medium mb-1 text-sm">
-                  Nahraj obrázek
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, setImage1)}
-                />
-              </div>
-            </div>
-
-            <p className="w-full bg-red-200 p-3 mb-4">
-              Do této šablony povoluji vkládat fotky a obrázky.{" "}
-              <strong>
-                Nesmí se tu ale objevit nic s textem (například bannery, nebo
-                cizí plakáty).
-              </strong>{" "}
-              Kdo tam něco takového dá, tomu utrhnu hlavu.
-            </p>
-          </div>
-        </MenuBlock>
-
         <MenuBlock>
           <h2 className="font-bold">Kdo zaštiťuje akci?</h2>
           <FacilitySelector
@@ -221,11 +157,11 @@ const PosterOneElementInverseGenerator = () => {
           />
         </MenuBlock>
         <MenuBlock>
-          <h2 className="font-bold mb-[3px]">Prvek</h2>
+          <h2 className="font-bold mb-[3px]">Prvky a pozadí</h2>
           <ElementSelectorGrid>
             {" "}
             {facilities.length === 0 || loading ? (
-              <LoadingSkeleton height="h-[3px]4" count={4} />
+              <LoadingSkeleton height="h-[100px]" count={4} />
             ) : (
               <>
                 <ElementSelector
@@ -246,7 +182,63 @@ const PosterOneElementInverseGenerator = () => {
                       },
                     }))
                   }
-                  noColorSelect
+                />
+                <ElementSelector
+                  label="Vybrat prvek 2"
+                  imageUrl={elements.element2.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element2: { bg: prev.element2?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element2: {
+                        bg: color,
+                        image: prev.element2?.image || null,
+                      },
+                    }))
+                  }
+                />
+                <ElementSelector
+                  label="Vybrat prvek 3"
+                  imageUrl={elements.element3.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element3: { bg: prev.element3?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element3: {
+                        bg: color,
+                        image: prev.element3?.image || null,
+                      },
+                    }))
+                  }
+                />
+                <ElementSelector
+                  label="Vybrat prvek 4"
+                  imageUrl={elements.element4.image || ""}
+                  onSelect={(url) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element4: { bg: prev.element4?.bg || "", image: url },
+                    }))
+                  }
+                  onColorSelect={(color) =>
+                    setElements((prev) => ({
+                      ...prev,
+                      element4: {
+                        bg: color,
+                        image: prev.element4?.image || null,
+                      },
+                    }))
+                  }
                 />
               </>
             )}
@@ -267,43 +259,17 @@ const PosterOneElementInverseGenerator = () => {
       <PreviewSection>
         <div className="scale-[25%] origin-top-left ">
           <div
-            className="relative pointer-events-none flex flex-row flex-nowrap overflow-hidden"
-            style={{
-              height: "2526px",
-              width: "1786px",
-            }}
+            className="relative pointer-events-none bg-white flex flex-row flex-nowrap overflow-hidden"
+            style={{ height: "2526px", width: "1786px" }}
             ref={previewRef}
           >
-            <div
-              className="absolute top-0 left-0 -z-10"
-              style={{
-                height: "2526px",
-                width: "1786px",
-              }}
-            >
-              <img
-                src={image1DataUrl || "/img/image-placeholder.svg"}
-                className="absolute top-0 left-0 w-[1786px] h-[2526px] z-0 pointer-events-none object-cover"
-              />
-              <div
-                className="w-full h-full z-10 absolute top-0 left-0"
-                style={{
-                  backgroundColor:
-                    facility !== 0 ? facilities[facility].colorBg : "gray",
-                  mixBlendMode: "color",
-                }}
-              ></div>
-              <div
-                className="w-full h-full z-20 opacity-75 absolute top-0 left-0"
-                style={{
-                  backgroundColor:
-                    facility !== 0 ? facilities[facility].colorBg : "gray",
-                  mixBlendMode: "normal",
-                }}
-              ></div>
-            </div>
-            <PosterGrid sideText={date} mode="light">
-              <div className="w-[90%] mx-auto h-[29em] flex flex-col justify-center items-center text-center text-white">
+            {/* <img
+              src="/poster-temp_06.png"
+              alt=""
+              className="absolute top-0 left-0 w-[1786px] h-[2526px] z-10 pointer-events-none opacity-25"
+            /> */}
+            <PosterGrid sideText={date}>
+              <div className="w-[90%] mx-auto h-[29em] flex flex-col justify-center items-center text-center">
                 <p className="text-[2.63em] above-heading line-clamp-1">
                   {eventType}
                 </p>
@@ -315,7 +281,12 @@ const PosterOneElementInverseGenerator = () => {
                 </div>
               </div>
               {facility !== 0 ? (
-                <div className="w-full h-[70px] border-t-[3px] border-white flex flex-row justify-center items-center text-center">
+                <div
+                  className="w-full h-[70px] border-t-[3px] border-black flex flex-row justify-center items-center text-center"
+                  style={{
+                    backgroundColor: facilities[facility].colorBg,
+                  }}
+                >
                   <p className="text-white text-[2.8em] font-medium">
                     {facilities[facility].name}
                   </p>
@@ -323,32 +294,70 @@ const PosterOneElementInverseGenerator = () => {
               ) : (
                 <></>
               )}
-              <div
-                className="w-[1476px] aspect-square border-white border-y-[3px] relative"
-                style={{ backgroundColor: "transparent" }}
-              >
-                {elements.element1.image && (
-                  <>
-                    <Image
-                      src={elements.element1.image}
-                      alt="Image 1"
-                      className="object-cover invert grayscale mix-blend-screen"
-                      fill
-                    />{" "}
-                    <Image
-                      src={elements.element1.image}
-                      alt="Image 1"
-                      className="object-cover invert grayscale mix-blend-screen"
-                      fill
-                    />
-                  </>
-                )}
+              <div className="w-[1476px] aspect-square border-black border-y-[3px] relative">
+                <div className="grid grid-cols-2 grid-rows-2 w-full h-full">
+                  <div
+                    className="w-full h-full relative border-r-[3px] border-b-[3px] border-black"
+                    style={{ backgroundColor: elements.element1.bg }}
+                  >
+                    {elements.element1.image && (
+                      <Image
+                        src={elements.element1.image}
+                        alt="Image 1"
+                        className="object-cover"
+                        fill
+                      />
+                    )}
+                  </div>
+                  <div
+                    className="w-full h-full relative border-b-[3px] border-black"
+                    style={{ backgroundColor: elements.element2.bg }}
+                  >
+                    {elements.element2.image && (
+                      <Image
+                        src={elements.element2.image}
+                        alt="Image 2"
+                        className="object-cover"
+                        fill
+                      />
+                    )}
+                  </div>
+                  <div
+                    className="w-full h-full relative border-r-[3px] border-black"
+                    style={{ backgroundColor: elements.element3.bg }}
+                  >
+                    {elements.element3.image && (
+                      <Image
+                        src={elements.element3.image}
+                        alt="Image 3"
+                        className="object-cover"
+                        fill
+                      />
+                    )}
+                  </div>
+                  <div
+                    className="w-full h-full relative border-black"
+                    style={{ backgroundColor: elements.element4.bg }}
+                  >
+                    {elements.element4.image && (
+                      <Image
+                        src={elements.element4.image}
+                        alt="Image 4"
+                        className="object-cover"
+                        fill
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
               <div
-                className="w-full h-[176px] px-20 grid place-content-center text-center text-white"
+                className="w-full h-[176px] px-20 grid place-content-center text-center"
                 style={{ height: facility !== 0 ? "176px" : "246px" }}
               >
-                <p className="font-medium text-[2.28em] line-clamp-2">{text}</p>
+                {SplitParagraph({
+                  text,
+                  cssStyles: "font-medium text-[2.28em] line-clamp-2",
+                })}
               </div>
             </PosterGrid>
           </div>
@@ -358,4 +367,4 @@ const PosterOneElementInverseGenerator = () => {
   );
 };
 
-export default PosterOneElementInverseGenerator;
+export default PosterFourElementsGenerator;

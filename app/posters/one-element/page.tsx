@@ -30,7 +30,7 @@ import { DateTimeRangeInput } from "@/components/inputs/timeAndDate";
 import { MenuBlock, MenuSection, PreviewSection } from "@/components/layout";
 import LoadingSkeleton from "@/components/loadingSkeleton";
 
-const PostTwoElementsGenerator = () => {
+const PosterOneElementGenerator = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -156,7 +156,7 @@ const PostTwoElementsGenerator = () => {
           <ElementSelectorGrid>
             {" "}
             {facilities.length === 0 || loading ? (
-              <LoadingSkeleton height="h-[3px]4" count={4} />
+              <LoadingSkeleton height="h-[100px]" count={4} />
             ) : (
               <>
                 <ElementSelector
@@ -259,4 +259,4 @@ const PostTwoElementsGenerator = () => {
   );
 };
 
-export default PostTwoElementsGenerator;
+export default PosterOneElementGenerator;

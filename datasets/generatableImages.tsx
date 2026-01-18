@@ -33,6 +33,7 @@ export const generatablePosters: GeneratorType[] = [
     link: "/posters/one-element-inverse",
   },
   { name: "Plakátek A4 se dvěma prvky", link: "/posters/two-elements" },
+  { name: "Plakátek A4 se čtyřmi prvky", link: "/posters/four-elements" },
   { name: "Plakátek A4 s obrázkem a prvkem", link: "" },
   { name: "Plakátek A4 s obrázkem a QR kódem", link: "" },
 ];
