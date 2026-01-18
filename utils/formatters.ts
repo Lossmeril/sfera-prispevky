@@ -48,7 +48,7 @@ export const constructFileName = (
       input
         .split(/[.:,;\-\/\\()[\]{}—]/)[0]
         .replace(/ /g, "-")
-        .replace(/[#%&:*!?—]/, "")
+        .replace(/[#%&:*!?—↵¶—]/, "")
         .toLowerCase() +
       `-${type}`,
   );
