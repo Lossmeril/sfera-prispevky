@@ -9,17 +9,6 @@ interface DateTimeRangeInputProps {
   className?: string;
 }
 
-/**
- * Outputs (Czech):
- * - "pátek 22. listopadu 2024 | 15.30—17.30"
- * - "pátek 22. listopadu 2024 | 15.30"
- * - "pátek 22. listopadu 2024"
- *
- * Assumptions:
- * - `text` is owned by parent via useState<string>
- * - This component always "drives" the string based on its internal fields.
- */
-
 export const DateTimeRangeInput: React.FC<DateTimeRangeInputProps> = ({
   text,
   setText,
@@ -28,10 +17,14 @@ export const DateTimeRangeInput: React.FC<DateTimeRangeInputProps> = ({
   label = "Datum a čas",
   className = "",
 }) => {
-  // Internal form values (HTML date/time inputs use ISO-ish strings)
   const [dateISO, setDateISO] = useState<string>(""); // YYYY-MM-DD
-  const [startTime, setStartTime] = useState<string>(""); // HH:MM
-  const [endTime, setEndTime] = useState<string>(""); // HH:MM
+
+  type Span = { start: string; end: string };
+  const [spans, setSpans] = useState<Span[]>([
+    { start: "", end: "" },
+    { start: "", end: "" },
+    { start: "", end: "" },
+  ]);
 
   // Czech locale formatting helpers
   const formatCzechDate = (isoDate: string): string => {
@@ -42,7 +35,6 @@ export const DateTimeRangeInput: React.FC<DateTimeRangeInputProps> = ({
     if (!y || !m || !d) return "";
 
     const dt = new Date(y, m - 1, d);
-
     const parts = new Intl.DateTimeFormat("cs-CZ", {
       weekday: "long",
       day: "numeric",
@@ -55,52 +47,70 @@ export const DateTimeRangeInput: React.FC<DateTimeRangeInputProps> = ({
     const month = parts.find((p) => p.type === "month")?.value ?? "";
     const year = parts.find((p) => p.type === "year")?.value ?? "";
 
-    // Czech style: "pátek 22. listopadu 2024"
     return `${weekday} ${day}. ${month} ${year}`;
   };
 
   const formatTimeDot = (hhmm: string): string => {
-    // "15:30" -> "15.30"
     if (!hhmm) return "";
     const [hh, mm] = hhmm.split(":");
     if (hh == null || mm == null) return "";
     return `${hh}.${mm}`;
   };
 
-  const buildOutput = (isoDate: string, start: string, end: string): string => {
+  const spanToString = (span: Span): string => {
+    const startPart = formatTimeDot(span.start);
+    const endPart = formatTimeDot(span.end);
+    if (!startPart) return "";
+    if (endPart) return `${startPart}—${endPart}`;
+    return startPart;
+  };
+
+  const buildOutput = (isoDate: string, allSpans: Span[]): string => {
     const datePart = formatCzechDate(isoDate);
     if (!datePart) return "";
 
-    const startPart = formatTimeDot(start);
-    const endPart = formatTimeDot(end);
+    const renderedSpans = allSpans.map(spanToString).filter(Boolean);
+    if (renderedSpans.length === 0) return datePart;
 
-    if (startPart && endPart) return `${datePart} | ${startPart}—${endPart}`;
-    if (startPart) return `${datePart} | ${startPart}`;
-    return datePart;
+    return `${datePart} | ${renderedSpans.join(" | ")}`;
   };
 
-  // Keep output in sync with inputs
-  const output = useMemo(
-    () => buildOutput(dateISO, startTime, endTime),
-    [dateISO, startTime, endTime],
-  );
+  const isValid = useMemo(() => {
+    // Valid if every span with both times respects start <= end
+    for (const s of spans) {
+      if (s.start && s.end && s.start > s.end) return false;
+    }
+    return true;
+  }, [spans]);
 
-  const isValidTimeRange = useMemo(() => {
-    if (!startTime || !endTime) return true;
-    return startTime <= endTime;
-  }, [startTime, endTime]);
-
-  useEffect(() => {
-    setValid(isValidTimeRange);
-  }, [isValidTimeRange, setValid]);
+  const output = useMemo(() => buildOutput(dateISO, spans), [dateISO, spans]);
 
   useEffect(() => {
-    // Only update parent if it actually changed (avoids loops)
+    setValid(isValid);
+  }, [isValid, setValid]);
+
+  useEffect(() => {
     if (output !== text) setText(output);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [output]);
 
-  // Optional: basic sanity if end < start (same day)
+  const setSpan = (index: number, patch: Partial<Span>) => {
+    setSpans((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], ...patch };
+      return next;
+    });
+  };
+
+  const clearAll = () => {
+    setDateISO("");
+    setSpans([
+      { start: "", end: "" },
+      { start: "", end: "" },
+      { start: "", end: "" },
+    ]);
+    setText("");
+  };
 
   return (
     <div className={className}>
@@ -110,7 +120,7 @@ export const DateTimeRangeInput: React.FC<DateTimeRangeInputProps> = ({
         </label>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 gap-2">
         <input
           id={id}
           type="date"
@@ -119,36 +129,63 @@ export const DateTimeRangeInput: React.FC<DateTimeRangeInputProps> = ({
           onChange={(e) => setDateISO(e.target.value)}
         />
 
-        <input
-          type="time"
-          className="w-full border rounded-md p-2"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
-          step={60} // minutes
-        />
+        {/* Up to 3 spans */}
+        {spans.map((span, idx) => {
+          const spanInvalid = !!(
+            span.start &&
+            span.end &&
+            span.start > span.end
+          );
 
-        <input
-          type="time"
-          className="w-full border rounded-md p-2"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-          step={60} // minutes
-        />
+          return (
+            <div
+              key={idx}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-2"
+              aria-label={`Časový úsek ${idx + 1}`}
+            >
+              <input
+                type="time"
+                className={`w-full border rounded-md p-2 ${
+                  spanInvalid ? "border-red-500" : ""
+                }`}
+                value={span.start}
+                onChange={(e) => setSpan(idx, { start: e.target.value })}
+                step={60}
+                placeholder="Od"
+                aria-invalid={spanInvalid}
+              />
+
+              <input
+                type="time"
+                className={`w-full border rounded-md p-2 ${
+                  spanInvalid ? "border-red-500" : ""
+                }`}
+                value={span.end}
+                onChange={(e) => setSpan(idx, { end: e.target.value })}
+                step={60}
+                placeholder="Do"
+                aria-invalid={spanInvalid}
+              />
+            </div>
+          );
+        })}
       </div>
 
       <div className="flex items-center justify-between mt-2">
-        <p className="text-xs text-gray-600">
-          Výstup: <span className="font-medium">{output || "—"}</span>
-        </p>
+        <div className="text-xs text-gray-600">
+          <p>
+            Výstup: <span className="font-medium">{output || "—"}</span>
+          </p>
+          {!isValid && (
+            <p className="text-red-600 mt-1">
+              Některý časový úsek má konec dříve než začátek.
+            </p>
+          )}
+        </div>
 
         <button
           type="button"
-          onClick={() => {
-            setDateISO("");
-            setStartTime("");
-            setEndTime("");
-            setText("");
-          }}
+          onClick={clearAll}
           className="bg-gray-100 hover:bg-gray-200 px-2 py-1 border rounded-md text-xs font-medium transition-all"
         >
           Vymazat
