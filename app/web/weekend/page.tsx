@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 
-import { formatDate } from "@/utils/formatters";
+import { addDays, formatDate } from "@/utils/formatters";
 import { ElementKey, Facility } from "@/utils/types";
 import { imageVarietyValidate, isSaturday, validate } from "@/utils/validators";
 
@@ -312,7 +312,7 @@ const ScreenFourElementsGenerator = () => {
                 <p className="absolute top-[55%] left-1/2 uppercase text-white font-youthRounded text-[7em] text-center -translate-x-1/2 -translate-y-1/2">
                   {+formatDate(saturdayDate).split(".")[0]}
                   <span>&mdash;</span>
-                  {+formatDate(saturdayDate).split(".")[0] + 1}
+                  {+formatDate(addDays(saturdayDate, 1)).split(".")[0]}
                 </p>
 
                 <div className="absolute top-24 left-[36%] w-[250px] aspect-square rounded-full overflow-hidden">

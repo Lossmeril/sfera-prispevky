@@ -12,6 +12,12 @@ export const formatDate = (date: string): string => {
   return formatter.format(dateObj);
 };
 
+export const addDays = (date: string, days: number): string => {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split("T")[0];
+};
+
 export const formatTime = (time: string): string => {
   if (!time) return "";
 
