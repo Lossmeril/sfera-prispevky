@@ -295,9 +295,11 @@ const PosterLargeImageGenerator = () => {
                         cssStyles="text-[4.3em] leading-[1em] line-clamp-2 font-medium main-heading alt-glyphs"
                       />
                     </div>
-                    <p className="font-medium text-[1.8em] leading-10 line-clamp-3 mt-6">
-                      {text}
-                    </p>
+
+                    <SplitParagraph
+                      text={removeEmojis(text)}
+                      cssStyles="font-medium text-[1.8em] leading-10 line-clamp-3 mt-6"
+                    />
                   </div>
                 </div>
                 <div
