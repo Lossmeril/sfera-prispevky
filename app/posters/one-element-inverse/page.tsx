@@ -90,7 +90,7 @@ const PosterOneElementInverseGenerator = () => {
       (d) =>
         genericValidator(
           d.dateValid,
-          "Koncový čas nemůže být dříve než počáteční.",
+          "Vyplňte datum a čas akce správně (viz formulář výše).",
         ),
       (d) =>
         genericValidator(d.facility !== 0, "Dílna/Laboratoř musí být vybrána."),
