@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { constructFileName, removeEmojis } from "@/utils/formatters";
 import { fileToDataURL } from "@/utils/images";
+import { describeFacility, describeFile } from "@/utils/logUsage";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { Facility } from "@/utils/types";
 import {
@@ -202,6 +203,14 @@ const LargeImageElementWithHeadingGenerator = () => {
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{
+              eventType,
+              title,
+              description,
+              facility: describeFacility(facilities, facility),
+              image1: describeFile(image1),
+              isImagePortrait,
+            }}
             fileName={constructFileName(title, "příspěvek", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />

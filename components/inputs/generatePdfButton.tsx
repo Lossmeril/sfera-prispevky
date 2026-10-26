@@ -5,15 +5,19 @@ import React from "react";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 
+import { UsageData, logUsage } from "@/utils/logUsage";
+
 interface GeneratePdfButtonProps {
   previewRef: React.RefObject<HTMLDivElement>;
   validated?: boolean;
   fileName?: string;
+  logData?: UsageData;
 }
 
 const GeneratePdfButton: React.FC<GeneratePdfButtonProps> = ({
   previewRef,
   validated = true,
+  logData,
   fileName = "generated-file",
 }) => {
   const [generatingLoading, setGeneratingLoading] =
@@ -67,6 +71,7 @@ const GeneratePdfButton: React.FC<GeneratePdfButtonProps> = ({
         previewRef.current.offsetHeight,
       );
       pdf.save(fileName);
+      logUsage(previewRef.current, logData);
     } catch (err) {
       console.error("PDF generation failed:", err);
     } finally {

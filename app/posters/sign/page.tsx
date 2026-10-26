@@ -181,6 +181,7 @@ const PostTwoElementsGenerator = () => {
           <GeneratePdfButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{ text, elements }}
             fileName={"SFÉRA_A4_cedule"}
           />
           <ErrorDisplay errors={result.errors} />

@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { constructFileName, removeEmojis } from "@/utils/formatters";
+import { describeFacility } from "@/utils/logUsage";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
@@ -211,6 +212,14 @@ const PosterTwoElementsGenerator = () => {
           <GeneratePdfButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{
+              eventType,
+              title,
+              date,
+              text,
+              facility: describeFacility(facilities, facility),
+              elements,
+            }}
             fileName={constructFileName(title, "plakat", 297, 210, "mm")}
           />
           <ErrorDisplay errors={result.errors} />

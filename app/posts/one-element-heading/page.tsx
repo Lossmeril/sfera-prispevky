@@ -143,6 +143,7 @@ const PostOneElementWithHeadingGenerator = () => {
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{ eventType, title, elements }}
             fileName={constructFileName(title, "příspěvek", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />

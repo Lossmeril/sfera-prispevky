@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import { constructFileName, removeEmojis } from "@/utils/formatters";
 import { fileToDataURL } from "@/utils/images";
+import { describeFacility, describeFile } from "@/utils/logUsage";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
@@ -228,6 +229,15 @@ const PosterLargeImageGenerator = () => {
           <GeneratePdfButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{
+              eventType,
+              title,
+              date,
+              text,
+              facility: describeFacility(facilities, facility),
+              image1: describeFile(image1),
+              elements,
+            }}
             fileName={constructFileName(title, "plakat", 297, 210, "mm")}
           />
           <ErrorDisplay errors={result.errors} />

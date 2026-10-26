@@ -169,6 +169,7 @@ const PostFourElementsGenerator = () => {
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{ elements }}
             fileName={constructFileName("příspěvek", "čtyři-prvky", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />

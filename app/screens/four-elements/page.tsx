@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { constructFileName } from "@/utils/formatters";
+import { describeFacility } from "@/utils/logUsage";
 import { ElementKey, Facility } from "@/utils/types";
 import {
   bgColorsValidate,
@@ -256,6 +257,14 @@ const ScreenFourElementsGenerator = () => {
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{
+              eventType,
+              title,
+              date,
+              facility: describeFacility(facilities, facility),
+              reservationsVisible,
+              elements,
+            }}
             forceSize={{ width: 1920, height: 1080 }}
             fileName={constructFileName(title, "obrazovka", 1920, 1080)}
           />

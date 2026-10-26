@@ -284,6 +284,7 @@ const ScreenFourElementsGenerator = () => {
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{ saturdayDate, elements }}
             fileName={`web-thumbnail-vikendovka-${formatDate(
               saturdayDate,
             ).replace(/\./g, "-")}`}

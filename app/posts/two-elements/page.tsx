@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { constructFileName, removeEmojis } from "@/utils/formatters";
+import { describeFacility } from "@/utils/logUsage";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
@@ -193,6 +194,13 @@ const PostTwoElementsGenerator = () => {
           <GenerateImageButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{
+              eventType,
+              title,
+              date,
+              facility: describeFacility(facilities, facility),
+              elements,
+            }}
             fileName={constructFileName(title, "příspěvek", 1080, 1350)}
           />
           <ErrorDisplay errors={result.errors} />

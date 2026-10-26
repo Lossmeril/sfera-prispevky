@@ -4,16 +4,20 @@ import React from "react";
 
 import { toPng } from "html-to-image";
 
+import { UsageData, logUsage } from "@/utils/logUsage";
+
 interface GenerateImageButtonProps {
   previewRef: React.RefObject<HTMLDivElement>;
   validated?: boolean;
   fileName?: string;
+  logData?: UsageData;
   forceSize?: { width: number; height: number } | false;
 }
 
 const GenerateImageButton: React.FC<GenerateImageButtonProps> = ({
   previewRef,
   validated = true,
+  logData,
   fileName = "generated_image",
   forceSize = false,
 }) => {
@@ -79,6 +83,7 @@ const GenerateImageButton: React.FC<GenerateImageButtonProps> = ({
               link.download = fileName + ".png";
               link.href = dataUrl;
               link.click();
+              logUsage(previewRef.current, logData);
             }
           }}
         >

@@ -7,6 +7,7 @@ import Image from "next/image";
 import css from "styled-jsx/css";
 
 import { constructFileName, removeEmojis } from "@/utils/formatters";
+import { describeFacility } from "@/utils/logUsage";
 import SplitParagraph from "@/utils/splitParagraphs";
 import { ElementKey, Facility } from "@/utils/types";
 import {
@@ -249,6 +250,14 @@ const PosterFourElementsGenerator = () => {
           <GeneratePdfButton
             previewRef={previewRef}
             validated={result.valid}
+            logData={{
+              eventType,
+              title,
+              date,
+              text,
+              facility: describeFacility(facilities, facility),
+              elements,
+            }}
             fileName={constructFileName(title, "plakat", 297, 210, "mm")}
           />
           <ErrorDisplay errors={result.errors} />
